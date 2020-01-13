@@ -7,6 +7,9 @@ public class Test {
 		System.out.println("Trial.");
 		System.out.println("ABC");
 		//saturday test
+		
+		System.out.println("Testing on Sunday.");
+		//Sunday test
 	}
 
 }
