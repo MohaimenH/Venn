@@ -15,6 +15,8 @@ public class Test {
 		// Lab Push - 13th Jan 2020.
 		
 		// Ian 2020/1/13 12:00
+		
+		System.out.println("New branch test.");
 	}
 
 }
