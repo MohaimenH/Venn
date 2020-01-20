@@ -42,6 +42,7 @@ public class  Category {
 	}
 	
 	public boolean remove(Item item) {
+		item.exitCategory();
 		return this.items.remove(item);
 	}
 }
