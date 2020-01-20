@@ -22,7 +22,7 @@ public class Test {
 
 		System.out.println("New branch lab2.");
 		
-		System.out.println("Branch Test, 20th Jan.");
+		System.out.println("sfjsaldjfk");
 		// neq branch by luke
 		
 		
