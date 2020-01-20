@@ -17,12 +17,14 @@ public class Test {
 		// Ian 2020/1/13 12:00
 		
 
+		//testing conflicts
 		// New branch test Ian_branch 1.19 16:55
 
 		System.out.println("New branch test.");
 		System.out.println("New branch test.");
 		
 		System.out.println("Branch Test, 20th Jan.");
+		// neq branch by luke
 	}
 
 }
