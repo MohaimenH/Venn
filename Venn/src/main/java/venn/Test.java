@@ -29,7 +29,8 @@ public class Test {
 		//TESTER
 
 		//testing merging in lab
-
+		
+		//Conflict test.
 	}
 
 }
