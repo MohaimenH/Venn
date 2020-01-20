@@ -20,6 +20,9 @@ public class Test {
 		// New branch test Ian_branch 1.19 16:55
 
 		System.out.println("New branch test.");
+		System.out.println("New branch test.");
+		
+		System.out.println("Branch Test, 20th Jan.");
 	}
 
 }
