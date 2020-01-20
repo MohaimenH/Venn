@@ -20,14 +20,12 @@ public class Test {
 		//testing conflicts
 		// New branch test Ian_branch 1.19 16:55
 
-		System.out.println("New branch test.");
-		System.out.println("New branch test.");
+		System.out.println("New branch lab2.");
 		
-		System.out.println("Branch Test, 20th Jan.");
+
+		System.out.println("this shouldn't work out.");
 		// neq branch by luke
 
-		
-		
 		//TESTER
 
 		//testing merging in lab
