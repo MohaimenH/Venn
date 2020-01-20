@@ -31,6 +31,7 @@ public class Test {
 		//TESTER
 
 		//testing merging in lab
+		System.out.print("hello");
 
 	}
 
