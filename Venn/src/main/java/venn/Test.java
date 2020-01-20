@@ -17,6 +17,8 @@ public class Test {
 		// Ian 2020/1/13 12:00
 		
 		System.out.println("New branch test.");
+		
+		System.out.println("Branch Test, 20th Jan.");
 	}
 
 }
