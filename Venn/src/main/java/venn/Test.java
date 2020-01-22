@@ -29,6 +29,10 @@ public class Test {
 		//TESTER
 
 		//testing merging in lab
+		
+		//Conflict test.
+
+		//testing merging in lab
 		System.out.print("hello");
 
 	}
