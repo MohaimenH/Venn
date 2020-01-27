@@ -1,16 +1,29 @@
 package application;
 
-import java.awt.Button;
-import java.awt.TextArea;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 
 public class MainController {
-	private TextArea Right;
-	private TextArea Left;
+	 @FXML
+
+	private TextField inputText;
+	 @FXML
+
+	private TextArea right;
+	 @FXML
+
+	 
+	private TextArea left;
+	
+	 @FXML
+	 private TextArea light;
+	 @FXML
 	private Button submit;
 	 @FXML
 	    private URL location;
@@ -24,17 +37,11 @@ public class MainController {
 	    private void initialize() 
 	    {
 	    }
-	 @FXML
-
-	 public void setOther(ActionEvent e) {
-		 System.out.print("test");
-		 String thing= Left.getText();
-		 Right.setText(thing);
-	 }
+	
 	 @FXML
 
 	 private void printOutput() 
 	    {
-	        Right.setText(Left.getText());
+	        light.setText(inputText.getText());
 	    }
 }
