@@ -31,8 +31,9 @@ public class MainController {
 	    @FXML
 	    private ResourceBundle resources;
 	
-	public  MainController() {
-	}
+	public  MainController() {}
+
+	
 	 @FXML
 	    private void initialize() 
 	    {
