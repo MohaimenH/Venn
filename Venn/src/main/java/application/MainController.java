@@ -11,18 +11,11 @@ import javafx.scene.control.TextField;
 
 public class MainController {
 	 @FXML
-
 	private TextField inputText;
 	 @FXML
-
 	private TextArea right;
-	 @FXML
-
-	 
+	 @FXML 
 	private TextArea left;
-	
-	 @FXML
-	 private TextArea light;
 	 @FXML
 	private Button submit;
 	 @FXML
@@ -42,6 +35,6 @@ public class MainController {
 
 	 private void printOutput() 
 	    {
-	        light.setText(inputText.getText());
+	        right.setText(inputText.getText());
 	    }
 }
