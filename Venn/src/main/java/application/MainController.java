@@ -14,14 +14,17 @@ import javafx.scene.control.TextField;
 public class MainController {
 	Boolean selected=false;
 	String temp;
+	int index;
 	@FXML
 	private ListView<String> holder;
 	 @FXML
 	private TextField inputText;
 	 @FXML
-	private TextArea right;
+	private ListView<String> right;
 	 @FXML 
 	private ListView<String> left;
+	 @FXML
+	 private ListView<String> middle;
 	 @FXML
 	private Button submit;
 	 @FXML
@@ -43,28 +46,47 @@ public class MainController {
 	 private void printOutput() 
 	    {
 		 	String place=inputText.getText();
-
 		 holder.getItems().add(place);
 	    }
 	 @FXML
-	 private Boolean detectDrop() {
-		 selected=true;
-		 return selected;
+	 private void detectDrop() {
+		selected =true;
 	 }
 	 @FXML
 	 private void detactDrag() {
-		 //what we can do is detect when an item is selected, then depending on weather its selected we 
-		 //detect where the mouse is and set that text to the appropriate text area
-		 selected=false;
+		 	 index=holder.getSelectionModel().getSelectedIndex();
+		 	 selected=true;
              temp=holder.getSelectionModel().getSelectedItem();
              System.out.print(temp);
-
 	 }
 	 @FXML
 	 private void detectLeft() {
-		 Boolean detection=detectDrop();
-		 if(detection) {
+		 
+		 if(selected) {
 			 left.getItems().add(temp);
+			 holder.getItems().remove(index);
+			 selected=false;
+			 
+		 }
+	 }
+	 @FXML
+	 private void detectRight() {
+		 
+		 if(selected) {
+			 right.getItems().add(temp);
+			 holder.getItems().remove(index);
+			 selected=false;
+			 
+		 }
+	 }
+	 @FXML
+	 private void detectMiddle() {
+		 
+		 if(selected) {
+			 middle.getItems().add(temp);
+			 holder.getItems().remove(index);
+			 selected=false;
+			 
 		 }
 	 }
 }
