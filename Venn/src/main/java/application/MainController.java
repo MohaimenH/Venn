@@ -47,6 +47,7 @@ public class MainController {
 	    {
 		 	String place=inputText.getText();
 		 holder.getItems().add(place);
+		 inputText.clear();
 	    }
 	 @FXML
 	 private void detectDrop() {
