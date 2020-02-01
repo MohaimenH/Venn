@@ -1,14 +1,11 @@
 package database;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import database.Category;
 import database.Category.CType;
-import database.Item;
-
-import java.util.ArrayList;
-import java.util.HashSet;
 
 public class Venn {
 
