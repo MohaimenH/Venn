@@ -18,6 +18,7 @@ public class Main extends Application{
 			primaryStage.setScene(scene);
 			primaryStage.show();
 			// Making a change for lab.
+			//Changes
 	}
 	
 	public static void main(String[] arg) {
