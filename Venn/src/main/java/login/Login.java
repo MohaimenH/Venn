@@ -49,14 +49,8 @@ public class Login extends Application {
 		Button loginButton = new Button("Log In");
 		GridPane.setConstraints(loginButton, 1, 2);
 		loginButton.setOnAction(e -> {
-			Main main = new Main();
-			try {
-				window.close();
-				main.run(new Stage());
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			VennSet.run();
+			window.close();
 		});
 		
 		grid.getChildren().addAll(label1, label2,nameInput, pwInput, loginButton);
@@ -80,11 +74,7 @@ public class Login extends Application {
 			
 		}
 	}
-//	@Override
-//	public void handle(ActionEvent event) {
-//		if (event.getSource() == log_in) {
-//			System.out.print("t");
-//		}
-//	}
 	
 }
+
+

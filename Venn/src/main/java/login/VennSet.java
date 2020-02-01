@@ -1,5 +1,7 @@
 package login;
+import java.io.IOException;
 
+import application.Main;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -14,21 +16,19 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class Main extends Application{
+public class VennSet extends Application{
 	
 	Stage window;
-	
-	@Override
-	public void start(Stage pri) throws Exception {
-		this.window = pri;
-		window.setTitle("Main");
+	private static void body() {
+		Stage window = new Stage();
+		window.setTitle("Setup Your Venn Diagram");
 		
 		GridPane grid = new GridPane();
 		grid.setPadding(new Insets(10, 10, 10, 10));
 		grid.setVgap(8);
 		grid.setHgap(10);
 		
-		Label label1 = new Label("User Name:");
+		Label label1 = new Label("VennName:");
 		Label label2 = new Label("Password:");
 		GridPane.setConstraints(label1,0, 0);
 		GridPane.setConstraints(label2,0, 1);
@@ -41,14 +41,39 @@ public class Main extends Application{
 		GridPane.setConstraints(pwInput, 1, 1);
 		pwInput.setPromptText("password");
 		
-		Button loginButton = new Button("Log In");
-		GridPane.setConstraints(loginButton, 1, 2);
 		
-		grid.getChildren().addAll(label1, label2,nameInput, pwInput, loginButton);
 		
-		Scene scene = new Scene(grid, 100, 100);
+		
+		Button button = new Button("Get Diagram");
+		GridPane.setConstraints(button, 1, 2);
+		button.setOnAction(e -> {
+			Main main = new Main();
+			try {
+				window.close();
+				main.run(new Stage());
+			} catch (IOException e1) {
+				AlertBox.display("Error", "Unknown Error occurs.");
+				e1.printStackTrace();
+			}
+		});
+		
+		grid.getChildren().addAll(label1, label2,nameInput, pwInput, button);
+		
+		Scene scene = new Scene(grid, 260, 100);
 		window.setScene(scene);
 		window.show();
+	}
+	
+	
+	
+	public static void run() {
+		VennSet.body();
+	}
+	
+	
+	@Override
+	public void start(Stage pri) throws Exception {
+		body();
 	}
 	
 	public static void main(String[] args) {
