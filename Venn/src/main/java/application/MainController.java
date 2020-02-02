@@ -189,6 +189,7 @@ public class MainController {
 //		 else if ((midElems.contains(temp) == true)) {
 		else {
 			holder.getItems().remove(index);
+			selected = false;
 		}
 	}
 
