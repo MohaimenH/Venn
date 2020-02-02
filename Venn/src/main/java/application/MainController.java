@@ -108,7 +108,7 @@ public class MainController {
 		selected = true;
 		temp = holder.getSelectionModel().getSelectedItem();
 		System.out.print(temp);
-
+//		selected=false;
 	}
 
 	@FXML
@@ -136,9 +136,9 @@ public class MainController {
 			}
 		}
 
-//		 else if ((leftElems.contains(temp) == true)) {
-		else {
-			holder.getItems().remove(index);
+		else if ((leftElems.contains(temp) == true)) {
+//		else {
+//			holder.getItems().remove(index);
 			selected = false;
 		}
 	}
@@ -163,8 +163,8 @@ public class MainController {
 			}
 		}
 
-//		 else if ((rightElems.contains(temp) == true)) {
-		else {
+		else if ((rightElems.contains(temp) == true)) {
+//		else {
 			holder.getItems().remove(index);
 			selected = false;
 		}
@@ -186,8 +186,8 @@ public class MainController {
 			selected = false;
 		}
 
-//		 else if ((midElems.contains(temp) == true)) {
-		else {
+		else if ((midElems.contains(temp) == true)) {
+//		else {
 			holder.getItems().remove(index);
 			selected = false;
 		}
