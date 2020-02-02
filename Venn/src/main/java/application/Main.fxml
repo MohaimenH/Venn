@@ -33,7 +33,8 @@
       <Text layoutX="28.0" layoutY="486.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Right Circle" />
       <Button fx:id="left_label_button" layoutX="132.0" layoutY="445.0" mnemonicParsing="false" onAction="#setLeftLabel" text="Set Left" />
       <Button fx:id="right_label_button" layoutX="132.0" layoutY="496.0" mnemonicParsing="false" onAction="#setRightLabel" text="Set Right" /> 
-      <Button fx:id="clearLeft" layoutX="386.0" layoutY="83.0" mnemonicParsing="false" onAction="#clearLeftSet" text="Clear Set" /> 
+      <Button fx:id="clearLeft" layoutX="386.0" layoutY="83.0" mnemonicParsing="false" onAction="#clearLeftSet" text="Clear Set" />
+      <Button fx:id="clearRight" layoutX="690.0" layoutY="83.0" mnemonicParsing="false" onAction="#clearRightSet" text="Clear Set" /> 
 
    </children>
 </AnchorPane>
