@@ -17,15 +17,15 @@ public class MainController {
 	String temp;
 	int index;
 	
-//	Set<String> elements = new HashSet<>();
-//	Set<String> leftElems = new HashSet<>();
-//	Set<String> rightElems = new HashSet<>();
-//	Set<String> midElems = new HashSet<>();
+	Set<String> elements = new HashSet<>();
+	Set<String> leftElems = new HashSet<>();
+	Set<String> rightElems = new HashSet<>();
+	Set<String> midElems = new HashSet<>();
 	
-	ArrayList<String> elements = new ArrayList<>();
-	ArrayList<String> leftElems = new ArrayList<>();
-	ArrayList<String> rightElems = new ArrayList<>();
-	ArrayList<String> midElems = new ArrayList<>();
+//	ArrayList<String> elements = new ArrayList<>();
+//	ArrayList<String> leftElems = new ArrayList<>();
+//	ArrayList<String> rightElems = new ArrayList<>();
+//	ArrayList<String> midElems = new ArrayList<>();
 	
 	//////////////////
 	@FXML
