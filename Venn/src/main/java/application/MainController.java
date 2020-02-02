@@ -118,9 +118,6 @@ public class MainController {
 
 			if (rightElems.contains(temp)) {
 				detectMiddle();
-				right.getItems().remove(temp);
-				rightElems.remove(temp);
-				selected = false;
 //				 index=rightElems.indexOf(temp);
 //				 System.out.println("Before: " + left.getItems().indexOf(temp));
 //				 left.getItems().remove(index);
@@ -136,8 +133,9 @@ public class MainController {
 			}
 		}
 
-		else if (selected && (leftElems.contains(temp) == true)) {
+//		else if (selected && (leftElems.contains(temp) == true)) {
 //		else {
+		else if (selected) {
 			holder.getItems().remove(temp);
 //			holder.getItems().remove(index);
 			selected = false;
@@ -151,9 +149,6 @@ public class MainController {
 
 			if (leftElems.contains(temp)) {
 				detectMiddle();
-				left.getItems().remove(temp);
-				leftElems.remove(temp);
-				selected = false;
 			}
 
 			else {
@@ -164,9 +159,10 @@ public class MainController {
 			}
 		}
 
-		else if (selected && (rightElems.contains(temp) == true)) {
+//		else if (selected && (rightElems.contains(temp) == true)) {
 //		else {
-			holder.getItems().remove(temp);
+		else if (selected) {
+		holder.getItems().remove(temp);
 //			holder.getItems().remove(index);
 			selected = false;
 		}
@@ -188,8 +184,9 @@ public class MainController {
 			selected = false;
 		}
 
-		else if (selected && (midElems.contains(temp) == true)) {
+//		else if (selected && (midElems.contains(temp) == true)) {
 //		else {
+		else if (selected) {
 			holder.getItems().remove(temp);
 //			holder.getItems().remove(index);
 			selected = false;
