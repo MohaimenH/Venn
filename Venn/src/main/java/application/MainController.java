@@ -28,6 +28,10 @@ public class MainController {
 	@FXML
 	private Button right_label_button;
 	@FXML
+	private Button clearLeft;
+	@FXML
+	private Button clearRight;
+	@FXML
 	private Label leftLabel;
 	@FXML
 	private Label rightLabel;
@@ -71,6 +75,7 @@ public class MainController {
 		 	String place=inputText.getText();
 		 holder.getItems().add(place);
 		 inputText.clear();
+		 elements.add(place);
 	    }
 	//=============================================//drag and drop detection
 	 @FXML
@@ -83,8 +88,6 @@ public class MainController {
 		 	 selected=true;
              temp=holder.getSelectionModel().getSelectedItem();
              System.out.print(temp);
-             
-             elements.add(temp);
 	 }
 	 @FXML
 	 private void detectLeft() {
@@ -142,6 +145,7 @@ public class MainController {
 			 holder.getItems().remove(index);
 		 }
 	 }
+	 
 	//=============================================//label customization
 	 @FXML
 	 private void setLeftLabel() {
@@ -155,6 +159,13 @@ public class MainController {
 		 rightLabel.setText(right);
 		 right_label_input.clear();
 	 }
-	 //=============================================//
-
+	 //=============================================// Clear individual sets
+	 
+	 private void clearLeft() {
+		 left.getItems().clear();
+	 }
+	 
+	 private void clearRight() {
+		 right.getItems().clear();
+	 }
 }
