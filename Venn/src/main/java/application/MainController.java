@@ -212,10 +212,12 @@ public class MainController {
 	}
 	// =============================================// Clear individual sets
 
+	@FXML
 	private void clearLeft() {
 		left.getItems().clear();
 	}
-
+	
+	@FXML
 	private void clearRight() {
 		right.getItems().clear();
 	}
