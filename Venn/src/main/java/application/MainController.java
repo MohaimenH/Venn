@@ -138,6 +138,7 @@ public class MainController {
 
 		else if ((leftElems.contains(temp) == true)) {
 //		else {
+			holder.getItems().remove(temp);
 //			holder.getItems().remove(index);
 			selected = false;
 		}
@@ -165,7 +166,8 @@ public class MainController {
 
 		else if ((rightElems.contains(temp) == true)) {
 //		else {
-			holder.getItems().remove(index);
+			holder.getItems().remove(temp);
+//			holder.getItems().remove(index);
 			selected = false;
 		}
 	}
@@ -188,7 +190,8 @@ public class MainController {
 
 		else if ((midElems.contains(temp) == true)) {
 //		else {
-			holder.getItems().remove(index);
+			holder.getItems().remove(temp);
+//			holder.getItems().remove(index);
 			selected = false;
 		}
 	}
