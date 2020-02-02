@@ -1,7 +1,7 @@
 package application;
 
 import java.net.URL;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -16,6 +16,12 @@ public class MainController {
 	Boolean selected=false;
 	String temp;
 	int index;
+	
+	Set<String> elements = new HashSet<>();
+	Set<String> leftElems = new HashSet<>();
+	Set<String> rightElems = new HashSet<>();
+	Set<String> midElems = new HashSet<>();
+	
 	//////////////////
 	@FXML
 	private Button left_label_button;
@@ -77,33 +83,63 @@ public class MainController {
 		 	 selected=true;
              temp=holder.getSelectionModel().getSelectedItem();
              System.out.print(temp);
+             
+             elements.add(temp);
 	 }
 	 @FXML
 	 private void detectLeft() {
-		 if(selected) {
-			 left.getItems().add(temp);
-			 holder.getItems().remove(index);
-			 selected=false;
+		 if(selected && (leftElems.contains(temp) != true)) {
 			 
+			 if (rightElems.contains(temp)) {
+				 detectMiddle();
+				 left.getItems().remove(temp);
+//				 holder.getItems().remove(index);
+			 }
+			 
+			 else {
+				 left.getItems().add(temp);
+				 holder.getItems().remove(index);
+				 leftElems.add(temp);
+				 selected=false;
+			 }
+		 }
+		 
+		 else if ((leftElems.contains(temp) == true)) {
+			 holder.getItems().remove(index);
 		 }
 	 }
 	 @FXML
 	 private void detectRight() {
 		 
-		 if(selected) {
-			 right.getItems().add(temp);
-			 holder.getItems().remove(index);
-			 selected=false;
+		 if(selected && (rightElems.contains(temp) != true)) {
 			 
+			 if (leftElems.contains(temp)) {
+				 detectMiddle();
+			 }
+			 
+			 else {
+				 right.getItems().add(temp);
+				 holder.getItems().remove(index);
+				 rightElems.add(temp);
+				 selected=false;
+			 }
+		 }
+		 
+		 else if ((rightElems.contains(temp) == true)) {
+			 holder.getItems().remove(index);
 		 }
 	 }
 	 @FXML
 	 private void detectMiddle() {
-		 if(selected) {
+		 if(selected && (midElems.contains(temp) != true)) {
 			 middle.getItems().add(temp);
 			 holder.getItems().remove(index);
+			 midElems.add(temp);
 			 selected=false;
-			 
+		 }
+		 
+		 else if ((midElems.contains(temp) == true)) {
+			 holder.getItems().remove(index);
 		 }
 	 }
 	//=============================================//label customization
