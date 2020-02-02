@@ -17,10 +17,15 @@ public class MainController {
 	String temp;
 	int index;
 	
-	Set<String> elements = new HashSet<>();
-	Set<String> leftElems = new HashSet<>();
-	Set<String> rightElems = new HashSet<>();
-	Set<String> midElems = new HashSet<>();
+//	Set<String> elements = new HashSet<>();
+//	Set<String> leftElems = new HashSet<>();
+//	Set<String> rightElems = new HashSet<>();
+//	Set<String> midElems = new HashSet<>();
+	
+	ArrayList<String> elements = new ArrayList<>();
+	ArrayList<String> leftElems = new ArrayList<>();
+	ArrayList<String> rightElems = new ArrayList<>();
+	ArrayList<String> midElems = new ArrayList<>();
 	
 	//////////////////
 	@FXML
@@ -91,11 +96,17 @@ public class MainController {
 	 }
 	 @FXML
 	 private void detectLeft() {
-		 if(selected && (leftElems.contains(temp) != true)) {
+		 if(selected && (leftElems.contains(temp) != true) && (midElems.contains(temp) != true)) {
 			 
 			 if (rightElems.contains(temp)) {
 				 detectMiddle();
-				 left.getItems().remove(temp);
+				 right.getItems().remove(temp);
+				 rightElems.remove(temp);
+				 selected=false;
+//				 index=rightElems.indexOf(temp);
+//				 System.out.println("Before: " + left.getItems().indexOf(temp));
+//				 left.getItems().remove(index);
+//				 System.out.println("After: " + left.getItems().indexOf(temp));
 //				 holder.getItems().remove(index);
 			 }
 			 
@@ -107,17 +118,22 @@ public class MainController {
 			 }
 		 }
 		 
-		 else if ((leftElems.contains(temp) == true)) {
+//		 else if ((leftElems.contains(temp) == true)) {
+		 else {
 			 holder.getItems().remove(index);
+			 selected=false;
 		 }
 	 }
 	 @FXML
 	 private void detectRight() {
 		 
-		 if(selected && (rightElems.contains(temp) != true)) {
+		 if(selected && (rightElems.contains(temp) != true) && (midElems.contains(temp) != true)) {
 			 
 			 if (leftElems.contains(temp)) {
 				 detectMiddle();
+				 left.getItems().remove(temp);
+				 leftElems.remove(temp);
+				 selected=false;
 			 }
 			 
 			 else {
@@ -128,8 +144,10 @@ public class MainController {
 			 }
 		 }
 		 
-		 else if ((rightElems.contains(temp) == true)) {
+//		 else if ((rightElems.contains(temp) == true)) {
+		 else {
 			 holder.getItems().remove(index);
+			 selected=false;
 		 }
 	 }
 	 @FXML
@@ -138,10 +156,18 @@ public class MainController {
 			 middle.getItems().add(temp);
 			 holder.getItems().remove(index);
 			 midElems.add(temp);
+			 
+			 left.getItems().remove(temp);
+			 leftElems.remove(temp);
+			 
+			 right.getItems().remove(temp);
+			 rightElems.remove(temp);
+			 
 			 selected=false;
 		 }
 		 
-		 else if ((midElems.contains(temp) == true)) {
+//		 else if ((midElems.contains(temp) == true)) {
+		 else {
 			 holder.getItems().remove(index);
 		 }
 	 }
