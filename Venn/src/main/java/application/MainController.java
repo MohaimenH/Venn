@@ -130,7 +130,7 @@ public class MainController {
 
 			else {
 				left.getItems().add(temp);
-				holder.getItems().remove(index);
+				holder.getItems().remove(temp);
 				leftElems.add(temp);
 				selected = false;
 			}
@@ -158,7 +158,7 @@ public class MainController {
 
 			else {
 				right.getItems().add(temp);
-				holder.getItems().remove(index);
+				holder.getItems().remove(temp);
 				rightElems.add(temp);
 				selected = false;
 			}
@@ -176,7 +176,7 @@ public class MainController {
 	private void detectMiddle() {
 		if (selected && (midElems.contains(temp) != true) && notBlank(temp)) {
 			middle.getItems().add(temp);
-			holder.getItems().remove(index);
+			holder.getItems().remove(temp);
 			midElems.add(temp);
 
 			left.getItems().remove(temp);
