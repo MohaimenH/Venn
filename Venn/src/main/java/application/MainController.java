@@ -111,13 +111,13 @@ public class MainController {
 	 private void setLeftLabel() {
 		 String left=left_label_input.getText();
 		 leftLabel.setText(left);
-		 inputText.clear();
+		 left_label_input.clear();
 	 }
 	 @FXML
 	 private void setRightLabel() {
 		 String right=right_label_input.getText();
-		 leftLabel.setText(right);
-		 inputText.clear();
+		 rightLabel.setText(right);
+		 right_label_input.clear();
 	 }
 	 //=============================================//
 
