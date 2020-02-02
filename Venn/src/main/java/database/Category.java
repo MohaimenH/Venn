@@ -3,8 +3,6 @@ package database;
 import java.util.ArrayList;
 import java.util.List;
 
-import database.Item;
-
 public class  Category {
 
 	private List<Item> items;
