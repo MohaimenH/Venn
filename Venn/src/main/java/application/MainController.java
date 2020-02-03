@@ -36,6 +36,8 @@ public class MainController {
 
 	//////////////////
 	@FXML
+	private Label title;
+	@FXML
 	private Button left_label_button;
 	@FXML
 	private Button right_label_button;
@@ -251,4 +253,10 @@ public class MainController {
 		left.getItems().addAll(middle.getItems());
 		middle.getItems().clear();
 	}
+	// =============================================// modify the title
+	@FXML
+	private void setTitle() {
+		System.out.print("test");
+	}
+
 }
