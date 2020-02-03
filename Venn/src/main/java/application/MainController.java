@@ -212,10 +212,19 @@ public class MainController {
 	@FXML
 	private void clearLeftSet() {
 		left.getItems().clear();
+//		int size = middle.getItems().size();
+		right.getItems().addAll(middle.getItems());
+		middle.getItems().clear();
+//		for(int i=0; i < size; i++) {
+//			right.getItems().add(middle.getItems().get(i));
+//			rightElems.addAll(right)
+//		}
 	}
 	
 	@FXML
 	private void clearRightSet() {
 		right.getItems().clear();
+		left.getItems().addAll(middle.getItems());
+		middle.getItems().clear();
 	}
 }
