@@ -4,6 +4,9 @@ import java.awt.MouseInfo;
 import java.awt.Point;
 import java.net.URL;
 import java.util.*;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.*;
 
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -24,10 +27,10 @@ public class MainController {
 	String temp;
 	int index;
 
-	Set<String> elements = new HashSet<>();
-	Set<String> leftElems = new HashSet<>();
-	Set<String> rightElems = new HashSet<>();
-	Set<String> midElems = new HashSet<>();
+	private Set<String> elements = new HashSet<>();
+	private Set<String> leftElems = new HashSet<>();
+	private Set<String> rightElems = new HashSet<>();
+	private Set<String> midElems = new HashSet<>();
 
 //	ArrayList<String> elements = new ArrayList<>();
 //	ArrayList<String> leftElems = new ArrayList<>();
@@ -37,6 +40,8 @@ public class MainController {
 	//////////////////
 	@FXML
 	private Label title;
+	@FXML
+	private Button textExport;
 	@FXML
 	private Button left_label_button;
 	@FXML
@@ -96,6 +101,7 @@ public class MainController {
 		}
 		return true;
 	}
+	
 	// =============================================//
 
 	@FXML
@@ -291,5 +297,50 @@ public class MainController {
 	private void setTitle() {
 		System.out.print("test");
 	}
-
+	
+	@FXML
+	public void exportAsText() throws IOException {
+//		int arr=0;
+//		String a = leftElems.iterator().next();
+		int sizeL = leftElems.size();
+		int sizeR = rightElems.size();
+		int sizeM = midElems.size();
+		FileWriter writer = new FileWriter("C:\\Users\\Mohaimen Hassan\\Desktop\\output.txt"); //Change to Your Directory of Choice - Preferably Desktop
+//		ArrayList<Object> a = new ArrayList<>(leftElems.toArray());
+		
+		Object[] leftElements = leftElems.toArray();
+		
+		writer.write("Unique Elements of Set A:" + System.lineSeparator());
+		writer.write("\n");
+		for(int i=0; i < sizeL; i++) {
+			writer.write(leftElements[i].toString() + System.lineSeparator());
+		}
+		
+		Object[] rightElements = rightElems.toArray();
+		
+//		System.out.println("=============================");
+		
+//		String h = "Unique Elements of Set B:";
+		
+		writer.write("\n\n");
+		writer.write("Unique Elements of Set B:" + System.lineSeparator());
+		writer.write("\n");
+		for(int i=0; i < sizeR; i++) {
+			writer.write(rightElements[i].toString() + System.lineSeparator());
+		}
+		
+		Object[] midElements = midElems.toArray();
+		
+//		System.out.println("=============================");
+		
+//		System.out.println("Intersection of Set A & Set B:");
+		writer.write("\n\n");
+		writer.write("Intersection of Set A & Set B:" + System.lineSeparator());
+		writer.write("\n");
+		for(int i=0; i < sizeL; i++) {
+			writer.write(midElements[i].toString() + System.lineSeparator());
+		}
+		
+		writer.close();
+	}
 }
