@@ -630,11 +630,15 @@ public class MainController {
 			
 			Menu delMenu = new Menu("Delete Elements");
 			Menu moveMenu = new Menu("Move Elements");
+			Menu moveAll = new Menu("Move All");
 			
 			MenuItem del = new MenuItem("Delete Element");
-			MenuItem moveLeft = new MenuItem("Move to First Set");
-			MenuItem moveRight = new MenuItem("Move to Second Set");
-			MenuItem moveMid = new MenuItem("Move to Intersection");
+			MenuItem moveLeft = new MenuItem("Move Element To First Set");
+			MenuItem moveRight = new MenuItem("Move Element To Second Set");
+			MenuItem moveMid = new MenuItem("Move Element To Intersection");
+			MenuItem moveAllLeft = new MenuItem("Move All To First Set");
+			MenuItem moveAllRight = new MenuItem("Move All To Second Set");
+			MenuItem moveAllMid = new MenuItem("Move All to Intersection");
 			MenuItem delAll = new MenuItem("Delete All The Elements");
 
 			del.setOnAction((event) -> {
@@ -653,6 +657,7 @@ public class MainController {
 //				delElemsClick(middle, midElems);
 				selected=false;
 			});
+			
 
 			moveRight.setOnAction((event) -> {
 				selected=true;
@@ -672,6 +677,48 @@ public class MainController {
 //				delElemsClick(middle, midElems);
 			});
 			
+			moveAllLeft.setOnAction((event) -> {
+//				addToLeft(middle.getSelectionModel().getSelectedItem());
+				Object[] arr = holder.getItems().toArray();
+				int size = arr.length;
+				for(int i=0; i < size; i++) {
+					selected=true;
+					temp=arr[i].toString();
+					detectLeft();
+					selected=false;
+				}
+			});
+			
+			moveAllRight.setOnAction((event) -> {
+				
+				Object[] arr = holder.getItems().toArray();
+				int size = arr.length;
+				for(int i=0; i < size; i++) {
+					selected=true;
+					temp=arr[i].toString();
+					detectRight();
+					selected=false;
+				}
+				
+				
+//				addToRight(middle.getSelectionModel().getSelectedItem());
+//				delElemsClick(middle, midElems);
+			});
+			
+			moveAllMid.setOnAction((event) -> {
+				
+				Object[] arr = holder.getItems().toArray();
+				int size = arr.length;
+				for(int i=0; i < size; i++) {
+					selected=true;
+					temp=arr[i].toString();
+					detectMiddle();
+					selected=false;
+				}
+//				addToRight(middle.getSelectionModel().getSelectedItem());
+//				delElemsClick(middle, midElems);
+			});
+			
 			delAll.setOnAction((event) -> {
 //			    System.out.println("Delete clicked!");
 //				delElemsClick(middle, midElems);
@@ -680,7 +727,8 @@ public class MainController {
 			});
 			
 			delMenu.getItems().addAll(del, delAll);
-			moveMenu.getItems().addAll(moveLeft, moveRight, moveMid);
+			moveAll.getItems().addAll(moveAllLeft, moveAllRight, moveAllMid);
+			moveMenu.getItems().addAll(moveLeft, moveRight, moveMid, moveAll);
 			
 			contextMenu.getItems().addAll(delMenu, moveMenu);
 			
