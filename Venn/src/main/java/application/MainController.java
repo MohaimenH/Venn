@@ -33,6 +33,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.scene.control.*;
 import javafx.scene.*;
@@ -73,6 +74,8 @@ public class MainController {
 	private Button clearRight;
 	@FXML
 	private Button snapshot;
+	@FXML
+	private Button importer;
 	@FXML
 	private Label leftLabel;
 	@FXML
@@ -459,7 +462,7 @@ public class MainController {
 		WritableImage snap = new WritableImage(1000,611);
 		anchor.snapshot(new SnapshotParameters(), snap);
 		
-		File file = new File("C:\\Users\\Mohaimen Hassan\\Desktop\\snap.png"); // Change Directory
+		File file = new File("C:\\Users\\RM\\Pictures\\snap.png"); // Change Directory
 	    
 	    try {
 	        ImageIO.write(SwingFXUtils.fromFXImage(snap, null), "png", file);
@@ -635,6 +638,20 @@ public class MainController {
 			holder.setContextMenu(contextMenu);
 
 		}
+	}
+	
+	//=========================================import file chooser//
+	public void importer (ActionEvent event) {
+		FileChooser fc = new FileChooser();
+		File selectedFile = fc.showOpenDialog(null);
+		
+		if (selectedFile != null) {
+			holder.getItems().add(selectedFile.getName());
+		}
+		else {
+			
+		}
+			
 	}
 	
 	
