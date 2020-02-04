@@ -126,7 +126,7 @@ public class MainController {
 		return true;
 	}
 	
-	public void delElemsClick(ListView<String> list, Set<String> set) {
+	public void delElemsHelper(ListView<String> list, Set<String> set) {
 		index = list.getSelectionModel().getSelectedIndex();
 		temp = list.getItems().get(index);
 		list.getItems().remove(temp);
@@ -175,34 +175,46 @@ public class MainController {
 	//===========================================// Deleting Elements Using 'Del' Key
 	
 	@FXML
-	public void delElemLeft(KeyEvent keyEvent) {
+	public void keyPressLeft(KeyEvent keyEvent) {
 		if (keyEvent.getCode() == KeyCode.DELETE) {
 			// Remove element
-			index = left.getSelectionModel().getSelectedIndex();
-			leftElems.remove(left.getItems().get(index));
-			left.getItems().remove(index);
-			index=0;
+//			index = left.getSelectionModel().getSelectedIndex();
+//			leftElems.remove(left.getItems().get(index));
+//			left.getItems().remove(index);
+//			index=0;
+			
+			delElemsHelper(left, leftElems);
 		}
 	}
-	public void delElemRight(KeyEvent keyEvent) {
+	public void keyPressRight(KeyEvent keyEvent) {
 		if (keyEvent.getCode() == KeyCode.DELETE) {
 			// Remove element
-			index = right.getSelectionModel().getSelectedIndex();
-			rightElems.remove(right.getItems().get(index));
-			right.getItems().remove(index);
-			index=0;
+//			index = right.getSelectionModel().getSelectedIndex();
+//			rightElems.remove(right.getItems().get(index));
+//			right.getItems().remove(index);
+//			index=0;
+			
+			delElemsHelper(right, rightElems);
 		}
 	}
-	public void delElemMiddle(KeyEvent keyEvent) {
+	public void keyPressMiddle(KeyEvent keyEvent) {
 		if (keyEvent.getCode() == KeyCode.DELETE) {
 			// Remove element
-			index = middle.getSelectionModel().getSelectedIndex();
-			midElems.remove(middle.getItems().get(index));
-			middle.getItems().remove(index);
-			index=0;
+//			index = middle.getSelectionModel().getSelectedIndex();
+//			midElems.remove(middle.getItems().get(index));
+//			middle.getItems().remove(index);
+//			index=0;
+			
+			delElemsHelper(middle, midElems);
 		}
 	}
-	
+	public void keyPressHolder(KeyEvent keyEvent) {
+		if (keyEvent.getCode() == KeyCode.DELETE) {
+			index = holder.getSelectionModel().getSelectedIndex();
+			holder.getItems().remove(index);
+			selected = false;
+		}
+	}
 	// =============================================//Drag/Drop Detection 
 	
 	@FXML
@@ -452,17 +464,17 @@ public class MainController {
 			
 			del.setOnAction((event) -> {
 //			    System.out.println("Delete clicked!");
-				delElemsClick(left, leftElems);
+				delElemsHelper(left, leftElems);
 			});
 			
 			moveRight.setOnAction((event) -> {
 				addToRight(left.getSelectionModel().getSelectedItem());
-				delElemsClick(left, leftElems);
+				delElemsHelper(left, leftElems);
 			});
 			
 			moveMid.setOnAction((event) -> {
 				addToMiddle(left.getSelectionModel().getSelectedItem());
-				delElemsClick(left, leftElems);
+				delElemsHelper(left, leftElems);
 			});
 			
 			contextMenu.getItems().addAll(del, moveMid, moveRight);
@@ -485,17 +497,17 @@ public class MainController {
 			
 			del.setOnAction((event) -> {
 //			    System.out.println("Delete clicked!");
-				delElemsClick(right, rightElems);
+				delElemsHelper(right, rightElems);
 			});
 			
 			moveLeft.setOnAction((event) -> {
 				addToLeft(right.getSelectionModel().getSelectedItem());
-				delElemsClick(right, rightElems);
+				delElemsHelper(right, rightElems);
 			});
 			
 			moveMid.setOnAction((event) -> {
 				addToMiddle(right.getSelectionModel().getSelectedItem());
-				delElemsClick(right, rightElems);
+				delElemsHelper(right, rightElems);
 			});
 			
 			contextMenu.getItems().addAll(del, moveMid, moveLeft);
@@ -518,17 +530,17 @@ public class MainController {
 			
 			del.setOnAction((event) -> {
 //			    System.out.println("Delete clicked!");
-				delElemsClick(middle, midElems);
+				delElemsHelper(middle, midElems);
 			});
 			
 			moveLeft.setOnAction((event) -> {
 				addToLeft(middle.getSelectionModel().getSelectedItem());
-				delElemsClick(middle, midElems);
+				delElemsHelper(middle, midElems);
 			});
 			
 			moveRight.setOnAction((event) -> {
 				addToRight(middle.getSelectionModel().getSelectedItem());
-				delElemsClick(middle, midElems);
+				delElemsHelper(middle, midElems);
 			});
 			
 			contextMenu.getItems().addAll(del,moveLeft, moveRight);
