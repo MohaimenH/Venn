@@ -68,6 +68,10 @@ public class MainController {
 	@FXML
 	private ListView<String> middle;
 	@FXML
+	private ListView<String> decoyRight;
+	@FXML
+	private ListView<String> decoyLeft;
+	@FXML
 	private Button submit;
 	// =============================================//
 	@FXML
