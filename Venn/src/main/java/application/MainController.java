@@ -337,7 +337,7 @@ public class MainController {
 		writer.write("\n\n");
 		writer.write("Intersection of Set A & Set B:" + System.lineSeparator());
 		writer.write("\n");
-		for(int i=0; i < sizeL; i++) {
+		for(int i=0; i < sizeM; i++) {
 			writer.write(midElements[i].toString() + System.lineSeparator());
 		}
 		
