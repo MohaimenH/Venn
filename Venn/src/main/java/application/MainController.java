@@ -214,6 +214,33 @@ public class MainController {
 			holder.getItems().remove(index);
 			selected = false;
 		}
+		
+		if (keyEvent.getCode() == KeyCode.I) {
+			index = holder.getSelectionModel().getSelectedIndex();
+			temp=holder.getItems().get(index);
+			selected=true;
+			detectMiddle();
+			holder.getItems().remove(temp);
+			selected = false;
+		}
+		
+		if (keyEvent.getCode() == KeyCode.L) {
+			index = holder.getSelectionModel().getSelectedIndex();
+			temp=holder.getItems().get(index);
+			selected=true;
+			detectLeft();
+			holder.getItems().remove(temp);
+			selected = false;
+		}
+		
+		if (keyEvent.getCode() == KeyCode.R) {
+			index = holder.getSelectionModel().getSelectedIndex();
+			temp=holder.getItems().get(index);
+			selected=true;
+			detectRight();
+			holder.getItems().remove(temp);
+			selected = false;
+		}
 	}
 	// =============================================//Drag/Drop Detection 
 	
@@ -560,6 +587,7 @@ public class MainController {
 			MenuItem moveLeft = new MenuItem("Move to First Set");
 			MenuItem moveRight = new MenuItem("Move to Second Set");
 			MenuItem moveMid = new MenuItem("Move to Intersection");
+			MenuItem delAll = new MenuItem("Delete All The Elements");
 
 			del.setOnAction((event) -> {
 //			    System.out.println("Delete clicked!");
@@ -595,9 +623,15 @@ public class MainController {
 //				addToRight(middle.getSelectionModel().getSelectedItem());
 //				delElemsClick(middle, midElems);
 			});
-
 			
-			contextMenu.getItems().addAll(del, moveLeft, moveRight, moveMid);
+			delAll.setOnAction((event) -> {
+//			    System.out.println("Delete clicked!");
+//				delElemsClick(middle, midElems);
+				holder.getItems().clear();
+				selected = false;
+			});
+			
+			contextMenu.getItems().addAll(del, moveLeft, moveRight, moveMid, delAll);
 			holder.setContextMenu(contextMenu);
 
 		}
