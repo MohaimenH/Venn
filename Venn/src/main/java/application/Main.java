@@ -13,7 +13,7 @@ public class Main extends Application{
 	// This method is called by other page
 	public void run(Stage primaryStage) throws IOException {
 			Parent root = FXMLLoader.load(getClass().getResource("/application/Main.fxml"));
-			Scene scene = new Scene(root,934,611);
+			Scene scene = new Scene(root,1000,611);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.show();
@@ -30,10 +30,17 @@ public class Main extends Application{
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		Parent root = FXMLLoader.load(getClass().getResource("/application/Main.fxml"));
-		Scene scene = new Scene(root,934,611);
+		Scene scene = new Scene(root,1000,611);
 		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 		primaryStage.setScene(scene);
 		primaryStage.show();// TODO Auto-generated method stub
 		
+	}
+	
+	public Scene get() throws IOException {
+		Parent root = FXMLLoader.load(getClass().getResource("/application/Main.fxml"));
+		Scene scene = new Scene(root,1000,611);
+		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+		return scene;
 	}
 }
