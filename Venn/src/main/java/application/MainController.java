@@ -17,6 +17,7 @@ import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -25,6 +26,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -46,6 +48,8 @@ public class MainController {
 //	ArrayList<String> midElems = new ArrayList<>();
 
 	//////////////////
+	@FXML
+	private AnchorPane anchor;
 	@FXML
 	private Label title;
 	@FXML
@@ -356,15 +360,10 @@ public class MainController {
 	
 	@FXML
 	public void takeSnapshot() throws IOException, AWTException {
-		WritableImage snap = new WritableImage(934,611);
-		Main a = new Main();
-		a.get().snapshot(snap);
-		/*
-		Robot abc = new Robot();
-		Rectangle screenRect = new Rectangle(934,611);
-		BufferedImage snap = abc.createScreenCapture(screenRect);
-		*/
-		File file = new File("C:\\Users\\Mohaimen Hassan\\Desktop\\chartnew.png");
+		WritableImage snap = new WritableImage(1000,611);
+		anchor.snapshot(new SnapshotParameters(), snap);
+		
+		File file = new File("C:\\Users\\Mohaimen Hassan\\Desktop\\snap.png"); // Change Directory
 	    
 	    try {
 	        ImageIO.write(SwingFXUtils.fromFXImage(snap, null), "png", file);
@@ -372,5 +371,11 @@ public class MainController {
 	    } catch (IOException e) {
 	        // TODO: handle exception here
 	    }
+	    
+		/*
+		Robot abc = new Robot();
+		Rectangle screenRect = new Rectangle(934,611);
+		BufferedImage snap = abc.createScreenCapture(screenRect);
+		*/
 	}
 }
