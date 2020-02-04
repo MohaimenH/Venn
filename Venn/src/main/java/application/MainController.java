@@ -691,12 +691,17 @@ public class MainController {
 	}
 	
 	//=========================================import file chooser//
-	public void importer (ActionEvent event) {
+	public void importer (ActionEvent event) throws IOException {
 		FileChooser fc = new FileChooser();
 		File selectedFile = fc.showOpenDialog(null);
 		
+		String line;
+		BufferedReader reader = new BufferedReader(new FileReader(selectedFile));
+		
 		if (selectedFile != null) {
-			holder.getItems().add(selectedFile.getName());
+			while ((line = reader.readLine()) != null) {
+				holder.getItems().add(line);
+			}
 		}
 		else {
 			
