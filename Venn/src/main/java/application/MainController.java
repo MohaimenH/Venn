@@ -68,10 +68,10 @@ public class MainController {
 	private Button left_label_button;
 	@FXML
 	private Button right_label_button;
-	@FXML
-	private Button clearLeft;
-	@FXML
-	private Button clearRight;
+//	@FXML
+//	private Button clearLeft;
+//	@FXML
+//	private Button clearRight;
 	@FXML
 	private Button snapshot;
 	@FXML
@@ -218,7 +218,7 @@ public class MainController {
 			selected = false;
 		}
 		
-		if (keyEvent.getCode() == KeyCode.I) {
+		if (keyEvent.getCode() == KeyCode.I && holder.getItems().isEmpty() == false) {
 			index = holder.getSelectionModel().getSelectedIndex();
 			temp=holder.getItems().get(index);
 			selected=true;
@@ -227,7 +227,7 @@ public class MainController {
 			selected = false;
 		}
 		
-		if (keyEvent.getCode() == KeyCode.L) {
+		if (keyEvent.getCode() == KeyCode.L && holder.getItems().isEmpty() == false) {
 			index = holder.getSelectionModel().getSelectedIndex();
 			temp=holder.getItems().get(index);
 			selected=true;
@@ -236,7 +236,7 @@ public class MainController {
 			selected = false;
 		}
 		
-		if (keyEvent.getCode() == KeyCode.R) {
+		if (keyEvent.getCode() == KeyCode.R && holder.getItems().isEmpty() == false) {
 			index = holder.getSelectionModel().getSelectedIndex();
 			temp=holder.getItems().get(index);
 			selected=true;
@@ -487,9 +487,13 @@ public class MainController {
 //			System.out.println("RIGHT CLICK!");
 			
 			ContextMenu contextMenu = new ContextMenu();
+			Menu delMenu = new Menu("Delete Elements");
+			Menu moveMenu = new Menu("Move Elements");
+
 			MenuItem del = new MenuItem("Delete Element");
 			MenuItem moveRight = new MenuItem("Move to Second Set");
 			MenuItem moveMid = new MenuItem("Move to Intersection");
+			MenuItem delAll = new MenuItem("Delete All Elements In This Set");
 			
 			
 			del.setOnAction((event) -> {
@@ -507,7 +511,16 @@ public class MainController {
 				delElemsHelper(left, leftElems);
 			});
 			
-			contextMenu.getItems().addAll(del, moveMid, moveRight);
+			delAll.setOnAction((event) -> {
+				clearLeftSet();
+			});
+			
+			delMenu.getItems().addAll(del, delAll);
+			moveMenu.getItems().addAll(moveMid, moveRight);
+			
+			contextMenu.getItems().addAll(delMenu, moveMenu);
+			
+//			contextMenu.getItems().addAll(del, moveMid, moveRight, delAll);
 			left.setContextMenu(contextMenu);
 			
 		}	
@@ -520,10 +533,14 @@ public class MainController {
 //			System.out.println("RIGHT CLICK!");
 			
 			ContextMenu contextMenu = new ContextMenu();
+			
+			Menu delMenu = new Menu("Delete Elements");
+			Menu moveMenu = new Menu("Move Elements");
+			
 			MenuItem del = new MenuItem("Delete Element");
 			MenuItem moveLeft = new MenuItem("Move to First Set");
 			MenuItem moveMid = new MenuItem("Move to Intersection");
-			
+			MenuItem delAll = new MenuItem("Delete All Elements In This Set");
 			
 			del.setOnAction((event) -> {
 //			    System.out.println("Delete clicked!");
@@ -540,7 +557,16 @@ public class MainController {
 				delElemsHelper(right, rightElems);
 			});
 			
-			contextMenu.getItems().addAll(del, moveMid, moveLeft);
+			delAll.setOnAction((event) -> {
+				clearRightSet();
+			});
+			
+			delMenu.getItems().addAll(del, delAll);
+			moveMenu.getItems().addAll(moveMid, moveLeft);
+			
+			contextMenu.getItems().addAll(delMenu, moveMenu);
+			
+//			contextMenu.getItems().addAll(del, moveMid, moveLeft, delAll);
 			right.setContextMenu(contextMenu);
 			
 		}	
@@ -553,9 +579,14 @@ public class MainController {
 //			System.out.println("RIGHT CLICK!");
 			
 			ContextMenu contextMenu = new ContextMenu();
+			
+			Menu delMenu = new Menu("Delete Elements");
+			Menu moveMenu = new Menu("Move Elements");
+			
 			MenuItem del = new MenuItem("Delete Element");
 			MenuItem moveLeft = new MenuItem("Move to First Set");
 			MenuItem moveRight = new MenuItem("Move to Second Set");
+			MenuItem delAll = new MenuItem("Delete All Elements In This Set");
 			
 			
 			del.setOnAction((event) -> {
@@ -573,7 +604,17 @@ public class MainController {
 				delElemsHelper(middle, midElems);
 			});
 			
-			contextMenu.getItems().addAll(del,moveLeft, moveRight);
+			delAll.setOnAction((event) -> {
+				middle.getItems().clear();
+				midElems.clear();
+			});
+			
+			delMenu.getItems().addAll(del, delAll);
+			moveMenu.getItems().addAll(moveLeft, moveRight);
+			
+			contextMenu.getItems().addAll(delMenu, moveMenu);
+			
+//			contextMenu.getItems().addAll(del,moveLeft, moveRight, delAll);
 			middle.setContextMenu(contextMenu);
 			
 		}	
@@ -586,6 +627,10 @@ public class MainController {
 //			System.out.println("RIGHT CLICK!");
 
 			ContextMenu contextMenu = new ContextMenu();
+			
+			Menu delMenu = new Menu("Delete Elements");
+			Menu moveMenu = new Menu("Move Elements");
+			
 			MenuItem del = new MenuItem("Delete Element");
 			MenuItem moveLeft = new MenuItem("Move to First Set");
 			MenuItem moveRight = new MenuItem("Move to Second Set");
@@ -634,7 +679,12 @@ public class MainController {
 				selected = false;
 			});
 			
-			contextMenu.getItems().addAll(del, moveLeft, moveRight, moveMid, delAll);
+			delMenu.getItems().addAll(del, delAll);
+			moveMenu.getItems().addAll(moveLeft, moveRight, moveMid);
+			
+			contextMenu.getItems().addAll(delMenu, moveMenu);
+			
+//			contextMenu.getItems().addAll(del, moveLeft, moveRight, moveMid, delAll);
 			holder.setContextMenu(contextMenu);
 
 		}

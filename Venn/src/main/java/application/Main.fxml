@@ -32,9 +32,7 @@
       <Text layoutX="24.0" layoutY="430.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Left Circle" />
       <Text layoutX="19.0" layoutY="499.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Right Circle" />
       <Button fx:id="left_label_button" layoutX="132.0" layoutY="445.0" mnemonicParsing="false" onAction="#setLeftLabel" text="Set Left" />
-      <Button fx:id="right_label_button" layoutX="132.0" layoutY="512.0" mnemonicParsing="false" onAction="#setRightLabel" text="Set Right" /> 
-      <Button fx:id="clearLeft" layoutX="386.0" layoutY="83.0" mnemonicParsing="false" onAction="#clearLeftSet" text="Clear Set" />
-      <Button fx:id="clearRight" layoutX="690.0" layoutY="83.0" mnemonicParsing="false" onAction="#clearRightSet" text="Clear Set" />
+      <Button fx:id="right_label_button" layoutX="132.0" layoutY="496.0" mnemonicParsing="false" onAction="#setRightLabel" text="Set Right" />
       <ListView fx:id="decoyLeft" layoutX="218.0" layoutY="233.0" onMouseEntered="#detectLeft" opacity="0.0" prefHeight="276.0" prefWidth="92.0" />
       <ListView fx:id="decoyRight" layoutX="838.0" layoutY="233.0" onMouseEntered="#detectRight" opacity="0.0" prefHeight="276.0" prefWidth="92.0" />
       <Button fx:id="textExport" layoutX="537.0" layoutY="128.0" mnemonicParsing="false" onAction="#exportAsText" text="Export As Text" />
