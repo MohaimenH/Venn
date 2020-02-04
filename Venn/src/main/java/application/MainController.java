@@ -1,5 +1,7 @@
 package application;
 
+import java.awt.MouseInfo;
+import java.awt.Point;
 import java.net.URL;
 import java.util.*;
 
@@ -11,8 +13,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.text.Text;
 
 public class MainController {
+	int x;
+	int y;
 	Boolean selected = false;
 	String temp;
 	int index;
@@ -28,6 +35,8 @@ public class MainController {
 //	ArrayList<String> midElems = new ArrayList<>();
 
 	//////////////////
+	@FXML
+	private Label title;
 	@FXML
 	private Button left_label_button;
 	@FXML
@@ -87,7 +96,6 @@ public class MainController {
 
 	@FXML
 	private void printOutput() { // gets input text and adds it to master list
-
 		String place = inputText.getText();
 		if (notBlank(place)) {
 			holder.getItems().add(place);
@@ -95,15 +103,31 @@ public class MainController {
 			elements.add(place);
 		}
 	}
-
+	@FXML
+	public void handle(KeyEvent keyEvent) {//checks for button enter
+        if (keyEvent.getCode() == KeyCode.ENTER)  {
+            printOutput();
+        }
+    }
 	// =============================================//drag and drop detection
 	@FXML
 	private void detectDrop() {
 		selected = true;
+		
 	}
 
 	@FXML
+	private void points() {
+		Point p = MouseInfo.getPointerInfo().getLocation();
+		x=p.x;
+		y=p.y;
+		System.out.print("x: " +y);
+		System.out.print("y: "+x);
+
+	}
+	@FXML
 	private void detactDrag() {
+		
 		index = holder.getSelectionModel().getSelectedIndex();
 		selected = true;
 		temp = holder.getSelectionModel().getSelectedItem();
@@ -113,6 +137,7 @@ public class MainController {
 
 	@FXML
 	private void detectLeft() {
+		
 
 		if (selected && (leftElems.contains(temp) != true) && (midElems.contains(temp) != true) && notBlank(temp)) {
 
@@ -126,6 +151,7 @@ public class MainController {
 			}
 
 			else {
+
 				left.getItems().add(temp);
 				holder.getItems().remove(temp);
 				leftElems.add(temp);
@@ -212,10 +238,25 @@ public class MainController {
 	@FXML
 	private void clearLeftSet() {
 		left.getItems().clear();
+//		int size = middle.getItems().size();
+		right.getItems().addAll(middle.getItems());
+		middle.getItems().clear();
+//		for(int i=0; i < size; i++) {
+//			right.getItems().add(middle.getItems().get(i));
+//			rightElems.addAll(right)
+//		}
 	}
 	
 	@FXML
 	private void clearRightSet() {
 		right.getItems().clear();
+		left.getItems().addAll(middle.getItems());
+		middle.getItems().clear();
 	}
+	// =============================================// modify the title
+	@FXML
+	private void setTitle() {
+		System.out.print("test");
+	}
+
 }

@@ -1,0 +1,65 @@
+
+/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+/* 
+.list-cell {
+    -fx-background-color: transparent;
+}
+.list-view {
+    -fx-background-color: transparent;
+}
+
+#holder.list-cell {
+    -fx-background-color: transparent;
+}
+#holder.list-view {
+    -fx-background-color: transparent;
+}
+
+#middle.list-cell {
+    -fx-background-color: transparent;
+}
+#middle.list-view {
+    -fx-background-color: transparent;
+}
+*/
+
+#left.list-view {
+    -fx-background-color: transparent;
+}
+
+#middle.list-view {
+    -fx-background-color: transparent;
+}
+
+.list-cell {
+    -fx-background-color: transparent;
+    
+}
+
+#right.list-view {
+    -fx-background-color: transparent;
+}
+
+.list-cell {
+    -fx-alignment: center;
+}
+
+#left.list-view {
+	-fx-font: 20px "Arial";
+}
+
+#middle.list-view {
+	-fx-font: 20px "Comic Sans";
+}
+
+#right.list-view {
+	-fx-font: 20px "Comic Sans";
+}
+
+#holder.list-view {
+	-fx-font: 18px "Arial";
+}
+
+#holder.list-view {
+    -fx-selection-bar:grey;
+}
