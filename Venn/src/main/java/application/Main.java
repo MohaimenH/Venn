@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 
@@ -13,6 +14,8 @@ public class Main extends Application{
 	// This method is called by other page
 	public void run(Stage primaryStage) throws IOException {
 			Parent root = FXMLLoader.load(getClass().getResource("/application/Main.fxml"));
+			primaryStage.getIcons().add(new Image("icon/icon.png"));
+			primaryStage.setTitle("Venn: Simple Venn Diagrams");
 			Scene scene = new Scene(root,1000,611);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
@@ -30,6 +33,8 @@ public class Main extends Application{
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		Parent root = FXMLLoader.load(getClass().getResource("/application/Main.fxml"));
+		primaryStage.getIcons().add(new Image("icon/icon.png"));
+		primaryStage.setTitle("Venn: Simple Venn Diagrams");
 		Scene scene = new Scene(root,1000,611);
 		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 		primaryStage.setScene(scene);
