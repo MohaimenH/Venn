@@ -624,6 +624,10 @@ public class MainController {
 //			System.out.println("RIGHT CLICK!");
 
 			ContextMenu contextMenu = new ContextMenu();
+			
+			Menu delMenu = new Menu("Delete Elements");
+			Menu moveMenu = new Menu("Move Elements");
+			
 			MenuItem del = new MenuItem("Delete Element");
 			MenuItem moveLeft = new MenuItem("Move to First Set");
 			MenuItem moveRight = new MenuItem("Move to Second Set");
@@ -672,7 +676,12 @@ public class MainController {
 				selected = false;
 			});
 			
-			contextMenu.getItems().addAll(del, moveLeft, moveRight, moveMid, delAll);
+			delMenu.getItems().addAll(del, delAll);
+			moveMenu.getItems().addAll(moveLeft, moveRight, moveMid);
+			
+			contextMenu.getItems().addAll(delMenu, moveMenu);
+			
+//			contextMenu.getItems().addAll(del, moveLeft, moveRight, moveMid, delAll);
 			holder.setContextMenu(contextMenu);
 
 		}
