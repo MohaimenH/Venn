@@ -109,6 +109,35 @@ public class MainController {
             printOutput();
         }
     }
+	@FXML
+	public void delElemLeft(KeyEvent keyEvent) {
+		if (keyEvent.getCode() == KeyCode.DELETE) {
+			// Remove element
+			index = left.getSelectionModel().getSelectedIndex();
+			leftElems.remove(left.getItems().get(index));
+			left.getItems().remove(index);
+			index=0;
+		}
+	}
+	public void delElemRight(KeyEvent keyEvent) {
+		if (keyEvent.getCode() == KeyCode.DELETE) {
+			// Remove element
+			index = right.getSelectionModel().getSelectedIndex();
+			rightElems.remove(right.getItems().get(index));
+			right.getItems().remove(index);
+			index=0;
+		}
+	}
+	public void delElemMiddle(KeyEvent keyEvent) {
+		if (keyEvent.getCode() == KeyCode.DELETE) {
+			// Remove element
+			index = middle.getSelectionModel().getSelectedIndex();
+			midElems.remove(middle.getItems().get(index));
+			middle.getItems().remove(index);
+			index=0;
+		}
+	}
+	
 	// =============================================//drag and drop detection
 	@FXML
 	private void detectDrop() {
@@ -121,8 +150,8 @@ public class MainController {
 		Point p = MouseInfo.getPointerInfo().getLocation();
 		x=p.x;
 		y=p.y;
-		System.out.print("x: " +y);
-		System.out.print("y: "+x);
+//		System.out.print("x: " +y);
+//		System.out.print("y: "+x);
 
 	}
 	@FXML
@@ -131,7 +160,7 @@ public class MainController {
 		index = holder.getSelectionModel().getSelectedIndex();
 		selected = true;
 		temp = holder.getSelectionModel().getSelectedItem();
-		System.out.print(temp);
+//		System.out.print(temp);
 //		selected=false;
 	}
 
