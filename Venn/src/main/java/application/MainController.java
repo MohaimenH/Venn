@@ -1,14 +1,20 @@
 package application;
 
+import java.awt.AWTException;
 import java.awt.MouseInfo;
 import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.Robot;
+import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.util.*;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
+
+import javax.imageio.ImageIO;
+
 import java.io.*;
 
 import javafx.collections.ObservableList;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -16,9 +22,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 public class MainController {
 	int x;
@@ -50,6 +58,8 @@ public class MainController {
 	private Button clearLeft;
 	@FXML
 	private Button clearRight;
+	@FXML
+	private Button snapshot;
 	@FXML
 	private Label leftLabel;
 	@FXML
@@ -342,5 +352,25 @@ public class MainController {
 		}
 		
 		writer.close();
+	}
+	
+	@FXML
+	public void takeSnapshot() throws IOException, AWTException {
+		WritableImage snap = new WritableImage(934,611);
+		Main a = new Main();
+		a.get().snapshot(snap);
+		/*
+		Robot abc = new Robot();
+		Rectangle screenRect = new Rectangle(934,611);
+		BufferedImage snap = abc.createScreenCapture(screenRect);
+		*/
+		File file = new File("C:\\Users\\Mohaimen Hassan\\Desktop\\chartnew.png");
+	    
+	    try {
+	        ImageIO.write(SwingFXUtils.fromFXImage(snap, null), "png", file);
+//	    	ImageIO.write(snap, "png", file);
+	    } catch (IOException e) {
+	        // TODO: handle exception here
+	    }
 	}
 }

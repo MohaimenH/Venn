@@ -37,7 +37,8 @@
       <Button fx:id="clearRight" layoutX="690.0" layoutY="83.0" mnemonicParsing="false" onAction="#clearRightSet" text="Clear Set" />
       <ListView fx:id="decoyLeft" layoutX="218.0" layoutY="233.0" onMouseEntered="#detectLeft" opacity="0.0" prefHeight="276.0" prefWidth="92.0" />
       <ListView fx:id="decoyRight" layoutX="838.0" layoutY="233.0" onMouseEntered="#detectRight" opacity="0.0" prefHeight="276.0" prefWidth="92.0" />
-      <Button fx:id="textExport" layoutX="537.0" layoutY="111.0" mnemonicParsing="false" onAction="#exportAsText" text="Export As Text" /> 
+      <Button fx:id="textExport" layoutX="537.0" layoutY="128.0" mnemonicParsing="false" onAction="#exportAsText" text="Export As Text" />
+      <Button fx:id="snapshot" layoutX="550.0" layoutY="83.0" mnemonicParsing="false" onAction="#takeSnapshot" text="Snapshot" /> 
 
    </children>
 </AnchorPane>
