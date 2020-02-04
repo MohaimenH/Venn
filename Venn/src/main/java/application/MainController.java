@@ -1,6 +1,7 @@
 package application;
 
 import java.awt.AWTException;
+//import java.awt.MenuItem;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -16,9 +17,11 @@ import java.io.*;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
@@ -26,9 +29,15 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.scene.control.*;
+import javafx.scene.*;
+import javafx.application.Application;
+
 
 public class MainController {
 	int x;
@@ -108,6 +117,7 @@ public class MainController {
 	}
 
 	// =============================================// Helper Methods
+	
 	public boolean notBlank(String a) {
 		if (a.isEmpty() || a.trim().isEmpty() || a == null) {
 			selected = false;
@@ -116,7 +126,29 @@ public class MainController {
 		return true;
 	}
 	
-	// =============================================//
+	public void delElemsClick(ListView<String> list, Set<String> set) {
+		index = list.getSelectionModel().getSelectedIndex();
+		temp = list.getItems().get(index);
+		list.getItems().remove(temp);
+		set.remove(temp);
+	}
+	
+	public void addToRight(String temp) {
+		right.getItems().add(temp);
+		rightElems.add(temp);
+	}
+	
+	public void addToLeft(String temp) {
+		left.getItems().add(temp);
+		leftElems.add(temp);
+	}
+	
+	public void addToMiddle(String temp) {
+		middle.getItems().add(temp);
+		midElems.add(temp);
+	}
+	
+	// =============================================// Master List Operations
 
 	@FXML
 	private void printOutput() { // gets input text and adds it to master list
@@ -133,6 +165,9 @@ public class MainController {
             printOutput();
         }
     }
+	
+	//===========================================// Deleting Elements Using 'Del' Key
+	
 	@FXML
 	public void delElemLeft(KeyEvent keyEvent) {
 		if (keyEvent.getCode() == KeyCode.DELETE) {
@@ -162,7 +197,8 @@ public class MainController {
 		}
 	}
 	
-	// =============================================//drag and drop detection
+	// =============================================//Drag/Drop Detection 
+	
 	@FXML
 	private void detectDrop() {
 		selected = true;
@@ -178,6 +214,7 @@ public class MainController {
 //		System.out.print("y: "+x);
 
 	}
+	
 	@FXML
 	private void detactDrag() {
 		
@@ -188,6 +225,8 @@ public class MainController {
 //		selected=false;
 	}
 
+	//==============================================// Set Operations
+	
 	@FXML
 	private void detectLeft() {
 		
@@ -273,6 +312,7 @@ public class MainController {
 	}
 
 	// =============================================//label customization
+	
 	@FXML
 	private void setLeftLabel() {
 		String left = left_label_input.getText();
@@ -286,14 +326,18 @@ public class MainController {
 		rightLabel.setText(right);
 		right_label_input.clear();
 	}
+	
 	// =============================================// Clear individual sets
 
 	@FXML
 	private void clearLeftSet() {
 		left.getItems().clear();
-//		int size = middle.getItems().size();
+		leftElems.clear();
 		right.getItems().addAll(middle.getItems());
+		rightElems.addAll(middle.getItems());
 		middle.getItems().clear();
+		midElems.clear();
+//		int size = middle.getItems().size();
 //		for(int i=0; i < size; i++) {
 //			right.getItems().add(middle.getItems().get(i));
 //			rightElems.addAll(right)
@@ -303,14 +347,21 @@ public class MainController {
 	@FXML
 	private void clearRightSet() {
 		right.getItems().clear();
+		rightElems.clear();
 		left.getItems().addAll(middle.getItems());
+		leftElems.addAll(middle.getItems());
 		middle.getItems().clear();
+		midElems.clear();
 	}
+	
 	// =============================================// modify the title
+	
 	@FXML
 	private void setTitle() {
 		System.out.print("test");
 	}
+	
+	//==============================================// Export Options
 	
 	@FXML
 	public void exportAsText() throws IOException {
@@ -378,4 +429,109 @@ public class MainController {
 		BufferedImage snap = abc.createScreenCapture(screenRect);
 		*/
 	}
+	
+	// ============================================// Right Click Menus
+	
+	@FXML
+	public void menuLeft(MouseEvent mouseEvent) {
+		if(mouseEvent.getButton() == MouseButton.SECONDARY) {
+			
+//			System.out.println("RIGHT CLICK!");
+			
+			ContextMenu contextMenu = new ContextMenu();
+			MenuItem del = new MenuItem("Delete Element");
+			MenuItem moveRight = new MenuItem("Move to Second Set");
+			MenuItem moveMid = new MenuItem("Move to Intersection");
+			
+			
+			del.setOnAction((event) -> {
+//			    System.out.println("Delete clicked!");
+				delElemsClick(left, leftElems);
+			});
+			
+			moveRight.setOnAction((event) -> {
+				addToRight(left.getSelectionModel().getSelectedItem());
+				delElemsClick(left, leftElems);
+			});
+			
+			moveMid.setOnAction((event) -> {
+				addToMiddle(left.getSelectionModel().getSelectedItem());
+				delElemsClick(left, leftElems);
+			});
+			
+			contextMenu.getItems().addAll(del, moveMid, moveRight);
+			left.setContextMenu(contextMenu);
+			
+		}	
+	}
+	
+	@FXML
+	public void menuRight(MouseEvent mouseEvent) {
+		if(mouseEvent.getButton() == MouseButton.SECONDARY) {
+			
+//			System.out.println("RIGHT CLICK!");
+			
+			ContextMenu contextMenu = new ContextMenu();
+			MenuItem del = new MenuItem("Delete Element");
+			MenuItem moveLeft = new MenuItem("Move to First Set");
+			MenuItem moveMid = new MenuItem("Move to Intersection");
+			
+			
+			del.setOnAction((event) -> {
+//			    System.out.println("Delete clicked!");
+				delElemsClick(right, rightElems);
+			});
+			
+			moveLeft.setOnAction((event) -> {
+				addToLeft(right.getSelectionModel().getSelectedItem());
+				delElemsClick(right, rightElems);
+			});
+			
+			moveMid.setOnAction((event) -> {
+				addToMiddle(right.getSelectionModel().getSelectedItem());
+				delElemsClick(right, rightElems);
+			});
+			
+			contextMenu.getItems().addAll(del, moveMid, moveLeft);
+			right.setContextMenu(contextMenu);
+			
+		}	
+	}
+	
+	@FXML
+	public void menuMiddle(MouseEvent mouseEvent) {
+		if(mouseEvent.getButton() == MouseButton.SECONDARY) {
+			
+//			System.out.println("RIGHT CLICK!");
+			
+			ContextMenu contextMenu = new ContextMenu();
+			MenuItem del = new MenuItem("Delete Element");
+			MenuItem moveLeft = new MenuItem("Move to First Set");
+			MenuItem moveRight = new MenuItem("Move to Second Set");
+			
+			
+			del.setOnAction((event) -> {
+//			    System.out.println("Delete clicked!");
+				delElemsClick(middle, midElems);
+			});
+			
+			moveLeft.setOnAction((event) -> {
+				addToLeft(middle.getSelectionModel().getSelectedItem());
+				delElemsClick(middle, midElems);
+			});
+			
+			moveRight.setOnAction((event) -> {
+				addToRight(middle.getSelectionModel().getSelectedItem());
+				delElemsClick(middle, midElems);
+			});
+			
+			contextMenu.getItems().addAll(del,moveLeft, moveRight);
+			middle.setContextMenu(contextMenu);
+			
+		}	
+	}
+	
+	
+	
+	
 }
