@@ -215,7 +215,7 @@ public class MainController {
 			selected = false;
 		}
 		
-		if (keyEvent.getCode() == KeyCode.I) {
+		if (keyEvent.getCode() == KeyCode.I && holder.getItems().isEmpty() == false) {
 			index = holder.getSelectionModel().getSelectedIndex();
 			temp=holder.getItems().get(index);
 			selected=true;
@@ -224,7 +224,7 @@ public class MainController {
 			selected = false;
 		}
 		
-		if (keyEvent.getCode() == KeyCode.L) {
+		if (keyEvent.getCode() == KeyCode.L && holder.getItems().isEmpty() == false) {
 			index = holder.getSelectionModel().getSelectedIndex();
 			temp=holder.getItems().get(index);
 			selected=true;
@@ -233,7 +233,7 @@ public class MainController {
 			selected = false;
 		}
 		
-		if (keyEvent.getCode() == KeyCode.R) {
+		if (keyEvent.getCode() == KeyCode.R && holder.getItems().isEmpty() == false) {
 			index = holder.getSelectionModel().getSelectedIndex();
 			temp=holder.getItems().get(index);
 			selected=true;
@@ -487,6 +487,7 @@ public class MainController {
 			MenuItem del = new MenuItem("Delete Element");
 			MenuItem moveRight = new MenuItem("Move to Second Set");
 			MenuItem moveMid = new MenuItem("Move to Intersection");
+			MenuItem delAll = new MenuItem("Delete All Elements In This Set");
 			
 			
 			del.setOnAction((event) -> {
@@ -504,7 +505,11 @@ public class MainController {
 				delElemsHelper(left, leftElems);
 			});
 			
-			contextMenu.getItems().addAll(del, moveMid, moveRight);
+			delAll.setOnAction((event) -> {
+				clearLeftSet();
+			});
+			
+			contextMenu.getItems().addAll(del, moveMid, moveRight, delAll);
 			left.setContextMenu(contextMenu);
 			
 		}	
@@ -520,7 +525,7 @@ public class MainController {
 			MenuItem del = new MenuItem("Delete Element");
 			MenuItem moveLeft = new MenuItem("Move to First Set");
 			MenuItem moveMid = new MenuItem("Move to Intersection");
-			
+			MenuItem delAll = new MenuItem("Delete All Elements In This Set");
 			
 			del.setOnAction((event) -> {
 //			    System.out.println("Delete clicked!");
@@ -537,7 +542,11 @@ public class MainController {
 				delElemsHelper(right, rightElems);
 			});
 			
-			contextMenu.getItems().addAll(del, moveMid, moveLeft);
+			delAll.setOnAction((event) -> {
+				clearRightSet();
+			});
+			
+			contextMenu.getItems().addAll(del, moveMid, moveLeft, delAll);
 			right.setContextMenu(contextMenu);
 			
 		}	
@@ -553,6 +562,7 @@ public class MainController {
 			MenuItem del = new MenuItem("Delete Element");
 			MenuItem moveLeft = new MenuItem("Move to First Set");
 			MenuItem moveRight = new MenuItem("Move to Second Set");
+			MenuItem delAll = new MenuItem("Delete All Elements In This Set");
 			
 			
 			del.setOnAction((event) -> {
@@ -570,7 +580,12 @@ public class MainController {
 				delElemsHelper(middle, midElems);
 			});
 			
-			contextMenu.getItems().addAll(del,moveLeft, moveRight);
+			delAll.setOnAction((event) -> {
+				middle.getItems().clear();
+				midElems.clear();
+			});
+			
+			contextMenu.getItems().addAll(del,moveLeft, moveRight, delAll);
 			middle.setContextMenu(contextMenu);
 			
 		}	
