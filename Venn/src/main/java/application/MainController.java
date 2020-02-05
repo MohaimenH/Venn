@@ -12,6 +12,8 @@ import java.util.*;
 
 import javax.imageio.ImageIO;
 
+import database.AccSys;
+
 import java.io.*;
 
 import javafx.collections.ObservableList;
@@ -34,6 +36,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import javafx.scene.control.*;
 import javafx.scene.*;
@@ -46,6 +49,7 @@ public class MainController {
 	Boolean selected = false;
 	String temp;
 	int index;
+	static AccSys sys;
 
 	private Set<String> elements = new HashSet<>();
 	private Set<String> leftElems = new HashSet<>();
@@ -424,12 +428,14 @@ public class MainController {
 		if (path.length() == 0) {
 			return;
 		}
+		
+		
 		FileWriter writer = new FileWriter(path); //Change to Your Directory of Choice - Preferably Desktop
 //		ArrayList<Object> a = new ArrayList<>(leftElems.toArray());
 		
 		Object[] leftElements = leftElems.toArray();
 		
-		writer.write("Unique Elements of Set A:" + System.lineSeparator());
+		writer.write("*Unique Elements of " + leftLabel.getText() + System.lineSeparator());
 		writer.write("\n");
 		for(int i=0; i < sizeL; i++) {
 			writer.write(leftElements[i].toString() + System.lineSeparator());
@@ -442,7 +448,7 @@ public class MainController {
 //		String h = "Unique Elements of Set B:";
 		
 		writer.write("\n\n");
-		writer.write("Unique Elements of Set B:" + System.lineSeparator());
+		writer.write("*Unique Elements of " + rightLabel.getText() + System.lineSeparator());
 		writer.write("\n");
 		for(int i=0; i < sizeR; i++) {
 			writer.write(rightElements[i].toString() + System.lineSeparator());
@@ -454,7 +460,7 @@ public class MainController {
 		
 //		System.out.println("Intersection of Set A & Set B:");
 		writer.write("\n\n");
-		writer.write("Intersection of Set A & Set B:" + System.lineSeparator());
+		writer.write("*Intersection of " + leftLabel.getText() + " & " + rightLabel.getText() + System.lineSeparator());
 		writer.write("\n");
 		for(int i=0; i < sizeM; i++) {
 			writer.write(midElements[i].toString() + System.lineSeparator());
@@ -464,7 +470,7 @@ public class MainController {
 	}
 	
 	/*
-	 * This method get the path for export or snapshot
+	 * This method can help the export or snapshot get the path the expected
 	 */
 	
 	private String getpath(int i) {
@@ -491,14 +497,14 @@ public class MainController {
 		}
 		return path;
 	}
-	
-	
+
 	@FXML
 	public void takeSnapshot() throws IOException, AWTException {
 //		WritableImage snap = new WritableImage(1000,611);
 		WritableImage snap = new WritableImage(781,624);
 		secondAnchor.snapshot(new SnapshotParameters(), snap);
 //		MainAnchor.snapshot(new SnapshotParameters(), snap);
+
 		String path = this.getpath(1);
 		if (path.length() == 0) {
 			return;
@@ -782,21 +788,42 @@ public class MainController {
 	
 	//=========================================import file chooser//
 	public void importer (ActionEvent event) throws IOException {
-		FileChooser fc = new FileChooser();
-		File selectedFile = fc.showOpenDialog(null);
 		
 		String line;
-		BufferedReader reader = new BufferedReader(new FileReader(selectedFile));
+		String path = getpath(2);
+		if (path.length() == 0) {
+			return;
+		}
+		BufferedReader reader = new BufferedReader(new FileReader(new File(path)));
+		int flag = -1;
 		
-		if (selectedFile != null) {
 			while ((line = reader.readLine()) != null) {
-				holder.getItems().add(line);
+				String[] str = line.split("\\s+");
+				if (line.length() != 0 && line.charAt(0) == '*') {
+					switch(++flag) {
+					case 0 :
+						leftLabel.setText(str[str.length - 1]);break;
+					case 1 :
+						rightLabel.setText(str[str.length - 1]);break;
+					}
+				}
+				else if (!line.equals("")) {
+					switch(flag) {
+					case 0 :
+						left.getItems().add(line);
+						this.leftElems.add(line);break;
+					case 1 :
+						right.getItems().add(str[0]);
+						this.rightElems.add(line);break;
+					case 2 :
+						middle.getItems().add(str[0]);
+						this.rightElems.add(line);break;
+					}
+					
+				}
 			}
-		}
-		else {
-			
-		}
-			
+		
+		reader.close();
 	}
 	
 	
