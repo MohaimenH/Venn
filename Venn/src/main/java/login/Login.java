@@ -59,7 +59,10 @@ public class Login extends Application {
 		loginButton.setOnAction(e -> {
 			String name = nameInput.getText();
 			long pwd = Account.gethash(pwInput.getText());
+			System.out.println(sys.accounts.size());
+			
 			for (Account a : sys.accounts ) {
+				System.out.println(name.equals(a.getname()) && pwd == a.getpwd());
 				if (name.equals(a.getname()) && pwd == a.getpwd()) {
 					// jump to new User panel
 					window.close();

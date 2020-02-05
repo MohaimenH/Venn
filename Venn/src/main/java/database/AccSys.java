@@ -36,7 +36,7 @@ public class AccSys {
             	String [] arr = s.split("\\s+");
             	String name = arr[0];
             	long pwd = Long.parseLong(arr[1]);
-                accounts.add(new User(name, pwd));
+                result.add(new User(name, pwd));
             }
             br.close();
         }catch(Exception e){
