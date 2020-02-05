@@ -11,22 +11,24 @@
 
 <AnchorPane fx:id="MainAnchor" onMouseEntered="#detectLeft" prefHeight="637.0" prefWidth="1074.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
    <children>
-      <AnchorPane fx:id="secondAnchor" layoutX="194.0" layoutY="153.0" prefHeight="462.0" prefWidth="759.0">
+      <AnchorPane fx:id="secondAnchor" layoutX="194.0" layoutY="1.0" prefHeight="624.0" prefWidth="781.0">
          <children>
-            <Circle id="Left Circle" fill="#30068f" layoutX="235.0" layoutY="231.0" opacity="0.38" radius="220.0" stroke="BLACK" strokeWidth="4.0" />
-            <Circle id="Right Circle" fill="RED" layoutX="525.0" layoutY="231.0" opacity="0.39" radius="220.0" stroke="#4d3f3f" strokeWidth="4.0" />
-            <ListView fx:id="left" layoutX="112.0" layoutY="42.0" onKeyPressed="#keyPressLeft" onMouseClicked="#menuLeft" onMouseEntered="#detectLeft" onMouseMoved="#points" prefHeight="372.0" prefWidth="202.0" />
-            <ListView fx:id="middle" layoutX="341.0" layoutY="113.0" onKeyPressed="#keyPressMiddle" onMouseClicked="#menuMiddle" onMouseEntered="#detectMiddle" prefHeight="236.0" prefWidth="77.0" />
-            <ListView fx:id="right" layoutX="443.0" layoutY="47.0" onKeyPressed="#keyPressRight" onMouseClicked="#menuRight" onMouseEntered="#detectRight" prefHeight="367.0" prefWidth="197.0" />
-            <ListView fx:id="decoyLeft" layoutX="20.0" layoutY="89.0" onMouseEntered="#detectLeft" opacity="0.0" prefHeight="276.0" prefWidth="92.0" />
-            <ListView fx:id="decoyRight" layoutX="640.0" layoutY="89.0" onMouseEntered="#detectRight" opacity="0.0" prefHeight="276.0" prefWidth="92.0" />
+            <Circle id="Left Circle" fill="#30068f" layoutX="253.0" layoutY="378.0" opacity="0.38" radius="220.0" stroke="BLACK" strokeWidth="4.0" />
+            <Circle id="Right Circle" fill="RED" layoutX="543.0" layoutY="378.0" opacity="0.39" radius="220.0" stroke="#4d3f3f" strokeWidth="4.0" />
+            <ListView fx:id="left" layoutX="130.0" layoutY="193.0" onKeyPressed="#keyPressLeft" onMouseClicked="#menuLeft" onMouseEntered="#detectLeft" onMouseMoved="#points" prefHeight="372.0" prefWidth="202.0" />
+            <ListView fx:id="middle" layoutX="359.0" layoutY="264.0" onKeyPressed="#keyPressMiddle" onMouseClicked="#menuMiddle" onMouseEntered="#detectMiddle" prefHeight="236.0" prefWidth="77.0" />
+            <ListView fx:id="right" layoutX="461.0" layoutY="198.0" onKeyPressed="#keyPressRight" onMouseClicked="#menuRight" onMouseEntered="#detectRight" prefHeight="367.0" prefWidth="197.0" />
+            <ListView fx:id="decoyLeft" layoutX="38.0" layoutY="240.0" onMouseEntered="#detectLeft" opacity="0.0" prefHeight="276.0" prefWidth="92.0" />
+            <ListView fx:id="decoyRight" layoutX="658.0" layoutY="240.0" onMouseEntered="#detectRight" opacity="0.0" prefHeight="276.0" prefWidth="92.0" />
+            <Label fx:id="title" alignment="CENTER" contentDisplay="CENTER" layoutX="291.0" layoutY="43.0" onMouseClicked="#setTitle" prefHeight="58.0" prefWidth="215.0" text="Venn" textAlignment="CENTER">
+              
+               <font>
+                  <Font size="27.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
-      <Label fx:id="title" alignment="CENTER" contentDisplay="CENTER" layoutX="475.0" layoutY="21.0" onMouseClicked="#setTitle" prefHeight="58.0" prefWidth="215.0" text="Venn" textAlignment="CENTER">
-        
-         <font>
-            <Font size="27.0" />
-         </font></Label>
+      <Button fx:id="snapshot" layoutX="562.0" layoutY="104.0" mnemonicParsing="false" onAction="#takeSnapshot" text="Snapshot" />
          
       <Button id="test" fx:id="submit" layoutX="202.0" layoutY="50.0" mnemonicParsing="false" onAction="#printOutput" text="Add" />
       <TextField fx:id="inputText" layoutX="17.0" layoutY="50.0" onKeyPressed="#handle" prefHeight="59.0" prefWidth="176.0" />
@@ -39,9 +41,8 @@
       <Text layoutX="19.0" layoutY="499.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Right Circle" />
       <Button fx:id="left_label_button" layoutX="132.0" layoutY="445.0" mnemonicParsing="false" onAction="#setLeftLabel" text="Set Left" />
       <Button fx:id="right_label_button" layoutX="132.0" layoutY="496.0" mnemonicParsing="false" onAction="#setRightLabel" text="Set Right" />
-      <Button fx:id="textExport" layoutX="537.0" layoutY="128.0" mnemonicParsing="false" onAction="#exportAsText" text="Export As Text" />
-      <Button fx:id="snapshot" layoutX="550.0" layoutY="83.0" mnemonicParsing="false" onAction="#takeSnapshot" text="Snapshot" />
-      <Button fx:id="importer" layoutX="202.0" layoutY="83.0" mnemonicParsing="false" onAction="#importer" text="Import" /> 
+      <Button fx:id="importer" layoutX="202.0" layoutY="83.0" mnemonicParsing="false" onAction="#importer" text="Import" />
+      <Button fx:id="textExport" layoutX="549.0" layoutY="142.0" mnemonicParsing="false" onAction="#exportAsText" text="Export As Text" /> 
 
    </children>
 </AnchorPane>
