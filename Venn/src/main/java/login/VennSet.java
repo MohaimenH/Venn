@@ -29,17 +29,11 @@ public class VennSet extends Application{
 		grid.setHgap(10);
 		
 		Label label1 = new Label("VennName:");
-		Label label2 = new Label("Password:");
 		GridPane.setConstraints(label1,0, 0);
-		GridPane.setConstraints(label2,0, 1);
 		
 		TextField nameInput = new TextField();
 		nameInput.setPromptText("username");
 		GridPane.setConstraints(nameInput, 1, 0);
-		
-		TextField pwInput = new TextField();
-		GridPane.setConstraints(pwInput, 1, 1);
-		pwInput.setPromptText("password");
 		
 		
 		
@@ -57,7 +51,7 @@ public class VennSet extends Application{
 			}
 		});
 		
-		grid.getChildren().addAll(label1, label2,nameInput, pwInput, button);
+		grid.getChildren().addAll(label1, nameInput, button);
 		
 		Scene scene = new Scene(grid, 260, 100);
 		window.setScene(scene);
