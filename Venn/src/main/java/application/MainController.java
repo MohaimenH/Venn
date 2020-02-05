@@ -59,7 +59,9 @@ public class MainController {
 
 	//////////////////
 	@FXML
-	private AnchorPane anchor;
+	private AnchorPane MainAnchor;
+	@FXML 
+	private AnchorPane secondAnchor;
 	@FXML
 	private Label title;
 	@FXML
@@ -459,10 +461,13 @@ public class MainController {
 	
 	@FXML
 	public void takeSnapshot() throws IOException, AWTException {
-		WritableImage snap = new WritableImage(1000,611);
-		anchor.snapshot(new SnapshotParameters(), snap);
+//		WritableImage snap = new WritableImage(1000,611);
+		WritableImage snap = new WritableImage(759,462);
+		secondAnchor.snapshot(new SnapshotParameters(), snap);
+//		MainAnchor.snapshot(new SnapshotParameters(), snap);
 		
-		File file = new File("C:\\Users\\RM\\Pictures\\snap.png"); // Change Directory
+		File file = new File("C:\\Users\\Mohaimen Hassan\\Desktop\\snap.png");
+//		File file = new File("C:\\Users\\RM\\Pictures\\snap.png"); // Change Directory
 	    
 	    try {
 	        ImageIO.write(SwingFXUtils.fromFXImage(snap, null), "png", file);
