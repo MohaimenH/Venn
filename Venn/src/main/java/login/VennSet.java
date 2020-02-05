@@ -2,6 +2,7 @@ package login;
 import java.io.IOException;
 
 import application.Main;
+import database.AccSys;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -19,7 +20,7 @@ import javafx.stage.Stage;
 public class VennSet extends Application{
 	
 	Stage window;
-	private static void body() {
+	private static void body(AccSys sys) throws IOException {
 		Stage window = new Stage();
 		window.setTitle("Setup Your Venn Diagram");
 		
@@ -44,7 +45,7 @@ public class VennSet extends Application{
 			Main main = new Main();
 			try {
 				window.close();
-				main.run(new Stage());
+				main.run(new Stage(), sys);
 			} catch (IOException e1) {
 				AlertBox.display("Error", "Unknown Error occurs.");
 				e1.printStackTrace();
@@ -60,14 +61,14 @@ public class VennSet extends Application{
 	
 	
 	
-	public static void run() {
-		VennSet.body();
+	public static void run(AccSys sys) throws IOException {
+		VennSet.body(sys);
 	}
 	
 	
 	@Override
 	public void start(Stage pri) throws Exception {
-		body();
+		body(new AccSys());
 	}
 	
 	public static void main(String[] args) {

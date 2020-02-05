@@ -7,7 +7,7 @@ public abstract class Account {
 	String name;
 	long pwd;
 	static int User = 0;
-	List<File> files;
+	List<Venn> venn;
 	public Account(String name, long pwd) {
 		this.name = name;
 		this.pwd = pwd;
@@ -21,4 +21,11 @@ public abstract class Account {
 		return result;
 	}
 	
+	public String getname() {
+		return this.name;
+	}
+	
+	public long getpwd() {
+		return this.pwd;
+	}
 }

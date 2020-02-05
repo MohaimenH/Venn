@@ -1,8 +1,10 @@
 package login;
+import java.io.File;
 import java.io.IOException;
 
 import application.Main;
 import database.AccSys;
+import database.Account;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -31,6 +33,7 @@ public class Login extends Application {
 		});
 		window.getIcons().addAll(new Image("icon/icon.png"));
 		sys = new AccSys();
+		
 		GridPane grid = new GridPane();
 		grid.setPadding(new Insets(10, 10, 10, 10));
 		grid.setVgap(8);
@@ -45,27 +48,55 @@ public class Login extends Application {
 		nameInput.setPromptText("username");
 		GridPane.setConstraints(nameInput, 1, 0);
 		
+		
 		TextField pwInput = new TextField();
 		GridPane.setConstraints(pwInput, 1, 1);
 		pwInput.setPromptText("password");
 		
 		Button loginButton = new Button("Log In");
 		GridPane.setConstraints(loginButton, 1, 2);
+		loginButton.setPrefWidth(100);
 		loginButton.setOnAction(e -> {
-			AlertBox.display("no support", "OK");
+			String name = nameInput.getText();
+			long pwd = Account.gethash(pwInput.getText());
+			for (Account a : sys.accounts ) {
+				if (name.equals(a.getname()) && pwd == a.getpwd()) {
+					// jump to new User panel
+					window.close();
+				}
+			}
 		});
 		
 		Button visitor = new Button("Visitor");
-		GridPane.setConstraints(visitor, 0, 2);
+		GridPane.setConstraints(visitor, 1, 4);
+		visitor.setPrefWidth(100);
 		visitor.setOnAction(e -> {
-			VennSet.run();
+			try {
+				VennSet.run(sys);
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 			window.close();
 		});
 		
+		Button register = new Button("Register");
+		register.setPrefWidth(100);
+		GridPane.setConstraints(register, 1, 3);
+		register.setOnAction(e -> {
+			for (Account a : sys.accounts) {
+				if (a.getname().equals(nameInput.getText())) {
+					
+				}
+				else {
+					AlertBox.display("Alert", "The username is already exiset, please try a new one");
+					continue;
+				}
+			}
+		});
 		
-		grid.getChildren().addAll(label1, label2,nameInput, pwInput, loginButton, visitor);
+		grid.getChildren().addAll(label1, label2,nameInput, pwInput, loginButton, visitor, register);
 		
-		Scene scene = new Scene(grid, 260, 100);
+		Scene scene = new Scene(grid, 260, 160);
 		window.setMinHeight(100);
 		window.setMinWidth(270);
 		window.setScene(scene);
@@ -86,6 +117,14 @@ public class Login extends Application {
 		}
 	}
 	
+	private Account getAccount(String name, int pwd) {
+		String filepath = "database/users.txt";
+		File file = new File(filepath);
+		
+		
+		
+		return null;
+	}
 }
 
 
