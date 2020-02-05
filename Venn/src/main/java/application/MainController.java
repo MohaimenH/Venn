@@ -420,7 +420,11 @@ public class MainController {
 		int sizeL = leftElems.size();
 		int sizeR = rightElems.size();
 		int sizeM = midElems.size();
-		FileWriter writer = new FileWriter("C:\\Users\\Mohaimen Hassan\\Desktop\\output.txt"); //Change to Your Directory of Choice - Preferably Desktop
+		String path = this.getpath(0);
+		if (path.length() == 0) {
+			return;
+		}
+		FileWriter writer = new FileWriter(path); //Change to Your Directory of Choice - Preferably Desktop
 //		ArrayList<Object> a = new ArrayList<>(leftElems.toArray());
 		
 		Object[] leftElements = leftElems.toArray();
@@ -459,14 +463,47 @@ public class MainController {
 		writer.close();
 	}
 	
+	/*
+	 * This method get the path for export or snapshot
+	 */
+	
+	private String getpath(int i) {
+		Stage mainStage = null;
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Choose your path");
+		if (i == 0) {
+			fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("TXT", "*.txt"));
+		               
+		}
+		else if (i == 1) {
+			fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("JPG", "*.jpg"),
+                								     new FileChooser.ExtensionFilter("PNG", "*.png"));
+		}
+		
+		File selectedFile = fileChooser.showOpenDialog(mainStage);
+		String path = "";
+
+		try {
+			return path = selectedFile.getPath();
+		}
+		catch (NullPointerException e) {
+			
+		}
+		return path;
+	}
+	
+	
 	@FXML
 	public void takeSnapshot() throws IOException, AWTException {
 //		WritableImage snap = new WritableImage(1000,611);
 		WritableImage snap = new WritableImage(781,624);
 		secondAnchor.snapshot(new SnapshotParameters(), snap);
 //		MainAnchor.snapshot(new SnapshotParameters(), snap);
-		
-		File file = new File("C:\\Users\\Mohaimen Hassan\\Desktop\\snap.png");
+		String path = this.getpath(1);
+		if (path.length() == 0) {
+			return;
+		}
+		File file = new File(path);
 //		File file = new File("C:\\Users\\RM\\Pictures\\snap.png"); // Change Directory
 	    
 	    try {
