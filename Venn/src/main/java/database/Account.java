@@ -11,6 +11,7 @@ public abstract class Account {
 	public Account(String name, long pwd) {
 		this.name = name;
 		this.pwd = pwd;
+		User ++;
 	}
 	
 	public static long gethash(String p) {
