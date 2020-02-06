@@ -424,11 +424,11 @@ public class MainController {
 		int sizeL = leftElems.size();
 		int sizeR = rightElems.size();
 		int sizeM = midElems.size();
-		
-		String path = getpath(0);
+		String path = this.getpath(0);
 		if (path.length() == 0) {
 			return;
 		}
+		
 		
 		FileWriter writer = new FileWriter(path); //Change to Your Directory of Choice - Preferably Desktop
 //		ArrayList<Object> a = new ArrayList<>(leftElems.toArray());
@@ -505,11 +505,10 @@ public class MainController {
 		secondAnchor.snapshot(new SnapshotParameters(), snap);
 //		MainAnchor.snapshot(new SnapshotParameters(), snap);
 
-		String path = getpath(1);
+		String path = this.getpath(1);
 		if (path.length() == 0) {
 			return;
 		}
-		
 		File file = new File(path);
 //		File file = new File("C:\\Users\\RM\\Pictures\\snap.png"); // Change Directory
 	    
@@ -811,11 +810,14 @@ public class MainController {
 				else if (!line.equals("")) {
 					switch(flag) {
 					case 0 :
-						left.getItems().add(str[0]);break;
+						left.getItems().add(line);
+						this.leftElems.add(line);break;
 					case 1 :
-						right.getItems().add(str[0]);break;
+						right.getItems().add(str[0]);
+						this.rightElems.add(line);break;
 					case 2 :
-						middle.getItems().add(str[0]);break;
+						middle.getItems().add(str[0]);
+						this.rightElems.add(line);break;
 					}
 					
 				}

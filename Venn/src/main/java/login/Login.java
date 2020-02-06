@@ -1,10 +1,7 @@
 package login;
-import java.io.File;
 import java.io.IOException;
 
 import application.Main;
-import database.AccSys;
-import database.Account;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -12,7 +9,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -22,7 +18,6 @@ public class Login extends Application {
 	Button log_in, exit;
 	Stage window;
 	Scene scene1, scene2;
-	AccSys sys;
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		this.window = primaryStage;
@@ -31,8 +26,7 @@ public class Login extends Application {
 			e.consume();
 			closeprogram();
 		});
-		window.getIcons().addAll(new Image("icon/icon.png"));
-		sys = new AccSys();
+		
 		
 		GridPane grid = new GridPane();
 		grid.setPadding(new Insets(10, 10, 10, 10));
@@ -48,40 +42,18 @@ public class Login extends Application {
 		nameInput.setPromptText("username");
 		GridPane.setConstraints(nameInput, 1, 0);
 		
-		
 		TextField pwInput = new TextField();
 		GridPane.setConstraints(pwInput, 1, 1);
 		pwInput.setPromptText("password");
 		
 		Button loginButton = new Button("Log In");
 		GridPane.setConstraints(loginButton, 1, 2);
-		loginButton.setPrefWidth(100);
 		loginButton.setOnAction(e -> {
-			String name = nameInput.getText();
-			long pwd = Account.gethash(pwInput.getText());
-			System.out.println(sys.accounts.size());
-			
-			for (Account a : sys.accounts ) {
-				System.out.println(name.equals(a.getname()) && pwd == a.getpwd());
-				if (name.equals(a.getname()) && pwd == a.getpwd()) {
-					// jump to new User panel
-					window.close();
-				}
-			}
-		});
-		
-		Button visitor = new Button("Visitor");
-		GridPane.setConstraints(visitor, 1, 4);
-		visitor.setPrefWidth(100);
-		visitor.setOnAction(e -> {
-			try {
-				VennSet.run(sys);
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+			VennSet.run();
 			window.close();
 		});
 		
+<<<<<<< HEAD
 		Button register = new Button("Register");
 		register.setPrefWidth(100);
 		GridPane.setConstraints(register, 1, 3);
@@ -96,12 +68,11 @@ public class Login extends Application {
 				}
 			}
 		});
+=======
+		grid.getChildren().addAll(label1, label2,nameInput, pwInput, loginButton);
+>>>>>>> refs/remotes/origin/develop
 		
-		grid.getChildren().addAll(label1, label2,nameInput, pwInput, loginButton, visitor, register);
-		
-		Scene scene = new Scene(grid, 260, 160);
-		window.setMinHeight(100);
-		window.setMinWidth(270);
+		Scene scene = new Scene(grid, 260, 100);
 		window.setScene(scene);
 		window.show();
 	}
@@ -114,20 +85,13 @@ public class Login extends Application {
 		Boolean answer = ComfirmBox.display("Attention", "Sure you want to exit?");
 		if (answer) {
 			window.close();
+			System.out.println("Close");
 		}
 		else {
 			
 		}
 	}
 	
-	private Account getAccount(String name, int pwd) {
-		String filepath = "database/users.txt";
-		File file = new File(filepath);
-		
-		
-		
-		return null;
-	}
 }
 
 

@@ -2,7 +2,6 @@ package application;
 	
 import java.io.IOException;
 
-import database.AccSys;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,9 +12,8 @@ import javafx.stage.Stage;
 
 public class Main extends Application{
 	// This method is called by other page
-	public void run(Stage primaryStage, AccSys sys) throws IOException {
+	public void run(Stage primaryStage) throws IOException {
 			Parent root = FXMLLoader.load(getClass().getResource("/application/Main.fxml"));
-			MainController.sys = sys;
 			primaryStage.getIcons().add(new Image("icon/icon.png"));
 			primaryStage.setTitle("Venn: Simple Venn Diagrams");
 			Scene scene = new Scene(root,1074,637);
