@@ -2,6 +2,8 @@ package login;
 import java.io.IOException;
 
 import application.Main;
+import database.AccSys;
+import database.Account;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -18,6 +20,7 @@ public class Login extends Application {
 	Button log_in, exit;
 	Stage window;
 	Scene scene1, scene2;
+	AccSys sys;
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		this.window = primaryStage;
@@ -27,7 +30,7 @@ public class Login extends Application {
 			closeprogram();
 		});
 		
-		
+		sys = new AccSys();
 		GridPane grid = new GridPane();
 		grid.setPadding(new Insets(10, 10, 10, 10));
 		grid.setVgap(8);
@@ -53,7 +56,6 @@ public class Login extends Application {
 			window.close();
 		});
 		
-<<<<<<< HEAD
 		Button register = new Button("Register");
 		register.setPrefWidth(100);
 		GridPane.setConstraints(register, 1, 3);
@@ -68,9 +70,7 @@ public class Login extends Application {
 				}
 			}
 		});
-=======
 		grid.getChildren().addAll(label1, label2,nameInput, pwInput, loginButton);
->>>>>>> refs/remotes/origin/develop
 		
 		Scene scene = new Scene(grid, 260, 100);
 		window.setScene(scene);
