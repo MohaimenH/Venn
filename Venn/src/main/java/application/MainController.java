@@ -12,7 +12,7 @@ import java.util.*;
 
 import javax.imageio.ImageIO;
 
-import database.AccSys;
+//import database.AccSys;
 
 import java.io.*;
 
@@ -49,7 +49,7 @@ public class MainController {
 	Boolean selected = false;
 	String temp;
 	int index;
-	static AccSys sys;
+//	static AccSys sys;
 
 	private Set<String> elements = new HashSet<>();
 	private Set<String> leftElems = new HashSet<>();
