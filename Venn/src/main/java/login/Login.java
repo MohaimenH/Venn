@@ -87,8 +87,8 @@ public class Login extends Application {
 		GridPane.setConstraints(register, 1, 3);
 		register.setOnAction(e -> {
 			for (Account a : sys.accounts) {
-				if (a.getname().equals(nameInput.getText())) {
-					
+				if (!a.getname().equals(nameInput.getText())) {
+					// add a new name
 				}
 				else {
 					AlertBox.display("Alert", "The username is already exiset, please try a new one");
