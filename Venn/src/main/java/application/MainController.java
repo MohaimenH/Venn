@@ -825,7 +825,7 @@ public class MainController {
 						this.rightElems.add(line);break;
 					case 2 :
 						middle.getItems().add(str[0]);
-						this.rightElems.add(line);break;
+						this.midElems.add(line);break;
 					}
 					
 				}
