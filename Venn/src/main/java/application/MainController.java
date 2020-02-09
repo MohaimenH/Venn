@@ -479,16 +479,22 @@ public class MainController {
 		Stage mainStage = null;
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Choose your path");
+		File selectedFile = new File("src/main/java/users");
 		if (i == 0) {
 			fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("TXT", "*.txt"));
+			selectedFile = fileChooser.showSaveDialog(mainStage);
 		               
 		}
 		else if (i == 1) {
 			fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("JPG", "*.jpg"),
                 								     new FileChooser.ExtensionFilter("PNG", "*.png"));
+			selectedFile = fileChooser.showSaveDialog(mainStage);
+		}
+		else if (i == 2) {
+			fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("TXT", "*.txt"));
+			selectedFile = fileChooser.showOpenDialog(mainStage);
 		}
 		
-		File selectedFile = fileChooser.showOpenDialog(mainStage);
 		String path = "";
 
 		try {
