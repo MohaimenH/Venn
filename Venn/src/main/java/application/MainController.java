@@ -837,14 +837,45 @@ public class MainController {
 				else if (!line.equals("")) {
 					switch(flag) {
 					case 0 :
-						left.getItems().add(line);
-						this.leftElems.add(line);break;
+						if (! this.leftElems.contains(line)) {
+							if (! this.rightElems.contains(line)) {
+								left.getItems().add(line);
+							    this.leftElems.add(line);
+							}
+							else {
+								right.getItems().remove(line);
+								this.rightElems.remove(line);
+								middle.getItems().add(str[0]);
+								this.midElems.add(line);
+							}
+							
+						}break;
 					case 1 :
-						right.getItems().add(str[0]);
-						this.rightElems.add(line);break;
+						if (! this.rightElems.contains(line)) {
+							if (! this.leftElems.contains(line)) {
+								right.getItems().add(str[0]);
+								this.rightElems.add(line);
+							}
+							else {
+								left.getItems().remove(line);
+								this.leftElems.remove(line);
+								middle.getItems().add(str[0]);
+								this.midElems.add(line);
+							}
+						}break;
 					case 2 :
-						middle.getItems().add(str[0]);
-						this.midElems.add(line);break;
+						if (this.leftElems.contains(line)) {
+							left.getItems().remove(line);
+							this.leftElems.remove(line);
+						}
+						if (this.rightElems.contains(line)) {
+							right.getItems().remove(line);
+							this.rightElems.remove(line);
+						}
+						if (! this.midElems.contains(line)) {
+							middle.getItems().add(str[0]);
+							this.midElems.add(line);break;
+						}
 					}
 					
 				}
