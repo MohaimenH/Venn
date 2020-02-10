@@ -24,12 +24,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.SnapshotParameters;
-import javafx.scene.control.Button;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -66,6 +60,12 @@ public class MainController {
 //	ArrayList<String> midElems = new ArrayList<>();
 
 	//////////////////
+	@FXML
+	private Label File_menu;
+	@FXML
+	private Label Edit_menu;
+	@FXML
+	private Label Export_menu;
 	@FXML
 	private AnchorPane MainAnchor;
 	@FXML 
@@ -368,6 +368,74 @@ public class MainController {
 			selected = false;
 		}
 	}
+	// =============================================// Menu bar 
+	
+	
+	@FXML
+	public void Menubar_File(MouseEvent e) {
+		if(e.getButton()==MouseButton.PRIMARY) {
+			ContextMenu contextMenu = new ContextMenu();
+			MenuItem Import = new MenuItem("Import");
+			MenuItem Snapshot=new MenuItem("Snapshot");
+			
+			Import.setOnAction((event) -> {
+				System.out.print("Import Clicked");
+				try {
+					importer(event);
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+				
+			});
+			Snapshot.setOnAction((event)->{
+				System.out.print("Snapshot Clicked");
+				try {
+					takeSnapshot();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				} catch (AWTException e1) {
+					e1.printStackTrace();
+				}
+			});
+			
+			contextMenu.getItems().addAll(Import,Snapshot);
+			File_menu.setContextMenu(contextMenu);
+		}
+		
+	}
+	
+	@FXML
+	public void Menubar_edit(MouseEvent e) {
+		if(e.getButton()==MouseButton.PRIMARY) {
+			ContextMenu contextMenu = new ContextMenu();
+			MenuItem WipeClean = new MenuItem("Clear all");
+			
+			WipeClean.setOnAction((event)->{
+				System.out.print("clear all cliced");
+			});
+			contextMenu.getItems().addAll(WipeClean);
+			Edit_menu.setContextMenu(contextMenu);
+		}
+	}
+	@FXML
+	public void Menubar_export(MouseEvent e) {
+		if(e.getButton()==MouseButton.PRIMARY) {
+			ContextMenu contextMenu=new ContextMenu();
+			MenuItem Export =new MenuItem("Export as .txt");
+			
+			Export.setOnAction((event)->{
+				try {
+					exportAsText();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			});
+			
+			contextMenu.getItems().addAll(Export);
+			Export_menu.setContextMenu(contextMenu);
+		}
+	}
+
 
 	// =============================================//label customization
 	

@@ -6,6 +6,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -28,6 +29,10 @@
             </Label>
             <Label fx:id="rightLabel" layoutX="534.0" layoutY="126.0" text="Label" />
             <Label fx:id="leftLabel" layoutX="239.0" layoutY="126.0" onMouseClicked="#detectLabelClick" text="Label" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b7c4d1" height="25.0" layoutX="-181.0" layoutY="8.0" stroke="BLACK" strokeType="INSIDE" width="176.0" />
+            <Label fx:id="File_menu" layoutX="-170.0" layoutY="12.0" onMouseClicked="#Menubar_File" text="File" />
+            <Label fx:id="Edit_menu" layoutX="-139.0" layoutY="12.0" onMouseClicked="#Menubar_edit" text="Edit" />
+            <Label fx:id="Export_menu" layoutX="-107.0" layoutY="12.0" onMouseClicked="#Menubar_export" text="Export" />
          </children>
       </AnchorPane>
       <Button fx:id="snapshot" layoutX="562.0" layoutY="104.0" mnemonicParsing="false" onAction="#takeSnapshot" text="Snapshot" />
