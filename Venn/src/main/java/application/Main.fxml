@@ -26,6 +26,8 @@
                   <Font size="27.0" />
                </font>
             </Label>
+            <Label fx:id="rightLabel" layoutX="534.0" layoutY="126.0" text="Label" />
+            <Label fx:id="leftLabel" layoutX="239.0" layoutY="126.0" onMouseClicked="#detectLabelClick" text="Label" />
          </children>
       </AnchorPane>
       <Button fx:id="snapshot" layoutX="562.0" layoutY="104.0" mnemonicParsing="false" onAction="#takeSnapshot" text="Snapshot" />
@@ -33,8 +35,6 @@
       <Button id="test" fx:id="submit" layoutX="202.0" layoutY="50.0" mnemonicParsing="false" onAction="#printOutput" text="Add" />
       <TextField fx:id="inputText" layoutX="17.0" layoutY="50.0" onKeyPressed="#handle" prefHeight="59.0" prefWidth="176.0" />
       <ListView fx:id="holder" layoutX="17.0" layoutY="120.0" onDragDetected="#detactDrag" onKeyPressed="#keyPressHolder" onMouseClicked="#menuHolder" prefHeight="184.0" prefWidth="176.0" />
-      <Label fx:id="leftLabel" layoutX="403.0" layoutY="123.0" text="Label" />
-      <Label fx:id="rightLabel" layoutX="707.0" layoutY="123.0" text="Label" />
       <TextField fx:id="left_label_input" layoutX="17.0" layoutY="445.0" prefHeight="25.0" prefWidth="103.0" />
       <TextField fx:id="right_label_input" layoutX="17.0" layoutY="512.0" prefHeight="25.0" prefWidth="104.0" />
       <Text layoutX="24.0" layoutY="430.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Left Circle" />

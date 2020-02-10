@@ -48,6 +48,8 @@ import javafx.application.Application;
 public class MainController {
 	int x;
 	int y;
+	String left_label_String;
+	String right_label_string;
 	Boolean selected = false;
 	String temp;
 	int index;
@@ -368,6 +370,23 @@ public class MainController {
 	}
 
 	// =============================================//label customization
+	
+	@FXML
+	public void detectLabelClick(MouseEvent e) {
+		System.out.print("selected");
+		if(e.getButton() == MouseButton.SECONDARY) {		
+			ContextMenu contextMenu = new ContextMenu();
+			MenuItem editLeftLabel = new MenuItem("Edit left label");
+			
+			editLeftLabel.setOnAction((event) -> {
+				System.out.print("yes");
+			});
+			
+			contextMenu.getItems().addAll(editLeftLabel);
+			leftLabel.setContextMenu(contextMenu);
+			
+		}
+	}
 	
 	@FXML
 	private void setLeftLabel() {
