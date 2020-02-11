@@ -390,11 +390,11 @@ public class MainController {
 		
 		if(e.getButton()==MouseButton.PRIMARY) {
 //			ContextMenu contextMenu = new ContextMenu();
-			MenuItem Import = new MenuItem("Import");
-			MenuItem Snapshot=new MenuItem("Snapshot");
+			MenuItem Import = new MenuItem("Import Text File (.txt)");
+//			MenuItem Snapshot=new MenuItem("Snapshot");
 			
 			Import.setOnAction((event) -> {
-				System.out.print("Import Clicked");
+//				System.out.print("Import Clicked");
 				try {
 					importer(event);
 				} catch (IOException e1) {
@@ -402,18 +402,8 @@ public class MainController {
 				}
 				
 			});
-			Snapshot.setOnAction((event)->{
-				System.out.print("Snapshot Clicked");
-				try {
-					takeSnapshot();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				} catch (AWTException e1) {
-					e1.printStackTrace();
-				}
-			});
 			
-			menuBarContextMenu.getItems().addAll(Import,Snapshot);
+			menuBarContextMenu.getItems().addAll(Import);
 //			File_menu.setContextMenu(contextMenu);
 			menuBarContextMenu.show(File_menu, e.getScreenX(), e.getScreenY());
 //			e.consume();
@@ -431,8 +421,8 @@ public class MainController {
 		menuBarContextMenu.getItems().clear();
 		
 		if(e.getButton()==MouseButton.PRIMARY) {
-			ContextMenu contextMenu = new ContextMenu();
-			MenuItem WipeClean = new MenuItem("Clear all");
+//			ContextMenu contextMenu = new ContextMenu();
+			MenuItem WipeClean = new MenuItem("Clear All");
 			
 			WipeClean.setOnAction((event)->{
 				clearLeftSet();
@@ -459,8 +449,10 @@ public class MainController {
 		menuBarContextMenu.hide();
 		menuBarContextMenu.getItems().clear();
 		if(e.getButton()==MouseButton.PRIMARY) {
-			ContextMenu contextMenu=new ContextMenu();
-			MenuItem Export =new MenuItem("Export as .txt");
+//			ContextMenu contextMenu=new ContextMenu();
+			
+			MenuItem Snapshot=new MenuItem("As JPEG Image (.jpg)");
+			MenuItem Export =new MenuItem("As Text File (.txt)");
 			
 			Export.setOnAction((event)->{
 				try {
@@ -470,8 +462,19 @@ public class MainController {
 				}
 			});
 			
+			Snapshot.setOnAction((event)->{
+				System.out.print("Snapshot Clicked");
+				try {
+					takeSnapshot();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				} catch (AWTException e1) {
+					e1.printStackTrace();
+				}
+			});
+			
 //			contextMenu.getItems().addAll(Export);
-			menuBarContextMenu.getItems().addAll(Export);
+			menuBarContextMenu.getItems().addAll(Snapshot, Export);
 //			Export_menu.setContextMenu(contextMenu);
 			menuBarContextMenu.show(Export_menu, e.getScreenX(), e.getScreenY());
 //			contextMenu.show(Export_menu, e.getScreenX(), e.getScreenY());

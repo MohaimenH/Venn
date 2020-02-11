@@ -12,7 +12,7 @@
 
 <AnchorPane fx:id="MainAnchor" onMouseEntered="#detectLeft" prefHeight="637.0" prefWidth="1074.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
    <children>
-      <AnchorPane fx:id="secondAnchor" layoutX="194.0" layoutY="1.0" prefHeight="624.0" prefWidth="781.0">
+      <AnchorPane fx:id="secondAnchor" layoutX="244.0" layoutY="3.0" prefHeight="624.0" prefWidth="781.0">
          <children>
             <Circle id="Left Circle" fill="#30068f" layoutX="253.0" layoutY="378.0" opacity="0.38" radius="220.0" stroke="BLACK" strokeWidth="4.0" />
             <Circle id="Right Circle" fill="RED" layoutX="543.0" layoutY="378.0" opacity="0.39" radius="220.0" stroke="#4d3f3f" strokeWidth="4.0" />
@@ -24,7 +24,7 @@
             <Label fx:id="title" alignment="CENTER" contentDisplay="CENTER" layoutX="291.0" layoutY="43.0" onMouseClicked="#setTitle" prefHeight="58.0" prefWidth="215.0" text="Venn" textAlignment="CENTER">
               
                <font>
-                  <Font size="27.0" />
+                  <Font size="48.0" />
                </font>
             </Label>
             <Label fx:id="rightLabel" layoutX="534.0" layoutY="126.0" text="Label" />
@@ -34,7 +34,7 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b7c4d1" height="26.0" layoutX="16.0" layoutY="7.0" stroke="BLACK" strokeType="INSIDE" width="176.0" />
       <Label fx:id="Edit_menu" layoutX="81.0" layoutY="12.0" onMouseClicked="#Menubar_edit" text="Edit" />
       <Label fx:id="Export_menu" layoutX="132.0" layoutY="12.0" onMouseClicked="#Menubar_export" text="Export" />
-      <Button fx:id="snapshot" layoutX="562.0" layoutY="104.0" mnemonicParsing="false" onAction="#takeSnapshot" text="Snapshot" />
+      <Button fx:id="snapshot" layoutX="562.0" layoutY="104.0" mnemonicParsing="false" opacity="0.0" text="Snapshot" />
          
       <Button id="test" fx:id="submit" layoutX="202.0" layoutY="50.0" mnemonicParsing="false" onAction="#printOutput" text="Add" />
       <TextField fx:id="inputText" layoutX="17.0" layoutY="50.0" onKeyPressed="#handle" prefHeight="59.0" prefWidth="176.0" />
@@ -44,9 +44,9 @@
       <Text layoutX="24.0" layoutY="430.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Left Circle" />
       <Text layoutX="19.0" layoutY="499.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Right Circle" />
       <Button fx:id="left_label_button" layoutX="132.0" layoutY="445.0" mnemonicParsing="false" onAction="#setLeftLabel" text="Set Left" />
-      <Button fx:id="right_label_button" layoutX="132.0" layoutY="496.0" mnemonicParsing="false" onAction="#setRightLabel" text="Set Right" />
+      <Button fx:id="right_label_button" layoutX="132.0" layoutY="512.0" mnemonicParsing="false" onAction="#setRightLabel" text="Set Right" />
       <Button fx:id="importer" layoutX="202.0" layoutY="83.0" mnemonicParsing="false" onAction="#importer" text="Import" />
-      <Button fx:id="textExport" layoutX="549.0" layoutY="142.0" mnemonicParsing="false" onAction="#exportAsText" text="Export As Text" />
+      <Button fx:id="textExport" layoutX="549.0" layoutY="142.0" mnemonicParsing="false" opacity="0.0" text="Export As Text" />
       <Label fx:id="File_menu" layoutX="34.0" layoutY="12.0" onMouseClicked="#Menubar_File" text="File" /> 
 
    </children>
