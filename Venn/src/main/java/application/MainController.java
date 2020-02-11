@@ -48,6 +48,7 @@ public class MainController {
 	String temp;
 	int index;
 	static AccSys sys;
+	static ContextMenu menuBarContextMenu = new ContextMenu();
 
 	private Set<String> elements = new HashSet<>(); // All elements
 	
@@ -384,8 +385,11 @@ public class MainController {
 	@FXML
 	public void Menubar_File(MouseEvent e) {
 		
-		if(e.getButton()==MouseButton.SECONDARY || e.getButton()==MouseButton.PRIMARY) {
-			ContextMenu contextMenu = new ContextMenu();
+		menuBarContextMenu.hide();
+		menuBarContextMenu.getItems().clear();
+		
+		if(e.getButton()==MouseButton.PRIMARY) {
+//			ContextMenu contextMenu = new ContextMenu();
 			MenuItem Import = new MenuItem("Import");
 			MenuItem Snapshot=new MenuItem("Snapshot");
 			
@@ -409,29 +413,51 @@ public class MainController {
 				}
 			});
 			
-			contextMenu.getItems().addAll(Import,Snapshot);
+			menuBarContextMenu.getItems().addAll(Import,Snapshot);
 //			File_menu.setContextMenu(contextMenu);
-			contextMenu.show(File_menu, e.getScreenX(), e.getScreenY());
+			menuBarContextMenu.show(File_menu, e.getScreenX(), e.getScreenY());
+//			e.consume();
 		}
 		
+//		e.consume();
+//		System.out.print(e.isConsumed());
 	}
 	
 	@FXML
 	public void Menubar_edit(MouseEvent e) {
+//		e.consume();
+		
+		menuBarContextMenu.hide();
+		menuBarContextMenu.getItems().clear();
+		
 		if(e.getButton()==MouseButton.PRIMARY) {
 			ContextMenu contextMenu = new ContextMenu();
 			MenuItem WipeClean = new MenuItem("Clear all");
 			
 			WipeClean.setOnAction((event)->{
+				clearLeftSet();
+				clearRightSet();
 				System.out.print("clear all cliced");
 			});
-			contextMenu.getItems().addAll(WipeClean);
+			
+			menuBarContextMenu.getItems().addAll(WipeClean);
+
+			menuBarContextMenu.show(Edit_menu, e.getScreenX(), e.getScreenY());
+			
+//			contextMenu.getItems().addAll(WipeClean);
 //			Edit_menu.setContextMenu(contextMenu);
-			contextMenu.show(Edit_menu, e.getScreenX(), e.getScreenY());
+//			contextMenu.show(Edit_menu, e.getScreenX(), e.getScreenY());
+			
+//			e.consume();
 		}
+//		e.consume();
+//		System.out.print(e.isConsumed());
 	}
 	@FXML
 	public void Menubar_export(MouseEvent e) {
+//		e.consume();
+		menuBarContextMenu.hide();
+		menuBarContextMenu.getItems().clear();
 		if(e.getButton()==MouseButton.PRIMARY) {
 			ContextMenu contextMenu=new ContextMenu();
 			MenuItem Export =new MenuItem("Export as .txt");
@@ -444,10 +470,15 @@ public class MainController {
 				}
 			});
 			
-			contextMenu.getItems().addAll(Export);
+//			contextMenu.getItems().addAll(Export);
+			menuBarContextMenu.getItems().addAll(Export);
 //			Export_menu.setContextMenu(contextMenu);
-			contextMenu.show(Export_menu, e.getScreenX(), e.getScreenY());
+			menuBarContextMenu.show(Export_menu, e.getScreenX(), e.getScreenY());
+//			contextMenu.show(Export_menu, e.getScreenX(), e.getScreenY());
+//			e.consume();
 		}
+//		e.consume();
+//		System.out.print(e.isConsumed());
 	}
 
 
