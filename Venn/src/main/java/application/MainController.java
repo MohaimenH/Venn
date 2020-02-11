@@ -61,6 +61,8 @@ public class MainController {
 
 	//////////////////
 	@FXML
+	private MenuButton TestMenu;
+	@FXML
 	private Label File_menu;
 	@FXML
 	private Label Edit_menu;
@@ -376,6 +378,7 @@ public class MainController {
 		if(e.getButton()==MouseButton.PRIMARY) {
 			ContextMenu contextMenu = new ContextMenu();
 			MenuItem Import = new MenuItem("Import");
+			MenuItem Export = new MenuItem("Export"); 
 			MenuItem Snapshot=new MenuItem("Snapshot");
 			
 			Import.setOnAction((event) -> {
@@ -386,6 +389,13 @@ public class MainController {
 					e1.printStackTrace();
 				}
 				
+			});
+			Export.setOnAction((event)->{
+				try {
+					exportAsText();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
 			});
 			Snapshot.setOnAction((event)->{
 				System.out.print("Snapshot Clicked");
@@ -398,7 +408,8 @@ public class MainController {
 				}
 			});
 			
-			contextMenu.getItems().addAll(Import,Snapshot);
+			
+			contextMenu.getItems().addAll(Import,Export,Snapshot);
 			File_menu.setContextMenu(contextMenu);
 		}
 		
@@ -417,22 +428,18 @@ public class MainController {
 			Edit_menu.setContextMenu(contextMenu);
 		}
 	}
+	
 	@FXML
-	public void Menubar_export(MouseEvent e) {
+	public void TestMenuThing(MouseEvent e) {
 		if(e.getButton()==MouseButton.PRIMARY) {
-			ContextMenu contextMenu=new ContextMenu();
-			MenuItem Export =new MenuItem("Export as .txt");
+			ContextMenu contextMenu = new ContextMenu();
+			MenuItem WipeClean = new MenuItem("Clear all");
 			
-			Export.setOnAction((event)->{
-				try {
-					exportAsText();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
+			WipeClean.setOnAction((event)->{
+				System.out.print("clear all cliced");
 			});
-			
-			contextMenu.getItems().addAll(Export);
-			Export_menu.setContextMenu(contextMenu);
+			contextMenu.getItems().addAll(WipeClean);
+			TestMenu.setContextMenu(contextMenu);
 		}
 	}
 
