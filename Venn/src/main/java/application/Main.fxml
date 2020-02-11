@@ -29,12 +29,11 @@
             </Label>
             <Label fx:id="rightLabel" layoutX="534.0" layoutY="126.0" text="Label" />
             <Label fx:id="leftLabel" layoutX="239.0" layoutY="126.0" onMouseClicked="#detectLabelClick" text="Label" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b7c4d1" height="25.0" layoutX="-181.0" layoutY="8.0" stroke="BLACK" strokeType="INSIDE" width="176.0" />
-            <Label fx:id="File_menu" layoutX="-170.0" layoutY="12.0" onMouseClicked="#Menubar_File" text="File" />
-            <Label fx:id="Edit_menu" layoutX="-139.0" layoutY="12.0" onMouseClicked="#Menubar_edit" text="Edit" />
-            <Label fx:id="Export_menu" layoutX="-107.0" layoutY="12.0" onMouseClicked="#Menubar_export" text="Export" />
          </children>
       </AnchorPane>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b7c4d1" height="26.0" layoutX="16.0" layoutY="7.0" stroke="BLACK" strokeType="INSIDE" width="176.0" />
+      <Label fx:id="Edit_menu" layoutX="81.0" layoutY="12.0" onMouseClicked="#Menubar_edit" text="Edit" />
+      <Label fx:id="Export_menu" layoutX="132.0" layoutY="12.0" onMouseClicked="#Menubar_export" text="Export" />
       <Button fx:id="snapshot" layoutX="562.0" layoutY="104.0" mnemonicParsing="false" onAction="#takeSnapshot" text="Snapshot" />
          
       <Button id="test" fx:id="submit" layoutX="202.0" layoutY="50.0" mnemonicParsing="false" onAction="#printOutput" text="Add" />
@@ -47,7 +46,8 @@
       <Button fx:id="left_label_button" layoutX="132.0" layoutY="445.0" mnemonicParsing="false" onAction="#setLeftLabel" text="Set Left" />
       <Button fx:id="right_label_button" layoutX="132.0" layoutY="496.0" mnemonicParsing="false" onAction="#setRightLabel" text="Set Right" />
       <Button fx:id="importer" layoutX="202.0" layoutY="83.0" mnemonicParsing="false" onAction="#importer" text="Import" />
-      <Button fx:id="textExport" layoutX="549.0" layoutY="142.0" mnemonicParsing="false" onAction="#exportAsText" text="Export As Text" /> 
+      <Button fx:id="textExport" layoutX="549.0" layoutY="142.0" mnemonicParsing="false" onAction="#exportAsText" text="Export As Text" />
+      <Label fx:id="File_menu" layoutX="34.0" layoutY="12.0" onMouseClicked="#Menubar_File" text="File" /> 
 
    </children>
 </AnchorPane>

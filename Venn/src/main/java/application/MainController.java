@@ -383,7 +383,8 @@ public class MainController {
 	
 	@FXML
 	public void Menubar_File(MouseEvent e) {
-		if(e.getButton()==MouseButton.PRIMARY) {
+		
+		if(e.getButton()==MouseButton.SECONDARY || e.getButton()==MouseButton.PRIMARY) {
 			ContextMenu contextMenu = new ContextMenu();
 			MenuItem Import = new MenuItem("Import");
 			MenuItem Snapshot=new MenuItem("Snapshot");
@@ -409,7 +410,8 @@ public class MainController {
 			});
 			
 			contextMenu.getItems().addAll(Import,Snapshot);
-			File_menu.setContextMenu(contextMenu);
+//			File_menu.setContextMenu(contextMenu);
+			contextMenu.show(File_menu, e.getScreenX(), e.getScreenY());
 		}
 		
 	}
@@ -424,7 +426,8 @@ public class MainController {
 				System.out.print("clear all cliced");
 			});
 			contextMenu.getItems().addAll(WipeClean);
-			Edit_menu.setContextMenu(contextMenu);
+//			Edit_menu.setContextMenu(contextMenu);
+			contextMenu.show(Edit_menu, e.getScreenX(), e.getScreenY());
 		}
 	}
 	@FXML
@@ -442,7 +445,8 @@ public class MainController {
 			});
 			
 			contextMenu.getItems().addAll(Export);
-			Export_menu.setContextMenu(contextMenu);
+//			Export_menu.setContextMenu(contextMenu);
+			contextMenu.show(Export_menu, e.getScreenX(), e.getScreenY());
 		}
 	}
 
