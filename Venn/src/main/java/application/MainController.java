@@ -115,6 +115,8 @@ public class MainController {
 	@FXML
 	private ListView<String> left;
 	@FXML
+	private ListView<String> top;
+	@FXML
 	private ListView<String> middle;
 	@FXML
 	private ListView<String> decoyRight;
@@ -960,6 +962,121 @@ public class MainController {
 		reader.close();
 	}
 	
+	//=========================================// 3 Sets
+	
+	private boolean notPresentIn(Set<String> itself, Set<String> b, Set<String> c, Set<String> d) {
+		
+		if (itself.contains(temp) || b.contains(temp) || c.contains(temp) || d.contains(temp) ) {
+			return false;
+		}
+		
+		return true;
+	}
+	
+	private boolean notPresentIn(Set<String> itself, Set<String> b, Set<String> c) {
+		
+		if (itself.contains(temp) || b.contains(temp) || c.contains(temp)) {
+			return false;
+		}
+		
+		return true;
+	}
+	
+	@FXML
+	private void detectA() {
+		
+		if (selected && notPresentIn(topElems, elemsAB, elemsAC, midElems) && notBlank(temp)) {
+
+			if (elemsBC.contains(temp)) {
+				//detectM();
+			}
+			
+			else if (leftElems.contains(temp)) {
+				//detectAB();
+			}
+			
+			else if (rightElems.contains(temp)) {
+				//detectAC();
+			}
+			
+			else {
+				
+				top.getItems().add(temp);
+				holder.getItems().remove(temp);
+				topElems.add(temp);
+				selected = false;
+			}
+		}
+
+		else if (selected) {
+			holder.getItems().remove(temp);
+			selected = false;
+		}
+	}
+	
+	@FXML
+	private void detectB() {
+		
+		if (selected && notPresentIn(leftElems, elemsAB, elemsBC, midElems) && notBlank(temp)) {
+
+			if (elemsAC.contains(temp)) {
+				//detectM();
+			}
+			
+			else if (topElems.contains(temp)) {
+				//detectAB();
+			}
+			
+			else if (rightElems.contains(temp)) {
+				//detectBC();
+			}
+			
+			else {
+				
+				left.getItems().add(temp);
+				holder.getItems().remove(temp);
+				leftElems.add(temp);
+				selected = false;
+			}
+		}
+
+		else if (selected) {
+			holder.getItems().remove(temp);
+			selected = false;
+		}
+	}
+
+	@FXML
+	private void detectC() {
+		
+		if (selected && notPresentIn(rightElems, elemsAC, elemsBC, midElems) && notBlank(temp)) {
+
+			if (elemsAB.contains(temp)) {
+				//detectM();
+			}
+			
+			else if (topElems.contains(temp)) {
+				//detectAC();
+			}
+			
+			else if (leftElems.contains(temp)) {
+				//detectBC();
+			}
+			
+			else {
+				
+				right.getItems().add(temp);
+				holder.getItems().remove(temp);
+				rightElems.add(temp);
+				selected = false;
+			}
+		}
+
+		else if (selected) {
+			holder.getItems().remove(temp);
+			selected = false;
+		}
+	}
 	
 	
 }
