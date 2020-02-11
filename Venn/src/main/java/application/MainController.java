@@ -49,10 +49,18 @@ public class MainController {
 	int index;
 	static AccSys sys;
 
-	private Set<String> elements = new HashSet<>();
-	private Set<String> leftElems = new HashSet<>();
-	private Set<String> rightElems = new HashSet<>();
-	private Set<String> midElems = new HashSet<>();
+	private Set<String> elements = new HashSet<>(); // All elements
+	
+	private Set<String> leftElems = new HashSet<>(); // Set A for 2 Sets Version ||| Set B for 3 Sets Version 
+	private Set<String> rightElems = new HashSet<>(); // Set B for 2 Sets Version ||| Set C for 3 Sets Version
+	private Set<String> midElems = new HashSet<>(); // Intersection of all sets
+	
+	// Only needed for 3 Sets Version
+	private Set<String> topElems = new HashSet<>(); // Set A for 3 Set Version
+	private Set<String> elemsAB = new HashSet<>(); // Intersection of Set A & B
+	private Set<String> elemsAC = new HashSet<>(); // Intersection of Set A & C
+	private Set<String> elemsBC = new HashSet<>(); // Intersection of Set B & C
+
 
 //	ArrayList<String> elements = new ArrayList<>();
 //	ArrayList<String> leftElems = new ArrayList<>();
