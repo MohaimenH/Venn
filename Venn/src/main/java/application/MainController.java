@@ -4,7 +4,6 @@ import java.awt.AWTException;
 //import java.awt.MenuItem;
 import java.awt.MouseInfo;
 import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.image.BufferedImage;
 import java.net.URL;
@@ -69,6 +68,8 @@ public class MainController {
 //	ArrayList<String> midElems = new ArrayList<>();
 
 	//////////////////
+	@FXML
+	private MenuButton TestMenu;
 	@FXML
 	private Label File_menu;
 	@FXML
@@ -389,9 +390,11 @@ public class MainController {
 		menuBarContextMenu.getItems().clear();
 		
 		if(e.getButton()==MouseButton.PRIMARY) {
+
 //			ContextMenu contextMenu = new ContextMenu();
 			MenuItem Import = new MenuItem("Import Text File (.txt)");
 //			MenuItem Snapshot=new MenuItem("Snapshot");
+
 			
 			Import.setOnAction((event) -> {
 //				System.out.print("Import Clicked");
@@ -402,6 +405,7 @@ public class MainController {
 				}
 				
 			});
+
 			
 			menuBarContextMenu.getItems().addAll(Import);
 //			File_menu.setContextMenu(contextMenu);
@@ -462,6 +466,7 @@ public class MainController {
 				}
 			});
 			
+
 			Snapshot.setOnAction((event)->{
 				System.out.print("Snapshot Clicked");
 				try {
@@ -473,16 +478,23 @@ public class MainController {
 				}
 			});
 			
+
 //			contextMenu.getItems().addAll(Export);
 			menuBarContextMenu.getItems().addAll(Snapshot, Export);
 //			Export_menu.setContextMenu(contextMenu);
 			menuBarContextMenu.show(Export_menu, e.getScreenX(), e.getScreenY());
 //			contextMenu.show(Export_menu, e.getScreenX(), e.getScreenY());
 //			e.consume();
+
 		}
+
 //		e.consume();
 //		System.out.print(e.isConsumed());
+
+		
 	}
+	
+	
 
 
 	// =============================================//label customization
