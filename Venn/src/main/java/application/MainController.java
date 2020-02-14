@@ -523,28 +523,28 @@ public class MainController {
 		}
 	}
 
-	@FXML
-	private void setLeftLabel() {
-		String left = left_label_input.getText();
-		leftLabel.setText(left);
-		left_label_input.clear();
-	}
+//	@FXML
+//	private void setLeftLabel() {
+//		String left = left_label_input.getText();
+//		leftLabel.setText(left);
+//		left_label_input.clear();
+//	}
 
 	private void setLeftLabel(String name) {
 		leftLabel.setText(name);
-		left_label_input.clear();
+//		left_label_input.clear();
 	}
 
-	@FXML
-	private void setRightLabel() {
-		String right = right_label_input.getText();
-		rightLabel.setText(right);
-		right_label_input.clear();
-	}
+//	@FXML
+//	private void setRightLabel() {
+//		String right = right_label_input.getText();
+//		rightLabel.setText(right);
+//		right_label_input.clear();
+//	}
 
 	private void setRightLabel(String name) {
 		rightLabel.setText(name);
-		right_label_input.clear();
+//		right_label_input.clear();
 	}
 	// =============================================// Clear individual sets
 
