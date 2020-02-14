@@ -27,8 +27,14 @@
                   <Font size="48.0" />
                </font>
             </Label>
-            <Label fx:id="rightLabel" layoutX="534.0" layoutY="126.0" text="Label" />
-            <Label fx:id="leftLabel" layoutX="239.0" layoutY="126.0" onMouseClicked="#detectLabelClick" text="Label" />
+            <Label fx:id="rightLabel" layoutX="511.0" layoutY="119.0" text="Set B">
+               <font>
+                  <Font size="25.0" />
+               </font></Label>
+            <Label fx:id="leftLabel" layoutX="220.0" layoutY="119.0" onMouseClicked="#detectLabelClick" text="Set A">
+               <font>
+                  <Font size="25.0" />
+               </font></Label>
          </children>
       </AnchorPane>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b7c4d1" height="26.0" layoutX="16.0" layoutY="7.0" stroke="BLACK" strokeType="INSIDE" width="176.0" />
