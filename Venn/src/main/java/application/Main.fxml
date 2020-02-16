@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
@@ -10,10 +15,12 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="MainAnchor" onMouseEntered="#detectLeft" prefHeight="637.0" prefWidth="1074.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
+<AnchorPane fx:id="MainAnchor" onMouseEntered="#detectLeft" prefHeight="637.0" prefWidth="1074.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
    <children>
       <AnchorPane fx:id="secondAnchor" layoutX="244.0" layoutY="3.0" prefHeight="624.0" prefWidth="781.0">
          <children>
+            <TextField fx:id="rightTextArea" disable="true" layoutX="475.0" layoutY="124.0" onInputMethodTextChanged="#donothing" onKeyReleased="#rightname" onKeyTyped="#donothing" opacity="0.0" />
+            <TextField fx:id="leftTextArea" disable="true" layoutX="171.0" layoutY="124.0" onInputMethodTextChanged="#donothing" onKeyReleased="#leftname" onKeyTyped="#donothing" opacity="0.0" />
             <Circle id="Left Circle" fill="#30068f" layoutX="253.0" layoutY="378.0" opacity="0.38" radius="220.0" stroke="BLACK" strokeWidth="4.0" />
             <Circle id="Right Circle" fill="RED" layoutX="543.0" layoutY="378.0" opacity="0.39" radius="220.0" stroke="#4d3f3f" strokeWidth="4.0" />
             <ListView fx:id="left" layoutX="130.0" layoutY="193.0" onKeyPressed="#keyPressLeft" onMouseClicked="#menuLeft" onMouseEntered="#detectLeft" onMouseMoved="#points" prefHeight="372.0" prefWidth="202.0" />
@@ -27,14 +34,15 @@
                   <Font size="48.0" />
                </font>
             </Label>
-            <Label fx:id="rightLabel" layoutX="511.0" layoutY="119.0" text="Set B">
+            <Label fx:id="rightLabel" layoutX="511.0" layoutY="119.0" onMouseClicked="#detectLabel2Click" text="Set B">
                <font>
                   <Font size="25.0" />
                </font></Label>
             <Label fx:id="leftLabel" layoutX="220.0" layoutY="119.0" onMouseClicked="#detectLabelClick" text="Set A">
                <font>
                   <Font size="25.0" />
-               </font></Label>
+               </font>
+            </Label>
          </children>
       </AnchorPane>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b7c4d1" height="26.0" layoutX="16.0" layoutY="7.0" stroke="BLACK" strokeType="INSIDE" width="176.0" />

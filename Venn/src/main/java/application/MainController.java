@@ -105,6 +105,10 @@ public class MainController {
 	private TextField right_label_input;
 	@FXML
 	private TextField left_label_input;
+	@FXML
+	private TextField leftTextArea;
+	@FXML
+	private TextField rightTextArea;
 	// =============================================//
 
 	@FXML
@@ -136,10 +140,13 @@ public class MainController {
 
 	// =============================================//
 	public MainController() {
+		leftTextArea = new TextField();
+		this.leftTextArea.setOpacity(0);
 	}
 
 	@FXML
 	private void initialize() {
+		
 	}
 
 	// =============================================// Helper Methods
@@ -519,10 +526,72 @@ public class MainController {
 
 			contextMenu.getItems().addAll(editLeftLabel);
 			leftLabel.setContextMenu(contextMenu);
-
+		}
+		if (e.getButton() == MouseButton.PRIMARY) {
+			leftLabel.setOpacity(0);
+			this.leftLabel.setDisable(true);
+			leftname();
+			
 		}
 	}
 
+	@FXML
+	public void detectLabel2Click(MouseEvent e) {
+		
+		if (e.getButton() == MouseButton.PRIMARY) {
+			rightLabel.setOpacity(0);
+			this.rightLabel.setDisable(true);
+			rightname();
+			
+		}
+	}
+
+	@FXML
+	public void leftname() {
+
+		this.leftTextArea.setDisable(false);
+		this.leftTextArea.setOpacity(1);
+		this.leftTextArea.setOnKeyPressed(e ->{
+			if (e.getCode() == KeyCode.ENTER) {
+				this.leftLabel.setText(this.leftTextArea.getText());
+				this.leftTextArea.setOpacity(0);
+				leftLabel.setOpacity(1);
+				leftTextArea.setText("");
+				this.leftTextArea.setDisable(true);
+				this.leftTextArea.setOpacity(0);
+				this.leftLabel.setDisable(false);
+			}
+			
+		});;
+		
+	};
+	
+	@FXML
+	public void rightname() {
+
+		this.rightTextArea.setDisable(false);
+		this.rightTextArea.setOpacity(1);
+		this.rightTextArea.setOnKeyPressed(e ->{
+			if (e.getCode() == KeyCode.ENTER) {
+				this.rightLabel.setText(this.rightTextArea.getText());
+				this.rightTextArea.setOpacity(0);
+				rightLabel.setOpacity(1);
+				leftTextArea.setText("");
+				this.rightTextArea.setDisable(true);
+				this.rightTextArea.setOpacity(0);
+				this.rightLabel.setDisable(false);
+			}
+			
+		});;
+		
+	};
+	
+	@FXML
+	public void donothing() {
+		
+	}
+	
+	
 //	@FXML
 //	private void setLeftLabel() {
 //		String left = left_label_input.getText();
