@@ -48,7 +48,7 @@ public class MainController {
 	Boolean selected = false;
 	String temp;
 	int index;
-	static AccSys sys;
+	public static AccSys sys;
 	static ContextMenu menuBarContextMenu = new ContextMenu();
 
 	private Set<String> elements = new HashSet<>(); // All elements
@@ -515,7 +515,6 @@ public class MainController {
 
 	@FXML
 	public void detectLabelClick(MouseEvent e) {
-		System.out.print("selected");
 		if (e.getButton() == MouseButton.SECONDARY) {
 			ContextMenu contextMenu = new ContextMenu();
 			MenuItem editLeftLabel = new MenuItem("Edit left label");
@@ -548,9 +547,10 @@ public class MainController {
 
 	@FXML
 	public void leftname() {
-
+		
 		this.leftTextArea.setDisable(false);
 		this.leftTextArea.setOpacity(1);
+		this.leftTextArea.requestFocus();
 		this.leftTextArea.setOnKeyPressed(e ->{
 			if (e.getCode() == KeyCode.ENTER) {
 				this.leftLabel.setText(this.leftTextArea.getText());
@@ -568,9 +568,10 @@ public class MainController {
 	
 	@FXML
 	public void rightname() {
-
+		
 		this.rightTextArea.setDisable(false);
 		this.rightTextArea.setOpacity(1);
+		this.rightTextArea.requestFocus();
 		this.rightTextArea.setOnKeyPressed(e ->{
 			if (e.getCode() == KeyCode.ENTER) {
 				this.rightLabel.setText(this.rightTextArea.getText());
