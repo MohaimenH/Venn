@@ -31,6 +31,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -427,6 +428,7 @@ public class MainController {
 //			ContextMenu contextMenu = new ContextMenu();
 			MenuItem WipeClean = new MenuItem("Clear All");
 			MenuItem changeTitle = new MenuItem("Change Label of Venn Diagram");
+			MenuItem changeTitleFontSize = new MenuItem("Change Title Font");
 			MenuItem changeNameA = new MenuItem("Change Name For Set A");
 			MenuItem changeNameB = new MenuItem("Change Name For Set B");
 
@@ -440,6 +442,10 @@ public class MainController {
 				popUpChangeTitle();
 			});
 			
+			changeTitleFontSize.setOnAction((event) -> {
+				popUpChangeTitleSize();
+			});
+
 			changeNameA.setOnAction((event) -> {
 				popUpLeft();
 			});
@@ -448,7 +454,7 @@ public class MainController {
 				popUpRight();
 			});
 			
-			menuBarContextMenu.getItems().addAll(WipeClean, changeTitle, changeNameA, changeNameB);
+			menuBarContextMenu.getItems().addAll(WipeClean, changeTitle, changeTitleFontSize, changeNameA, changeNameB);
 
 			menuBarContextMenu.show(Edit_menu, e.getScreenX(), e.getScreenY());
 
@@ -640,9 +646,15 @@ public class MainController {
 
 	// =============================================// modify the title
 
-	@FXML
-	private void setTitle() {
-//		title.setText();
+//	@FXML
+	private void setLabelFontSize(Label label, double size) {
+		label.setFont(Font.font(size));
+	}
+	
+	private void setLabelFont(Label label, String family) {
+		if (notBlank(family)) {
+			label.setFont(Font.font(family));
+		}
 	}
 	
 	private void setTitle(String name) {
@@ -1204,11 +1216,66 @@ public class MainController {
 		layout.getChildren().addAll(label1, test, button1);
 		layout.setAlignment(Pos.CENTER);
 
-		Scene scene1 = new Scene(layout, 300, 100);
+		Scene scene1 = new Scene(layout, 300, 200);
 
 		popupwindow.setScene(scene1);
 
 		popupwindow.showAndWait();
 
 	}
+	
+	public void popUpChangeTitleSize() {
+
+		Stage popupwindow = new Stage();
+
+		popupwindow.initModality(Modality.APPLICATION_MODAL);
+		popupwindow.setTitle("Change Font Size of Title");
+
+		Label current = new Label("Curent Font Size Is " + title.getFont().getSize());
+		Label label1 = new Label("Please Enter A Font Size: ");
+
+		TextField test = new TextField();
+		
+		test.setAlignment(Pos.CENTER);
+		test.setOnAction((event) -> {
+			if (notBlank(test.getText())) {
+				try {
+					setLabelFontSize(title, Double.valueOf(test.getText()));
+				}
+				
+				catch (Exception e) {
+					//TODO
+				}
+			}
+			popupwindow.close();
+		});
+
+		Button button1 = new Button("Set Font Size");
+
+		button1.setOnAction((event) -> {
+			if (notBlank(test.getText())) {
+				try {
+					setLabelFontSize(title, Double.valueOf(test.getText()));
+				}
+				
+				catch (Exception e) {
+					//TODO
+				}
+			}
+			popupwindow.close();
+		});
+
+		VBox layout = new VBox(10);
+
+		layout.getChildren().addAll(current, label1, test, button1);
+		layout.setAlignment(Pos.CENTER);
+
+		Scene scene1 = new Scene(layout, 300, 150);
+
+		popupwindow.setScene(scene1);
+
+		popupwindow.showAndWait();
+
+	}
+	
 }

@@ -44,7 +44,7 @@
       <Text layoutX="19.0" layoutY="499.0" opacity="0.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Right Circle" />
       <Button fx:id="importer" layoutX="202.0" layoutY="83.0" mnemonicParsing="false" onAction="#importer" text="Import" />
       <Label fx:id="File_menu" layoutX="34.0" layoutY="12.0" onMouseClicked="#Menubar_File" text="File" />
-      <Label fx:id="title" alignment="CENTER" contentDisplay="CENTER" layoutX="298.0" layoutY="21.0" onMouseClicked="#setTitle" prefHeight="59.0" prefWidth="740.0" text="Venn" textAlignment="CENTER">
+      <Label fx:id="title" alignment="CENTER" contentDisplay="CENTER" layoutX="298.0" layoutY="21.0" prefHeight="59.0" prefWidth="740.0" text="Venn" textAlignment="CENTER">
         
                <font>
             <Font size="48.0" />
