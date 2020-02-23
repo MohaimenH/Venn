@@ -73,6 +73,8 @@ public class MainController {
 	@FXML
 	private Label Export_menu;
 	@FXML
+	private Label About_menu;
+	@FXML
 	private AnchorPane MainAnchor;
 	@FXML
 	private AnchorPane secondAnchor;
@@ -427,10 +429,21 @@ public class MainController {
 		if (e.getButton() == MouseButton.PRIMARY) {
 //			ContextMenu contextMenu = new ContextMenu();
 			MenuItem WipeClean = new MenuItem("Clear All");
-			MenuItem changeTitle = new MenuItem("Change Label of Venn Diagram");
-			MenuItem changeTitleFontSize = new MenuItem("Change Title Font");
-			MenuItem changeNameA = new MenuItem("Change Name For Set A");
-			MenuItem changeNameB = new MenuItem("Change Name For Set B");
+			
+			Menu title = new Menu("Diagram Title");
+			MenuItem changeTitle = new MenuItem("Change Title");
+			MenuItem changeTitleFontSize = new MenuItem("Change Font Size");
+			MenuItem changeTitleFont = new MenuItem("Change Font");
+			
+			Menu setA = new Menu(leftLabel.getText());
+			MenuItem changeNameA = new MenuItem("Change Label");
+			MenuItem changeSetAFontSize = new MenuItem("Change Font Size");
+			MenuItem changeSetAFont = new MenuItem("Change Font");
+			
+			Menu setB = new Menu(rightLabel.getText());
+			MenuItem changeNameB = new MenuItem("Change Label");
+			MenuItem changeSetBFontSize = new MenuItem("Change Font Size");
+			MenuItem changeSetBFont = new MenuItem("Change Font");
 
 			WipeClean.setOnAction((event) -> {
 				clearLeftSet();
@@ -445,16 +458,40 @@ public class MainController {
 			changeTitleFontSize.setOnAction((event) -> {
 				popUpChangeTitleSize();
 			});
-
+			
+			changeTitleFont.setOnAction((event) -> {
+				popUpChangeTitleFont();
+			});
+			
 			changeNameA.setOnAction((event) -> {
 				popUpLeft();
+			});
+			
+			changeSetAFontSize.setOnAction((event) -> {
+				popUpChangeSetASize();
+			});
+			
+			changeSetAFont.setOnAction((event) -> {
+				popUpChangeSetAFont();
 			});
 
 			changeNameB.setOnAction((event) -> {
 				popUpRight();
 			});
 			
-			menuBarContextMenu.getItems().addAll(WipeClean, changeTitle, changeTitleFontSize, changeNameA, changeNameB);
+			changeSetBFontSize.setOnAction((event) -> {
+				popUpChangeSetBSize();
+			});
+			
+			changeSetBFont.setOnAction((event) -> {
+				popUpChangeSetBFont();
+			});
+			
+			title.getItems().addAll(changeTitle, changeTitleFontSize, changeTitleFont);
+			setA.getItems().addAll(changeNameA, changeSetAFontSize, changeSetAFont);
+			setB.getItems().addAll(changeNameB, changeSetBFontSize, changeSetBFont);
+			
+			menuBarContextMenu.getItems().addAll(WipeClean, title, setA, setB);
 
 			menuBarContextMenu.show(Edit_menu, e.getScreenX(), e.getScreenY());
 
@@ -512,6 +549,47 @@ public class MainController {
 
 	}
 
+	@FXML
+	public void Menubar_About(MouseEvent e) {
+
+		menuBarContextMenu.hide();
+		menuBarContextMenu.getItems().clear();
+
+		if (e.getButton() == MouseButton.PRIMARY) {
+
+//			ContextMenu contextMenu = new ContextMenu();
+			MenuItem fontList = new MenuItem("Show Available Fonts");
+//			MenuItem Snapshot=new MenuItem("Snapshot");
+
+			fontList.setOnAction((event) -> {
+				Stage popupwindow = new Stage();
+
+				popupwindow.initModality(Modality.APPLICATION_MODAL);
+				popupwindow.setTitle("Available Fonts");
+				
+				ListView<String> fontsAvailable = new ListView<String>();
+				
+				fontsAvailable.getItems().addAll(Font.getFamilies());
+				
+				VBox layout = new VBox(5);
+
+				layout.getChildren().addAll(fontsAvailable);
+				layout.setAlignment(Pos.CENTER);
+
+				Scene scene1 = new Scene(layout, 300, 400);
+
+				popupwindow.setScene(scene1);
+
+				popupwindow.showAndWait();
+				
+			});
+
+			menuBarContextMenu.getItems().addAll(fontList);
+//			File_menu.setContextMenu(contextMenu);
+			menuBarContextMenu.show(About_menu, e.getScreenX(), e.getScreenY());
+//			e.consume();
+		}
+	}
 	// =============================================//label customization
 
 	@FXML
@@ -1184,6 +1262,7 @@ public class MainController {
 
 	}
 	
+	// ======================================== Title Change Pop-ups
 	public void popUpChangeTitle() {
 
 		Stage popupwindow = new Stage();
@@ -1231,7 +1310,7 @@ public class MainController {
 		popupwindow.initModality(Modality.APPLICATION_MODAL);
 		popupwindow.setTitle("Change Font Size of Title");
 
-		Label current = new Label("Curent Font Size Is " + title.getFont().getSize());
+		Label current = new Label("Current Font Size Is " + title.getFont().getSize());
 		Label label1 = new Label("Please Enter A Font Size: ");
 
 		TextField test = new TextField();
@@ -1256,6 +1335,282 @@ public class MainController {
 			if (notBlank(test.getText())) {
 				try {
 					setLabelFontSize(title, Double.valueOf(test.getText()));
+				}
+				
+				catch (Exception e) {
+					//TODO
+				}
+			}
+			popupwindow.close();
+		});
+
+		VBox layout = new VBox(10);
+
+		layout.getChildren().addAll(current, label1, test, button1);
+		layout.setAlignment(Pos.CENTER);
+
+		Scene scene1 = new Scene(layout, 300, 150);
+
+		popupwindow.setScene(scene1);
+
+		popupwindow.showAndWait();
+
+	}
+	
+	public void popUpChangeTitleFont() {
+
+		Stage popupwindow = new Stage();
+
+		popupwindow.initModality(Modality.APPLICATION_MODAL);
+		popupwindow.setTitle("Change Font of Title");
+
+		Label current = new Label("Current Font Is " + title.getFont().getFamily());
+		Label label1 = new Label("Please Enter A Font Name: ");
+
+		TextField test = new TextField();
+		
+		test.setAlignment(Pos.CENTER);
+		test.setOnAction((event) -> {
+			if (notBlank(test.getText())) {
+				try {
+					setLabelFont(title, test.getText());
+					setLabelFontSize(title, 30);
+				}
+				
+				catch (Exception e) {
+					//TODO
+				}
+			}
+			popupwindow.close();
+		});
+
+		Button button1 = new Button("Set Font");
+
+		button1.setOnAction((event) -> {
+			if (notBlank(test.getText())) {
+				try {
+					setLabelFont(title, test.getText());
+					setLabelFontSize(title, 30);
+				}
+				
+				catch (Exception e) {
+					//TODO
+				}
+			}
+			popupwindow.close();
+		});
+
+		VBox layout = new VBox(10);
+
+		layout.getChildren().addAll(current, label1, test, button1);
+		layout.setAlignment(Pos.CENTER);
+
+		Scene scene1 = new Scene(layout, 300, 150);
+
+		popupwindow.setScene(scene1);
+
+		popupwindow.showAndWait();
+
+	}
+
+	public void popUpChangeSetASize() {
+
+		Stage popupwindow = new Stage();
+
+		popupwindow.initModality(Modality.APPLICATION_MODAL);
+		popupwindow.setTitle("Change Font Size of Label");
+
+		Label current = new Label("Current Font Size Is " + leftLabel.getFont().getSize());
+		Label label1 = new Label("Please Enter A Font Size: ");
+
+		TextField test = new TextField();
+		
+		test.setAlignment(Pos.CENTER);
+		test.setOnAction((event) -> {
+			if (notBlank(test.getText())) {
+				try {
+					setLabelFontSize(leftLabel, Double.valueOf(test.getText()));
+				}
+				
+				catch (Exception e) {
+					//TODO
+				}
+			}
+			popupwindow.close();
+		});
+
+		Button button1 = new Button("Set Font Size");
+
+		button1.setOnAction((event) -> {
+			if (notBlank(test.getText())) {
+				try {
+					setLabelFontSize(leftLabel, Double.valueOf(test.getText()));
+				}
+				
+				catch (Exception e) {
+					//TODO
+				}
+			}
+			popupwindow.close();
+		});
+
+		VBox layout = new VBox(10);
+
+		layout.getChildren().addAll(current, label1, test, button1);
+		layout.setAlignment(Pos.CENTER);
+
+		Scene scene1 = new Scene(layout, 300, 150);
+
+		popupwindow.setScene(scene1);
+
+		popupwindow.showAndWait();
+
+	}
+
+	public void popUpChangeSetBSize() {
+
+		Stage popupwindow = new Stage();
+
+		popupwindow.initModality(Modality.APPLICATION_MODAL);
+		popupwindow.setTitle("Change Font Size of Label");
+
+		Label current = new Label("Current Font Size Is " + rightLabel.getFont().getSize());
+		Label label1 = new Label("Please Enter A Font Size: ");
+
+		TextField test = new TextField();
+		
+		test.setAlignment(Pos.CENTER);
+		test.setOnAction((event) -> {
+			if (notBlank(test.getText())) {
+				try {
+					setLabelFontSize(rightLabel, Double.valueOf(test.getText()));
+				}
+				
+				catch (Exception e) {
+					//TODO
+				}
+			}
+			popupwindow.close();
+		});
+
+		Button button1 = new Button("Set Font Size");
+
+		button1.setOnAction((event) -> {
+			if (notBlank(test.getText())) {
+				try {
+					setLabelFontSize(rightLabel, Double.valueOf(test.getText()));
+				}
+				
+				catch (Exception e) {
+					//TODO
+				}
+			}
+			popupwindow.close();
+		});
+
+		VBox layout = new VBox(10);
+
+		layout.getChildren().addAll(current, label1, test, button1);
+		layout.setAlignment(Pos.CENTER);
+
+		Scene scene1 = new Scene(layout, 300, 150);
+
+		popupwindow.setScene(scene1);
+
+		popupwindow.showAndWait();
+
+	}
+
+	public void popUpChangeSetAFont() {
+
+		Stage popupwindow = new Stage();
+
+		popupwindow.initModality(Modality.APPLICATION_MODAL);
+		popupwindow.setTitle("Change Font of Title");
+
+		Label current = new Label("Current Font Is " + leftLabel.getFont().getFamily());
+		Label label1 = new Label("Please Enter A Font Name: ");
+
+		TextField test = new TextField();
+		
+		test.setAlignment(Pos.CENTER);
+		test.setOnAction((event) -> {
+			if (notBlank(test.getText())) {
+				try {
+					setLabelFont(leftLabel, test.getText());
+					setLabelFontSize(leftLabel, 25);
+				}
+				
+				catch (Exception e) {
+					//TODO
+				}
+			}
+			popupwindow.close();
+		});
+
+		Button button1 = new Button("Set Font");
+
+		button1.setOnAction((event) -> {
+			if (notBlank(test.getText())) {
+				try {
+					setLabelFont(leftLabel, test.getText());
+					setLabelFontSize(leftLabel, 25);
+				}
+				
+				catch (Exception e) {
+					//TODO
+				}
+			}
+			popupwindow.close();
+		});
+
+		VBox layout = new VBox(10);
+
+		layout.getChildren().addAll(current, label1, test, button1);
+		layout.setAlignment(Pos.CENTER);
+
+		Scene scene1 = new Scene(layout, 300, 150);
+
+		popupwindow.setScene(scene1);
+
+		popupwindow.showAndWait();
+
+	}
+	
+	public void popUpChangeSetBFont() {
+
+		Stage popupwindow = new Stage();
+
+		popupwindow.initModality(Modality.APPLICATION_MODAL);
+		popupwindow.setTitle("Change Font of Title");
+
+		Label current = new Label("Current Font Is " + rightLabel.getFont().getFamily());
+		Label label1 = new Label("Please Enter A Font Name: ");
+
+		TextField test = new TextField();
+		
+		test.setAlignment(Pos.CENTER);
+		test.setOnAction((event) -> {
+			if (notBlank(test.getText())) {
+				try {
+					setLabelFont(rightLabel, test.getText());
+					setLabelFontSize(rightLabel, 25);
+				}
+				
+				catch (Exception e) {
+					//TODO
+				}
+			}
+			popupwindow.close();
+		});
+
+		Button button1 = new Button("Set Font");
+
+		button1.setOnAction((event) -> {
+			if (notBlank(test.getText())) {
+				try {
+					setLabelFont(rightLabel, test.getText());
+					setLabelFontSize(rightLabel, 25);
 				}
 				
 				catch (Exception e) {
