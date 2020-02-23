@@ -31,6 +31,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
@@ -432,18 +433,21 @@ public class MainController {
 			
 			Menu title = new Menu("Diagram Title");
 			MenuItem changeTitle = new MenuItem("Change Title");
+			MenuItem changeTitleColor = new MenuItem("Change Color");
 			MenuItem changeTitleFontSize = new MenuItem("Change Font Size");
 			MenuItem changeTitleFont = new MenuItem("Change Font");
 			
 			Menu setA = new Menu(leftLabel.getText());
 			MenuItem changeNameA = new MenuItem("Change Label");
-			MenuItem changeSetAFontSize = new MenuItem("Change Font Size");
-			MenuItem changeSetAFont = new MenuItem("Change Font");
+			MenuItem changeSetAColor = new MenuItem("Change Label Color");
+			MenuItem changeSetAFontSize = new MenuItem("Change Label Size");
+			MenuItem changeSetAFont = new MenuItem("Change Label Font");
 			
 			Menu setB = new Menu(rightLabel.getText());
 			MenuItem changeNameB = new MenuItem("Change Label");
-			MenuItem changeSetBFontSize = new MenuItem("Change Font Size");
-			MenuItem changeSetBFont = new MenuItem("Change Font");
+			MenuItem changeSetBColor = new MenuItem("Change Label Color");
+			MenuItem changeSetBFontSize = new MenuItem("Change Label Size");
+			MenuItem changeSetBFont = new MenuItem("Change Label Font");
 
 			WipeClean.setOnAction((event) -> {
 				clearLeftSet();
@@ -453,6 +457,10 @@ public class MainController {
 			
 			changeTitle.setOnAction((event) -> {
 				popUpChangeTitle();
+			});
+			
+			changeTitleColor.setOnAction((event) -> {
+				popUpChangeTitleColor();
 			});
 			
 			changeTitleFontSize.setOnAction((event) -> {
@@ -467,9 +475,14 @@ public class MainController {
 				popUpLeft();
 			});
 			
+			changeSetAColor.setOnAction((event) -> {
+				popUpChangeSetAColor();
+			});
+			
 			changeSetAFontSize.setOnAction((event) -> {
 				popUpChangeSetASize();
 			});
+			
 			
 			changeSetAFont.setOnAction((event) -> {
 				popUpChangeSetAFont();
@@ -477,6 +490,10 @@ public class MainController {
 
 			changeNameB.setOnAction((event) -> {
 				popUpRight();
+			});
+			
+			changeSetBColor.setOnAction((event) -> {
+				popUpChangeSetBColor();
 			});
 			
 			changeSetBFontSize.setOnAction((event) -> {
@@ -487,9 +504,9 @@ public class MainController {
 				popUpChangeSetBFont();
 			});
 			
-			title.getItems().addAll(changeTitle, changeTitleFontSize, changeTitleFont);
-			setA.getItems().addAll(changeNameA, changeSetAFontSize, changeSetAFont);
-			setB.getItems().addAll(changeNameB, changeSetBFontSize, changeSetBFont);
+			title.getItems().addAll(changeTitle, changeTitleColor, changeTitleFontSize, changeTitleFont);
+			setA.getItems().addAll(changeNameA, changeSetAColor, changeSetAFontSize, changeSetAFont);
+			setB.getItems().addAll(changeNameB, changeSetBColor, changeSetBFontSize, changeSetBFont);
 			
 			menuBarContextMenu.getItems().addAll(WipeClean, title, setA, setB);
 
@@ -734,7 +751,11 @@ public class MainController {
 			label.setFont(Font.font(family));
 		}
 	}
-	
+
+	private void setLabelColor(Label label, String c) {
+		
+		label.setTextFill(Color.valueOf(c));
+	}
 	private void setTitle(String name) {
 		title.setText(name);
 	}
@@ -1633,4 +1654,165 @@ public class MainController {
 
 	}
 	
+	public void popUpChangeTitleColor() {
+
+		Stage popupwindow = new Stage();
+
+		popupwindow.initModality(Modality.APPLICATION_MODAL);
+		popupwindow.setTitle("Change Color of Title");
+
+		Label current = new Label("Current Color Is " + title.getTextFill());
+		Label label1 = new Label("Please Enter A Color: ");
+
+		TextField test = new TextField();
+		
+		test.setAlignment(Pos.CENTER);
+		test.setOnAction((event) -> {
+			if (notBlank(test.getText())) {
+				try {
+					setLabelColor(title, test.getText());
+				}
+				
+				catch (Exception e) {
+					//TODO
+				}
+			}
+			popupwindow.close();
+		});
+
+		Button button1 = new Button("Set Color");
+
+		button1.setOnAction((event) -> {
+			if (notBlank(test.getText())) {
+				try {
+					setLabelColor(title, test.getText());
+				}
+				
+				catch (Exception e) {
+					//TODO
+				}
+			}
+			popupwindow.close();
+		});
+
+		VBox layout = new VBox(10);
+
+		layout.getChildren().addAll(current, label1, test, button1);
+		layout.setAlignment(Pos.CENTER);
+
+		Scene scene1 = new Scene(layout, 300, 150);
+
+		popupwindow.setScene(scene1);
+
+		popupwindow.showAndWait();
+
+	}
+	
+	public void popUpChangeSetAColor() {
+
+		Stage popupwindow = new Stage();
+
+		popupwindow.initModality(Modality.APPLICATION_MODAL);
+		popupwindow.setTitle("Change Color");
+
+		Label current = new Label("Current Color Is " + leftLabel.getTextFill());
+		Label label1 = new Label("Please Enter A Color: ");
+
+		TextField test = new TextField();
+		
+		test.setAlignment(Pos.CENTER);
+		test.setOnAction((event) -> {
+			if (notBlank(test.getText())) {
+				try {
+					setLabelColor(leftLabel, test.getText());
+				}
+				
+				catch (Exception e) {
+					//TODO
+				}
+			}
+			popupwindow.close();
+		});
+
+		Button button1 = new Button("Set Color");
+
+		button1.setOnAction((event) -> {
+			if (notBlank(test.getText())) {
+				try {
+					setLabelColor(leftLabel, test.getText());
+				}
+				
+				catch (Exception e) {
+					//TODO
+				}
+			}
+			popupwindow.close();
+		});
+
+		VBox layout = new VBox(10);
+
+		layout.getChildren().addAll(current, label1, test, button1);
+		layout.setAlignment(Pos.CENTER);
+
+		Scene scene1 = new Scene(layout, 300, 150);
+
+		popupwindow.setScene(scene1);
+
+		popupwindow.showAndWait();
+
+	}
+	
+	public void popUpChangeSetBColor() {
+
+		Stage popupwindow = new Stage();
+
+		popupwindow.initModality(Modality.APPLICATION_MODAL);
+		popupwindow.setTitle("Change Color");
+
+		Label current = new Label("Current Color Is " + rightLabel.getTextFill());
+		Label label1 = new Label("Please Enter A Color: ");
+
+		TextField test = new TextField();
+		
+		test.setAlignment(Pos.CENTER);
+		test.setOnAction((event) -> {
+			if (notBlank(test.getText())) {
+				try {
+					setLabelColor(rightLabel, test.getText());
+				}
+				
+				catch (Exception e) {
+					//TODO
+				}
+			}
+			popupwindow.close();
+		});
+
+		Button button1 = new Button("Set Color");
+
+		button1.setOnAction((event) -> {
+			if (notBlank(test.getText())) {
+				try {
+					setLabelColor(rightLabel, test.getText());
+				}
+				
+				catch (Exception e) {
+					//TODO
+				}
+			}
+			popupwindow.close();
+		});
+
+		VBox layout = new VBox(10);
+
+		layout.getChildren().addAll(current, label1, test, button1);
+		layout.setAlignment(Pos.CENTER);
+
+		Scene scene1 = new Scene(layout, 300, 150);
+
+		popupwindow.setScene(scene1);
+
+		popupwindow.showAndWait();
+
+	}
 }
