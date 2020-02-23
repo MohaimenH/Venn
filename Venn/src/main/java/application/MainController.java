@@ -57,12 +57,6 @@ public class MainController {
 	private Set<String> rightElems = new HashSet<>(); // Set B for 2 Sets Version ||| Set C for 3 Sets Version
 	private Set<String> midElems = new HashSet<>(); // Intersection of all sets
 
-	// Only needed for 3 Sets Version
-	private Set<String> topElems = new HashSet<>(); // Set A for 3 Set Version
-	private Set<String> elemsAB = new HashSet<>(); // Intersection of Set A & B
-	private Set<String> elemsAC = new HashSet<>(); // Intersection of Set A & C
-	private Set<String> elemsBC = new HashSet<>(); // Intersection of Set B & C
-
 //	ArrayList<String> elements = new ArrayList<>();
 //	ArrayList<String> leftElems = new ArrayList<>();
 //	ArrayList<String> rightElems = new ArrayList<>();
