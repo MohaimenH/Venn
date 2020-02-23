@@ -78,8 +78,6 @@ public class MainController {
 	@FXML
 	private Label title;
 	@FXML
-	private Button textExport;
-	@FXML
 	private Button left_label_button;
 	@FXML
 	private Button right_label_button;
@@ -87,8 +85,6 @@ public class MainController {
 //	private Button clearLeft;
 //	@FXML
 //	private Button clearRight;
-	@FXML
-	private Button snapshot;
 	@FXML
 	private Button importer;
 	@FXML
