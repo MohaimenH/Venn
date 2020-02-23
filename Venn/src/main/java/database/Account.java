@@ -14,17 +14,15 @@ public abstract class Account {
 		User ++;
 	}
 	
-	public static long gethash(String p) {
-		long result = 0L;
-		for (int i = 0; i < p.length(); i++) {
-			result += p.charAt(i);
-		}
-		return result;
-	}
+//	public static long gethash(String p) {
+//		long result = 0L;
+//		for (int i = 0; i < p.length(); i++) {
+//			result += p.charAt(i);
+//		}
+//		return result;
+//	}
 	
-	public String getname() {
-		return this.name;
-	}
+	public abstract String getname();
 	
 	public long getpwd() {
 		return this.pwd;

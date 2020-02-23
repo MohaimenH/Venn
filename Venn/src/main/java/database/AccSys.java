@@ -17,17 +17,17 @@ import login.AlertBox;
 public class AccSys {
 	public List<Account> accounts;
 	public SuperAcc superacc;
-	
+	public static String filepath = "src/main/java/database/users.txt";
 	public AccSys() throws IOException {
 		accounts = new ArrayList<Account>();
-		superacc = new SuperAcc("super", Account.gethash("iamsuper"));
+		superacc = new SuperAcc("super", getpwcode("iamsuper"));
 		this.accounts = this.getaccounts();
 		
 	}
 	
 	private List<Account> getaccounts() throws IOException{
 		List<Account> result = new ArrayList<Account>();
-		String filepath = "src/main/java/database/users.txt";
+		
 		File file = new File(filepath);
         try{
             BufferedReader br = new BufferedReader(new FileReader(file));
@@ -43,6 +43,14 @@ public class AccSys {
             e.printStackTrace();
         }
         
+		return result;
+	}
+	
+	public static long getpwcode(String pw) {
+		long result = 0;
+		for (int i = 0; i < pw.length(); i++) {
+    		result += pw.charAt(i);
+    	}
 		return result;
 	}
 }
