@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -50,12 +51,12 @@ public class Login extends Application {
 		// Input field
 		TextField nameInput = new TextField();
 		nameInput.setPromptText("username");
-		GridPane.setConstraints(nameInput, 2, 0);
-		nameInput.setPrefWidth(100);
-		TextField pwInput = new TextField();
+		GridPane.setConstraints(nameInput, 2, 0, 2, 1);
+		nameInput.setPrefWidth(170);
+		PasswordField pwInput = new PasswordField();
 		pwInput.setPromptText("password");
-		GridPane.setConstraints(pwInput, 2, 1);
-		pwInput.setPrefWidth(100);
+		GridPane.setConstraints(pwInput, 2, 1, 2, 1);
+		pwInput.setPrefWidth(170);
 		
 		//check boxes
 		CheckBox box1 = new CheckBox("Venn type:");
@@ -91,7 +92,7 @@ public class Login extends Application {
 		
 		// Button register
 		Button register = new Button("Register");
-		GridPane.setConstraints(register, 0, 2);
+		GridPane.setConstraints(register, 2, 3);
 		register.setPrefWidth(100);
 		register.setOnAction(e -> {
 			boolean flag = false;
@@ -122,7 +123,7 @@ public class Login extends Application {
 		
 		
 		grid.getChildren().addAll(label1, label2,nameInput, pwInput, loginButton, register);
-		Scene scene = new Scene(grid, 220, 100);
+		Scene scene = new Scene(grid, 260, 120);
 		window.setScene(scene);
 		window.show();
 	}
