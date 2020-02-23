@@ -43,8 +43,9 @@ import javafx.scene.*;
 import javafx.application.Application;
 
 public class MainController {
-	int x;
-	int y;
+	
+	double x;
+	double y;
 	String left_label_String;
 	String right_label_string;
 	Boolean selected = false;
@@ -132,7 +133,10 @@ public class MainController {
 	@FXML
 	private ResourceBundle resources;
 
+	
+
 	// =============================================//
+	
 	public MainController() {
 		leftTextArea = new TextField();
 		this.leftTextArea.setOpacity(0);
@@ -140,6 +144,7 @@ public class MainController {
 
 	@FXML
 	private void initialize() {
+		
 		
 	}
 
@@ -278,7 +283,31 @@ public class MainController {
 
 	@FXML
 	private void detectDrop() {
+		
 		selected = true;
+		
+		
+	}
+	
+	@FXML
+	private void detectRelease() {
+		System.out.print("released");
+	}
+	
+	@FXML
+	private void freeFloating() {
+
+		System.out.print("dropped");
+		Text floating=new Text();
+				
+		
+		
+		floating.setText(holder.getSelectionModel().getSelectedItem());
+		floating.setX(x);
+		floating.setY(y);
+	     floating.toFront();
+			 MainAnchor.getChildren().add(floating);
+
 
 	}
 
@@ -287,8 +316,9 @@ public class MainController {
 		Point p = MouseInfo.getPointerInfo().getLocation();
 		x = p.x;
 		y = p.y;
-//		System.out.print("x: " +y);
-//		System.out.print("y: "+x);
+		
+	//System.out.println("x: " +x);
+	//System.out.println("y: "+y);
 
 	}
 
@@ -319,6 +349,8 @@ public class MainController {
 			}
 
 			else {
+			
+				freeFloating();
 
 				left.getItems().add(temp);
 				holder.getItems().remove(temp);
