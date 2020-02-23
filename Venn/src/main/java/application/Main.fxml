@@ -43,14 +43,19 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b7c4d1" height="26.0" layoutX="16.0" layoutY="7.0" stroke="BLACK" strokeType="INSIDE" width="229.0" />
       <Label fx:id="Edit_menu" layoutX="81.0" layoutY="12.0" onMouseClicked="#Menubar_edit" text="Edit" />
       <Label fx:id="Export_menu" layoutX="132.0" layoutY="12.0" onMouseClicked="#Menubar_export" text="Export" />   
-      <Button id="test" fx:id="submit" layoutX="202.0" layoutY="50.0" mnemonicParsing="false" onAction="#printOutput" text="Add" />
-      <TextField fx:id="inputText" layoutX="17.0" layoutY="50.0" onKeyPressed="#handle" prefHeight="59.0" prefWidth="176.0" />
-      <ListView fx:id="holder" layoutX="17.0" layoutY="120.0" onDragDetected="#detactDrag" onKeyPressed="#keyPressHolder" onMouseClicked="#menuHolder" prefHeight="184.0" prefWidth="176.0" />
+      <Button id="test" fx:id="submit" layoutX="43.0" layoutY="217.0" mnemonicParsing="false" onAction="#printOutput" prefHeight="34.0" prefWidth="75.0" text="Add" />
+      <TextField fx:id="inputText" alignment="TOP_LEFT" layoutX="42.0" layoutY="106.0" onKeyPressed="#handle" prefHeight="87.0" prefWidth="176.0" promptText="Please Type Elements.." />
+      <ListView fx:id="holder" layoutX="43.0" layoutY="387.0" onDragDetected="#detactDrag" onKeyPressed="#keyPressHolder" onMouseClicked="#menuHolder" prefHeight="281.0" prefWidth="176.0" />
       <Text layoutX="24.0" layoutY="430.0" opacity="0.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Left Circle" />
       <Text layoutX="19.0" layoutY="499.0" opacity="0.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Right Circle" />
-      <Button fx:id="importer" layoutX="202.0" layoutY="83.0" mnemonicParsing="false" onAction="#importer" text="Import" />
+      <Button fx:id="importer" layoutX="141.0" layoutY="217.0" mnemonicParsing="false" onAction="#importer" prefHeight="34.0" prefWidth="75.0" text="Import" />
       <Label fx:id="File_menu" layoutX="34.0" layoutY="12.0" onMouseClicked="#Menubar_File" text="File" />
-      <Label fx:id="About_menu" layoutX="193.0" layoutY="12.0" onMouseClicked="#Menubar_About" text="About" /> 
+      <Label fx:id="About_menu" layoutX="193.0" layoutY="12.0" onMouseClicked="#Menubar_About" text="About" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="42.0" layoutY="349.0" prefHeight="24.0" prefWidth="176.0" text="Drag &amp; Drop Elements" textAlignment="CENTER" textFill="#515151">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label> 
 
 
    </children>
