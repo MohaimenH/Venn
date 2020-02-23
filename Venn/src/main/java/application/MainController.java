@@ -867,7 +867,7 @@ public class MainController {
 	@FXML
 	public void takeSnapshot() throws IOException, AWTException {
 //		WritableImage snap = new WritableImage(1000,611);
-		WritableImage snap = new WritableImage(781, 624);
+		WritableImage snap = new WritableImage(843,701);
 		secondAnchor.snapshot(new SnapshotParameters(), snap);
 //		MainAnchor.snapshot(new SnapshotParameters(), snap);
 
