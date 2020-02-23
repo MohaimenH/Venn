@@ -23,13 +23,13 @@
             <ListView fx:id="right" layoutX="572.0" layoutY="163.0" onKeyPressed="#keyPressRight" onMouseClicked="#menuRight" onMouseEntered="#detectRight" prefHeight="368.0" prefWidth="186.0" />
             <ListView fx:id="decoyLeft" layoutX="197.0" layoutY="534.0" onMouseEntered="#detectLeft" opacity="0.0" prefHeight="59.0" prefWidth="120.0" />
             <ListView fx:id="decoyRight" layoutX="572.0" layoutY="541.0" onMouseEntered="#detectRight" opacity="0.0" prefHeight="45.0" prefWidth="62.0" />
-            <Label fx:id="rightLabel" layoutX="518.0" layoutY="29.0" onMouseClicked="#detectLabel2Click" text="Set B">
+            <Label fx:id="rightLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="448.0" layoutY="27.0" onMouseClicked="#detectLabel2Click" prefHeight="45.0" prefWidth="212.0" text="Set B" textAlignment="CENTER">
                <font>
-                  <Font size="32.0" />
+                  <Font size="25.0" />
                </font></Label>
-            <Label fx:id="leftLabel" layoutX="258.0" layoutY="26.0" onMouseClicked="#detectLabelClick" prefHeight="45.0" prefWidth="102.0" text="Set A">
+            <Label fx:id="leftLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="198.0" layoutY="27.0" onMouseClicked="#detectLabelClick" prefHeight="45.0" prefWidth="212.0" text="Set A" textAlignment="CENTER">
                <font>
-                  <Font size="32.0" />
+                  <Font size="25.0" />
                </font>
             </Label>
          </children>
@@ -44,7 +44,7 @@
       <Text layoutX="19.0" layoutY="499.0" opacity="0.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Right Circle" />
       <Button fx:id="importer" layoutX="202.0" layoutY="83.0" mnemonicParsing="false" onAction="#importer" text="Import" />
       <Label fx:id="File_menu" layoutX="34.0" layoutY="12.0" onMouseClicked="#Menubar_File" text="File" />
-      <Label fx:id="title" alignment="CENTER" contentDisplay="CENTER" layoutX="576.0" layoutY="21.0" onMouseClicked="#setTitle" prefHeight="58.0" prefWidth="215.0" text="Venn" textAlignment="CENTER">
+      <Label fx:id="title" alignment="CENTER" contentDisplay="CENTER" layoutX="298.0" layoutY="21.0" onMouseClicked="#setTitle" prefHeight="59.0" prefWidth="740.0" text="Venn" textAlignment="CENTER">
         
                <font>
             <Font size="48.0" />

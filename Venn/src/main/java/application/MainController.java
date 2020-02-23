@@ -426,6 +426,7 @@ public class MainController {
 		if (e.getButton() == MouseButton.PRIMARY) {
 //			ContextMenu contextMenu = new ContextMenu();
 			MenuItem WipeClean = new MenuItem("Clear All");
+			MenuItem changeTitle = new MenuItem("Change Label of Venn Diagram");
 			MenuItem changeNameA = new MenuItem("Change Name For Set A");
 			MenuItem changeNameB = new MenuItem("Change Name For Set B");
 
@@ -433,6 +434,10 @@ public class MainController {
 				clearLeftSet();
 				clearRightSet();
 				System.out.print("clear all clicked");
+			});
+			
+			changeTitle.setOnAction((event) -> {
+				popUpChangeTitle();
 			});
 			
 			changeNameA.setOnAction((event) -> {
@@ -443,7 +448,7 @@ public class MainController {
 				popUpRight();
 			});
 			
-			menuBarContextMenu.getItems().addAll(WipeClean, changeNameA, changeNameB);
+			menuBarContextMenu.getItems().addAll(WipeClean, changeTitle, changeNameA, changeNameB);
 
 			menuBarContextMenu.show(Edit_menu, e.getScreenX(), e.getScreenY());
 
@@ -637,7 +642,11 @@ public class MainController {
 
 	@FXML
 	private void setTitle() {
-		System.out.print("test");
+//		title.setText();
+	}
+	
+	private void setTitle(String name) {
+		title.setText(name);
 	}
 
 	// ==============================================// Export Options
@@ -1095,14 +1104,18 @@ public class MainController {
 		TextField test = new TextField();
 		test.setAlignment(Pos.CENTER);
 		test.setOnAction((event) -> {
-			setLeftLabel(test.getText());
+			if (notBlank(test.getText())) {
+				setLeftLabel(test.getText());
+			}
 			popupwindow.close();
 		});
 
 		Button button1 = new Button("Set Name");
 
 		button1.setOnAction((event) -> {
-			setLeftLabel(test.getText());
+			if (notBlank(test.getText())) {
+				setLeftLabel(test.getText());
+			}
 			popupwindow.close();
 		});
 
@@ -1131,14 +1144,58 @@ public class MainController {
 		TextField test = new TextField();
 		test.setAlignment(Pos.CENTER);
 		test.setOnAction((event) -> {
-			setRightLabel(test.getText());
+			if (notBlank(test.getText())) {
+				setRightLabel(test.getText());
+			}
 			popupwindow.close();
 		});
 
 		Button button1 = new Button("Set Name");
 
 		button1.setOnAction((event) -> {
-			setRightLabel(test.getText());
+			if (notBlank(test.getText())) {
+				setRightLabel(test.getText());
+			}
+			popupwindow.close();
+		});
+
+		VBox layout = new VBox(10);
+
+		layout.getChildren().addAll(label1, test, button1);
+		layout.setAlignment(Pos.CENTER);
+
+		Scene scene1 = new Scene(layout, 300, 100);
+
+		popupwindow.setScene(scene1);
+
+		popupwindow.showAndWait();
+
+	}
+	
+	public void popUpChangeTitle() {
+
+		Stage popupwindow = new Stage();
+
+		popupwindow.initModality(Modality.APPLICATION_MODAL);
+		popupwindow.setTitle("Change Title of Diagram");
+
+		Label label1 = new Label("Please Enter A Name For The Venn Diagram:");
+
+		TextField test = new TextField();
+		test.setAlignment(Pos.CENTER);
+		test.setOnAction((event) -> {
+			if (notBlank(test.getText())) {
+				setTitle(test.getText());
+			}
+			popupwindow.close();
+		});
+
+		Button button1 = new Button("Set Name");
+
+		button1.setOnAction((event) -> {
+			if (notBlank(test.getText())) {
+				setTitle(test.getText());
+			}
 			popupwindow.close();
 		});
 
