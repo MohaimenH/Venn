@@ -1295,7 +1295,7 @@ public class MainController {
 		layout.getChildren().addAll(label1, test, button1);
 		layout.setAlignment(Pos.CENTER);
 
-		Scene scene1 = new Scene(layout, 300, 200);
+		Scene scene1 = new Scene(layout, 300, 100);
 
 		popupwindow.setScene(scene1);
 
