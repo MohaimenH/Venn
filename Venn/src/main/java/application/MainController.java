@@ -32,6 +32,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
@@ -89,6 +90,10 @@ public class MainController {
 //	private Button clearLeft;
 //	@FXML
 //	private Button clearRight;
+	@FXML
+	private Circle setA;
+	@FXML
+	private Circle setB;
 	@FXML
 	private Button importer;
 	@FXML
@@ -439,12 +444,14 @@ public class MainController {
 			
 			Menu setA = new Menu(leftLabel.getText());
 			MenuItem changeNameA = new MenuItem("Change Label");
+			MenuItem changeSetACircleColor = new MenuItem("Change Set Color");
 			MenuItem changeSetAColor = new MenuItem("Change Label Color");
 			MenuItem changeSetAFontSize = new MenuItem("Change Label Size");
 			MenuItem changeSetAFont = new MenuItem("Change Label Font");
 			
 			Menu setB = new Menu(rightLabel.getText());
 			MenuItem changeNameB = new MenuItem("Change Label");
+			MenuItem changeSetBCircleColor = new MenuItem("Change Set Color");
 			MenuItem changeSetBColor = new MenuItem("Change Label Color");
 			MenuItem changeSetBFontSize = new MenuItem("Change Label Size");
 			MenuItem changeSetBFont = new MenuItem("Change Label Font");
@@ -475,6 +482,10 @@ public class MainController {
 				popUpLeft();
 			});
 			
+			changeSetACircleColor.setOnAction((event) -> {
+				popUpChangeSetACircleColor();
+			});
+			
 			changeSetAColor.setOnAction((event) -> {
 				popUpChangeSetAColor();
 			});
@@ -492,6 +503,10 @@ public class MainController {
 				popUpRight();
 			});
 			
+			changeSetBCircleColor.setOnAction((event) -> {
+				popUpChangeSetBCircleColor();
+			});
+			
 			changeSetBColor.setOnAction((event) -> {
 				popUpChangeSetBColor();
 			});
@@ -505,8 +520,8 @@ public class MainController {
 			});
 			
 			title.getItems().addAll(changeTitle, changeTitleColor, changeTitleFontSize, changeTitleFont);
-			setA.getItems().addAll(changeNameA, changeSetAColor, changeSetAFontSize, changeSetAFont);
-			setB.getItems().addAll(changeNameB, changeSetBColor, changeSetBFontSize, changeSetBFont);
+			setA.getItems().addAll(changeNameA, changeSetACircleColor, changeSetAColor, changeSetAFontSize, changeSetAFont);
+			setB.getItems().addAll(changeNameB, changeSetBCircleColor, changeSetBColor, changeSetBFontSize, changeSetBFont);
 			
 			menuBarContextMenu.getItems().addAll(WipeClean, title, setA, setB);
 
@@ -649,7 +664,9 @@ public class MainController {
 		this.leftTextArea.requestFocus();
 		this.leftTextArea.setOnKeyPressed(e ->{
 			if (e.getCode() == KeyCode.ENTER) {
-				this.leftLabel.setText(this.leftTextArea.getText());
+				if (notBlank(this.leftTextArea.getText())) {
+					this.leftLabel.setText(this.leftTextArea.getText());
+				}
 				this.leftTextArea.setOpacity(0);
 				leftLabel.setOpacity(1);
 				leftTextArea.setText("");
@@ -670,10 +687,12 @@ public class MainController {
 		this.rightTextArea.requestFocus();
 		this.rightTextArea.setOnKeyPressed(e ->{
 			if (e.getCode() == KeyCode.ENTER) {
-				this.rightLabel.setText(this.rightTextArea.getText());
+				if (notBlank(this.rightTextArea.getText())) {
+					this.rightLabel.setText(this.rightTextArea.getText());
+				}
 				this.rightTextArea.setOpacity(0);
 				rightLabel.setOpacity(1);
-				leftTextArea.setText("");
+				rightTextArea.setText("");
 				this.rightTextArea.setDisable(true);
 				this.rightTextArea.setOpacity(0);
 				this.rightLabel.setDisable(false);
@@ -1815,4 +1834,114 @@ public class MainController {
 		popupwindow.showAndWait();
 
 	}
+	
+	public void popUpChangeSetACircleColor() {
+
+		Stage popupwindow = new Stage();
+
+		popupwindow.initModality(Modality.APPLICATION_MODAL);
+		popupwindow.setTitle("Change Color of Set");
+
+		Label current = new Label("Current Color Is " + setA.getFill());
+		Label label1 = new Label("Please Enter A Color: ");
+
+		TextField test = new TextField();
+		
+		test.setAlignment(Pos.CENTER);
+		test.setOnAction((event) -> {
+			if (notBlank(test.getText())) {
+				try {
+					setA.setFill(Color.valueOf(test.getText()));
+				}
+				
+				catch (Exception e) {
+					//TODO
+				}
+			}
+			popupwindow.close();
+		});
+
+		Button button1 = new Button("Set Color");
+
+		button1.setOnAction((event) -> {
+			if (notBlank(test.getText())) {
+				try {
+					setA.setFill(Color.valueOf(test.getText()));
+				}
+				
+				catch (Exception e) {
+					//TODO
+				}
+			}
+			popupwindow.close();
+		});
+
+		VBox layout = new VBox(10);
+
+		layout.getChildren().addAll(current, label1, test, button1);
+		layout.setAlignment(Pos.CENTER);
+
+		Scene scene1 = new Scene(layout, 300, 150);
+
+		popupwindow.setScene(scene1);
+
+		popupwindow.showAndWait();
+	}
+
+	public void popUpChangeSetBCircleColor() {
+
+		Stage popupwindow = new Stage();
+
+		popupwindow.initModality(Modality.APPLICATION_MODAL);
+		popupwindow.setTitle("Change Color of Set");
+
+		Label current = new Label("Current Color Is " + setB.getFill());
+		Label label1 = new Label("Please Enter A Color: ");
+
+		TextField test = new TextField();
+		
+		test.setAlignment(Pos.CENTER);
+		test.setOnAction((event) -> {
+			if (notBlank(test.getText())) {
+				try {
+					setB.setFill(Color.valueOf(test.getText()));
+				}
+				
+				catch (Exception e) {
+					//TODO
+				}
+			}
+			popupwindow.close();
+		});
+
+		Button button1 = new Button("Set Color");
+
+		button1.setOnAction((event) -> {
+			if (notBlank(test.getText())) {
+				try {
+					setB.setFill(Color.valueOf(test.getText()));
+				}
+				
+				catch (Exception e) {
+					//TODO
+				}
+			}
+			popupwindow.close();
+		});
+
+		VBox layout = new VBox(10);
+
+		layout.getChildren().addAll(current, label1, test, button1);
+		layout.setAlignment(Pos.CENTER);
+
+		Scene scene1 = new Scene(layout, 300, 150);
+
+		popupwindow.setScene(scene1);
+
+		popupwindow.showAndWait();
+	}
+
+
+
+
 }
