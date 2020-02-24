@@ -4,26 +4,36 @@ import java.awt.AWTException;
 //import java.awt.MenuItem;
 import java.awt.MouseInfo;
 import java.awt.Point;
-import java.awt.Robot;
-import java.awt.image.BufferedImage;
+
+//import database.AccSys;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URL;
-import java.util.*;
+import java.util.HashSet;
+import java.util.ResourceBundle;
+import java.util.Set;
 
 import javax.imageio.ImageIO;
 
 import database.AccSys;
-
-//import database.AccSys;
-
-import java.io.*;
-
-import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
+import javafx.scene.control.Button;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -34,14 +44,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.scene.control.*;
-import javafx.scene.*;
-import javafx.application.Application;
 
 public class MainController {
 	int x;
@@ -819,9 +824,9 @@ public class MainController {
 		label.setFont(Font.font(size));
 	}
 	
-	private void setLabelFont(Label label, String family) {
+	private void setLabelFont(Label label, String family, double size) {
 		if (notBlank(family)) {
-			label.setFont(Font.font(family));
+			label.setFont(Font.font(family, size));
 		}
 	}
 
@@ -936,7 +941,7 @@ public class MainController {
 			ImageIO.write(SwingFXUtils.fromFXImage(snap, null), "png", file);
 //	    	ImageIO.write(snap, "png", file);
 		} catch (IOException e) {
-			// TODO: handle exception here
+			// ExceptionCaught: handle exception here
 		}
 
 		/*
@@ -1417,7 +1422,7 @@ public class MainController {
 				}
 				
 				catch (Exception e) {
-					//TODO
+					//ExceptionCaught
 				}
 			}
 			popupwindow.close();
@@ -1432,7 +1437,7 @@ public class MainController {
 				}
 				
 				catch (Exception e) {
-					//TODO
+					//ExceptionCaught
 				}
 			}
 			popupwindow.close();
@@ -1467,12 +1472,12 @@ public class MainController {
 		test.setOnAction((event) -> {
 			if (notBlank(test.getText())) {
 				try {
-					setLabelFont(title, test.getText());
-					setLabelFontSize(title, 30);
+					setLabelFont(title, test.getText(), 48);
+//					setLabelFontSize(title, 30);
 				}
 				
 				catch (Exception e) {
-					//TODO
+					//ExceptionCaught
 				}
 			}
 			popupwindow.close();
@@ -1483,12 +1488,12 @@ public class MainController {
 		button1.setOnAction((event) -> {
 			if (notBlank(test.getText())) {
 				try {
-					setLabelFont(title, test.getText());
-					setLabelFontSize(title, 30);
+					setLabelFont(title, test.getText(), 48);
+//					setLabelFontSize(title, 30);
 				}
 				
 				catch (Exception e) {
-					//TODO
+					//ExceptionCaught
 				}
 			}
 			popupwindow.close();
@@ -1527,7 +1532,7 @@ public class MainController {
 				}
 				
 				catch (Exception e) {
-					//TODO
+					//ExceptionCaught
 				}
 			}
 			popupwindow.close();
@@ -1542,7 +1547,7 @@ public class MainController {
 				}
 				
 				catch (Exception e) {
-					//TODO
+					//ExceptionCaught
 				}
 			}
 			popupwindow.close();
@@ -1581,7 +1586,7 @@ public class MainController {
 				}
 				
 				catch (Exception e) {
-					//TODO
+					//ExceptionCaught
 				}
 			}
 			popupwindow.close();
@@ -1596,7 +1601,7 @@ public class MainController {
 				}
 				
 				catch (Exception e) {
-					//TODO
+					//ExceptionCaught
 				}
 			}
 			popupwindow.close();
@@ -1631,12 +1636,12 @@ public class MainController {
 		test.setOnAction((event) -> {
 			if (notBlank(test.getText())) {
 				try {
-					setLabelFont(leftLabel, test.getText());
-					setLabelFontSize(leftLabel, 25);
+					setLabelFont(leftLabel, test.getText(), 25);
+//					setLabelFontSize(leftLabel, 25);
 				}
 				
 				catch (Exception e) {
-					//TODO
+					//ExceptionCaught
 				}
 			}
 			popupwindow.close();
@@ -1647,12 +1652,12 @@ public class MainController {
 		button1.setOnAction((event) -> {
 			if (notBlank(test.getText())) {
 				try {
-					setLabelFont(leftLabel, test.getText());
-					setLabelFontSize(leftLabel, 25);
+					setLabelFont(leftLabel, test.getText(), 25);
+//					setLabelFontSize(leftLabel, 25);
 				}
 				
 				catch (Exception e) {
-					//TODO
+					//ExceptionCaught
 				}
 			}
 			popupwindow.close();
@@ -1687,12 +1692,12 @@ public class MainController {
 		test.setOnAction((event) -> {
 			if (notBlank(test.getText())) {
 				try {
-					setLabelFont(rightLabel, test.getText());
-					setLabelFontSize(rightLabel, 25);
+					setLabelFont(rightLabel, test.getText(), 25);
+//					setLabelFontSize(rightLabel, 25);
 				}
 				
 				catch (Exception e) {
-					//TODO
+					//ExceptionCaught
 				}
 			}
 			popupwindow.close();
@@ -1703,12 +1708,12 @@ public class MainController {
 		button1.setOnAction((event) -> {
 			if (notBlank(test.getText())) {
 				try {
-					setLabelFont(rightLabel, test.getText());
-					setLabelFontSize(rightLabel, 25);
+					setLabelFont(rightLabel, test.getText(), 25);
+//					setLabelFontSize(rightLabel, 25);
 				}
 				
 				catch (Exception e) {
-					//TODO
+					//ExceptionCaught
 				}
 			}
 			popupwindow.close();
@@ -1747,7 +1752,7 @@ public class MainController {
 				}
 				
 				catch (Exception e) {
-					//TODO
+					//ExceptionCaught
 				}
 			}
 			popupwindow.close();
@@ -1762,7 +1767,7 @@ public class MainController {
 				}
 				
 				catch (Exception e) {
-					//TODO
+					//ExceptionCaught
 				}
 			}
 			popupwindow.close();
@@ -1801,7 +1806,7 @@ public class MainController {
 				}
 				
 				catch (Exception e) {
-					//TODO
+					//ExceptionCaught
 				}
 			}
 			popupwindow.close();
@@ -1816,7 +1821,7 @@ public class MainController {
 				}
 				
 				catch (Exception e) {
-					//TODO
+					//ExceptionCaught
 				}
 			}
 			popupwindow.close();
@@ -1855,7 +1860,7 @@ public class MainController {
 				}
 				
 				catch (Exception e) {
-					//TODO
+					//ExceptionCaught
 				}
 			}
 			popupwindow.close();
@@ -1870,7 +1875,7 @@ public class MainController {
 				}
 				
 				catch (Exception e) {
-					//TODO
+					//ExceptionCaught
 				}
 			}
 			popupwindow.close();
@@ -1909,7 +1914,7 @@ public class MainController {
 				}
 				
 				catch (Exception e) {
-					//TODO
+					//ExceptionCaught
 				}
 			}
 			popupwindow.close();
@@ -1924,7 +1929,7 @@ public class MainController {
 				}
 				
 				catch (Exception e) {
-					//TODO
+					//ExceptionCaught
 				}
 			}
 			popupwindow.close();
@@ -1962,7 +1967,7 @@ public class MainController {
 				}
 				
 				catch (Exception e) {
-					//TODO
+					//ExceptionCaught
 				}
 			}
 			popupwindow.close();
@@ -1977,7 +1982,7 @@ public class MainController {
 				}
 				
 				catch (Exception e) {
-					//TODO
+					//ExceptionCaught
 				}
 			}
 			popupwindow.close();
