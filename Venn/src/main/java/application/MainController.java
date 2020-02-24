@@ -1,6 +1,7 @@
 package application;
 
 import java.awt.AWTException;
+import java.awt.Desktop;
 //import java.awt.MenuItem;
 import java.awt.MouseInfo;
 import java.awt.Point;
@@ -11,6 +12,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.HashSet;
 import java.util.ResourceBundle;
@@ -599,6 +602,8 @@ public class MainController {
 //			ContextMenu contextMenu = new ContextMenu();
 			MenuItem fontList = new MenuItem("Show Available Fonts");
 			MenuItem projDevs = new MenuItem("Project Developers");
+//			MenuItem proj = new MenuItem("URL");
+			
 //			MenuItem Snapshot=new MenuItem("Snapshot");
 
 			fontList.setOnAction((event) -> {
@@ -627,6 +632,15 @@ public class MainController {
 			projDevs.setOnAction((event) -> {
 				popUpNames();
 			});
+			
+//			proj.setOnAction((event) -> {
+//				try {
+//					browse();
+//				} catch (URISyntaxException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
+//			});
 			
 			menuBarContextMenu.getItems().addAll(projDevs, fontList);
 //			File_menu.setContextMenu(contextMenu);
@@ -2025,6 +2039,16 @@ public class MainController {
 		popupwindow.showAndWait();
 	}
 
-
-
+//	public void browse() throws URISyntaxException { 
+//		Desktop desktop = Desktop.getDesktop();
+//		try {
+//			URI url = new URI("http://google.com");
+//			desktop.browse(url);
+//		}
+//		catch (Exception e) {
+//			
+//		}
+//		
+//	}
+	
 }
