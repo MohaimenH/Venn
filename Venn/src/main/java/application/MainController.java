@@ -108,6 +108,8 @@ public class MainController {
 	private TextField leftTextArea;
 	@FXML
 	private TextField rightTextArea;
+	@FXML
+	private TextField titleTextArea;
 	// =============================================//
 
 	@FXML
@@ -628,13 +630,18 @@ public class MainController {
 	public void detectLabelClick(MouseEvent e) {
 		if (e.getButton() == MouseButton.SECONDARY) {
 			ContextMenu contextMenu = new ContextMenu();
-			MenuItem editLeftLabel = new MenuItem("Edit left label");
+			MenuItem editLeftLabelColor = new MenuItem("Change Label Color");
+			MenuItem editLeftLabelSize = new MenuItem("Change Label Size");
 
-			editLeftLabel.setOnAction((event) -> {
-				System.out.print("yes");
+			editLeftLabelColor.setOnAction((event) -> {
+				popUpChangeSetAColor();
 			});
 
-			contextMenu.getItems().addAll(editLeftLabel);
+			editLeftLabelSize.setOnAction((event) -> {
+				popUpChangeSetASize();
+			});
+			
+			contextMenu.getItems().addAll(editLeftLabelColor, editLeftLabelSize);
 			leftLabel.setContextMenu(contextMenu);
 		}
 		if (e.getButton() == MouseButton.PRIMARY) {
@@ -644,9 +651,51 @@ public class MainController {
 			
 		}
 	}
+	@FXML
+	public void detectTitleClick(MouseEvent e) {
+		if (e.getButton() == MouseButton.SECONDARY) {
+			ContextMenu contextMenu = new ContextMenu();
+			MenuItem editTitleColor = new MenuItem("Change Title Color");
+			MenuItem editTitleSize = new MenuItem("Change Title Size");
 
+			editTitleColor.setOnAction((event) -> {
+				popUpChangeTitleColor();
+			});
+
+			editTitleSize.setOnAction((event) -> {
+				popUpChangeTitleSize();
+			});
+			
+			contextMenu.getItems().addAll(editTitleColor, editTitleSize);
+			title.setContextMenu(contextMenu);
+		}
+//		if (e.getButton() == MouseButton.PRIMARY) {
+//			title.setOpacity(0);
+//			this.title.setDisable(true);
+//			leftname();
+//			
+//		}
+	}
+	
 	@FXML
 	public void detectLabel2Click(MouseEvent e) {
+		
+		if (e.getButton() == MouseButton.SECONDARY) {
+			ContextMenu contextMenu = new ContextMenu();
+			MenuItem editRightLabelColor = new MenuItem("Change Label Color");
+			MenuItem editRightLabelSize = new MenuItem("Change Label Size");
+
+			editRightLabelColor.setOnAction((event) -> {
+				popUpChangeSetBColor();
+			});
+
+			editRightLabelSize.setOnAction((event) -> {
+				popUpChangeSetBSize();
+			});
+			
+			contextMenu.getItems().addAll(editRightLabelColor, editRightLabelSize);
+			rightLabel.setContextMenu(contextMenu);
+		}
 		
 		if (e.getButton() == MouseButton.PRIMARY) {
 			rightLabel.setOpacity(0);
