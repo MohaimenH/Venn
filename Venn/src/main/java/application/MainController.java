@@ -56,7 +56,7 @@ public class MainController {
 	public static AccSys sys;
 	static ContextMenu menuBarContextMenu = new ContextMenu();
 	
-	private ArrayList<Object> free=new ArrayList<>();
+	private ArrayList<Object> free=new ArrayList<>();//holds array of text objects
 
 	private Set<String> elements = new HashSet<>(); // All elements
 
@@ -70,8 +70,8 @@ public class MainController {
 //	ArrayList<String> midElems = new ArrayList<>();
 
 	//////////////////
-	@FXML
-	private Circle Left_Circle;
+	//@FXML
+	//private Circle setA;
 	@FXML
 	private MenuButton TestMenu;
 	@FXML
@@ -111,7 +111,8 @@ public class MainController {
 	@FXML
 	private TextField rightTextArea;
 	// =============================================//
-
+	@FXML
+	private ListView<Text> testList;
 	@FXML
 	private ListView<String> holder;
 	@FXML
@@ -224,7 +225,7 @@ public class MainController {
 			   y=event.getSceneY();
 			   test.setLayoutX(x);
 			   test.setLayoutY(y);
-				System.out.print("x:"+test.getLayoutX() +" Y"+test.getLayoutY()+" center"+this.Left_Circle.getCenterX());
+				//System.out.print("x:"+test.getLayoutX() +" Y"+test.getLayoutY()+" center"+setA.getCenterX());
 
 		   });
 		   
@@ -237,7 +238,7 @@ public class MainController {
 			elementNum++;
 			count++;
 			  
-
+			
 			
 		String place = inputText.getText();
 		if (notBlank(place)) {
