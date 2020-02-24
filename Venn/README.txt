@@ -26,3 +26,10 @@ For ease of use, you can also use hotkeys to quickly move elements to their spot
 INSTALLATON:
 Up to date version of JavaFX 
 
+Contributors:
+Mohaimen
+Ratul
+Jiahao
+Luke
+
+
