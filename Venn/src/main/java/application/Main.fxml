@@ -22,11 +22,11 @@
             </Label>
             <TextField fx:id="rightTextArea" disable="true" layoutX="472.0" layoutY="88.0" onInputMethodTextChanged="#donothing" onKeyReleased="#rightname" onKeyTyped="#donothing" opacity="0.0" />
             <TextField fx:id="leftTextArea" disable="true" layoutX="216.0" layoutY="88.0" onInputMethodTextChanged="#donothing" onKeyReleased="#leftname" onKeyTyped="#donothing" opacity="0.0" />
-            <Circle id="Left Circle" fill="#30068f" layoutX="309.0" layoutY="398.0" opacity="0.38" radius="261.0" stroke="BLACK" strokeWidth="4.0" />
-            <Circle id="Right Circle" fill="RED" layoutX="544.0" layoutY="398.0" opacity="0.39" radius="259.0" stroke="#4d3f3f" strokeWidth="4.0" />
-            <ListView fx:id="left" layoutX="81.0" layoutY="206.0" onKeyPressed="#keyPressLeft" onMouseClicked="#menuLeft" onMouseEntered="#detectLeft" onMouseMoved="#points" onMouseReleased="#detectRelease" prefHeight="368.0" prefWidth="202.0" />
-            <ListView fx:id="middle" layoutX="331.0" layoutY="201.0" onKeyPressed="#keyPressMiddle" onMouseClicked="#menuMiddle" onMouseEntered="#detectMiddle" onMouseMoved="#points" prefHeight="405.0" prefWidth="202.0" />
-            <ListView fx:id="right" layoutX="572.0" layoutY="214.0" onKeyPressed="#keyPressRight" onMouseClicked="#menuRight" onMouseEntered="#detectRight" onMouseMoved="#points" prefHeight="368.0" prefWidth="186.0" />
+            <Circle id="Left_Circle" fill="#30068f" layoutX="309.0" layoutY="398.0" opacity="0.38" radius="261.0" stroke="BLACK" strokeWidth="4.0" />
+            <Circle id="Right_Circle" fill="RED" layoutX="544.0" layoutY="398.0" opacity="0.39" radius="259.0" stroke="#4d3f3f" strokeWidth="4.0" />
+            <ListView fx:id="left" layoutX="81.0" layoutY="206.0" onKeyPressed="#keyPressLeft" onMouseClicked="#menuLeft" onMouseEntered="#detectLeft" onMouseReleased="#detectRelease" prefHeight="368.0" prefWidth="202.0" />
+            <ListView fx:id="middle" layoutX="331.0" layoutY="201.0" onKeyPressed="#keyPressMiddle" onMouseClicked="#menuMiddle" onMouseEntered="#detectMiddle" prefHeight="405.0" prefWidth="202.0" />
+            <ListView fx:id="right" layoutX="572.0" layoutY="214.0" onKeyPressed="#keyPressRight" onMouseClicked="#menuRight" onMouseEntered="#detectRight" prefHeight="368.0" prefWidth="186.0" />
             <ListView fx:id="decoyLeft" layoutX="197.0" layoutY="585.0" onMouseEntered="#detectLeft" opacity="0.0" prefHeight="59.0" prefWidth="120.0" />
             <ListView fx:id="decoyRight" layoutX="572.0" layoutY="592.0" onMouseEntered="#detectRight" opacity="0.0" prefHeight="45.0" prefWidth="62.0" />
             <Label fx:id="rightLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="448.0" layoutY="78.0" onMouseClicked="#detectLabel2Click" prefHeight="45.0" prefWidth="212.0" text="Set B" textAlignment="CENTER">

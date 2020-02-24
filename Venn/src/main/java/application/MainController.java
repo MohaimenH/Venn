@@ -33,6 +33,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
@@ -54,6 +55,8 @@ public class MainController {
 	int index;
 	public static AccSys sys;
 	static ContextMenu menuBarContextMenu = new ContextMenu();
+	
+	private ArrayList<Object> free=new ArrayList<>();
 
 	private Set<String> elements = new HashSet<>(); // All elements
 
@@ -67,6 +70,8 @@ public class MainController {
 //	ArrayList<String> midElems = new ArrayList<>();
 
 	//////////////////
+	@FXML
+	private Circle Left_Circle;
 	@FXML
 	private MenuButton TestMenu;
 	@FXML
@@ -135,6 +140,8 @@ public class MainController {
 	private ResourceBundle resources;
 
 	int elementNum=0;
+	int count=0;
+	int rows=1;
 
 	// =============================================//
 	
@@ -191,44 +198,47 @@ public class MainController {
 	
 
 	
-	 private void sizeTextAreaToText(TextArea textArea, String text) {
-	        Text t = new Text(text);
-	        t.setFont(textArea.getFont());
-	        StackPane pane = new StackPane(t);
-	        pane.layout();
-	        double width = t.getLayoutBounds().getWidth();
-	        double padding = 20 ;
-	        textArea.setMaxWidth(width+padding);
-	        textArea.setText(text);
-
-	    }
-	 @FXML
-	 private void detectFreefloater(TextArea a) {
-		 System.out.print("Clicked"+ a.getId() );
-	 }
+	
 
 	@FXML
 	private void printOutput() { // gets input text and adds it to master list
-		TextArea test=new TextArea();
+		Text test =new Text();
 		String id=elementNum+"";
 		test.setId(id);
 		
 		
-		
-		sizeTextAreaToText(test, inputText.getText());
-		test.setMaxHeight(10);
-		
+	
 		test.setText(inputText.getText());
+		free.add(test);
 		test.setLayoutX(15);
-		test.setLayoutY(310+elementNum*40);
+		test.setLayoutY(320+count*20);
 		
 		   test.setOnMousePressed(event->{
-			   System.out.print("gesfdgs");
+			  // System.out.println(event.getTarget());
 		   });
-		
+		   
+		   
+		   test.setOnMouseReleased(event->{
+			   System.out.println("drag done");
+			   x=event.getSceneX();
+			   y=event.getSceneY();
+			   test.setLayoutX(x);
+			   test.setLayoutY(y);
+				System.out.print("x:"+test.getLayoutX());
+
+		   });
+		   
+		   
+		   
+		   
+		  // System.out.println("number of elems:"+elementNum+" number of count:"+count);
+		//   System.out.println(free.get(elementNum)+"  rad"+Left_Circle.get );
 		 MainAnchor.getChildren().add(test);
 			elementNum++;
+			count++;
+			  
 
+			
 		String place = inputText.getText();
 		if (notBlank(place)) {
 			holder.getItems().add(place);
@@ -334,33 +344,9 @@ public class MainController {
 		System.out.print("released");
 	}
 	
-	@FXML
-	private void freeFloating() {
+	
 
-		System.out.print("dropped");
-		Text floating=new Text();
-				
-		
-		
-		floating.setText(holder.getSelectionModel().getSelectedItem());
-		floating.setX(x);
-		floating.setY(y);
-	     floating.toFront();
-			 MainAnchor.getChildren().add(floating);
-
-
-	}
-
-	@FXML
-	private void points() {
-		Point p = MouseInfo.getPointerInfo().getLocation();
-		x = p.x;
-		y = p.y;
-		
-	//System.out.println("x: " +x);
-	//System.out.println("y: "+y);
-
-	}
+	
 
 	@FXML
 	private void detactDrag() {
@@ -390,7 +376,6 @@ public class MainController {
 
 			else {
 			
-				freeFloating();
 
 				left.getItems().add(temp);
 				holder.getItems().remove(temp);
