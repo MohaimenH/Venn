@@ -36,6 +36,7 @@ public class Main extends Application{
 		primaryStage.getIcons().add(new Image("icon/icon.png"));
 		primaryStage.setTitle("Venn: Simple Venn Diagrams");
 		Scene scene = new Scene(root,1074,716);
+
 		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 		primaryStage.setScene(scene);
 		primaryStage.show();// TODO Auto-generated method stub

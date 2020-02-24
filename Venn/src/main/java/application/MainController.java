@@ -4,26 +4,37 @@ import java.awt.AWTException;
 //import java.awt.MenuItem;
 import java.awt.MouseInfo;
 import java.awt.Point;
-import java.awt.Robot;
-import java.awt.image.BufferedImage;
+
+//import database.AccSys;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.ResourceBundle;
+import java.util.Set;
 
 import javax.imageio.ImageIO;
 
 import database.AccSys;
-
-//import database.AccSys;
-
-import java.io.*;
-
-import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+
 import javafx.scene.SnapshotParameters;
+import javafx.scene.control.Button;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -43,6 +54,7 @@ import javafx.stage.Stage;
 import javafx.scene.control.*;
 import javafx.scene.*;
 import javafx.application.Application;
+
 
 public class MainController {
 	
@@ -97,6 +109,11 @@ public class MainController {
 //	@FXML
 //	private Button clearRight;
 	@FXML
+	private Circle setA;
+	@FXML
+	private Circle setB;
+	@FXML
+
 	private Button importer;
 	@FXML
 	private Label leftLabel;
@@ -110,6 +127,7 @@ public class MainController {
 	private TextField leftTextArea;
 	@FXML
 	private TextField rightTextArea;
+
 	// =============================================//
 	@FXML
 	private ListView<Text> testList;
@@ -154,7 +172,7 @@ public class MainController {
 	@FXML
 	private void initialize() {
 		
-		
+
 	}
 
 	// =============================================// Helper Methods
@@ -247,7 +265,7 @@ public class MainController {
 			elements.add(place);
 		}
 	}
-	
+
 
 	@FXML
 	public void handle(KeyEvent keyEvent) {// checks for button enter
@@ -336,19 +354,13 @@ public class MainController {
 	private void detectDrop() {
 		
 		selected = true;
-		
-		
+
+
 	}
-	
 	@FXML
 	private void detectRelease() {
 		System.out.print("released");
 	}
-	
-	
-
-	
-
 	@FXML
 	private void detactDrag() {
 
@@ -503,6 +515,7 @@ public class MainController {
 			
 			Menu setB = new Menu(rightLabel.getText());
 			MenuItem changeNameB = new MenuItem("Change Label");
+
 			MenuItem changeSetBColor = new MenuItem("Change Label Color");
 			MenuItem changeSetBFontSize = new MenuItem("Change Label Size");
 			MenuItem changeSetBFont = new MenuItem("Change Label Font");
@@ -565,6 +578,7 @@ public class MainController {
 			title.getItems().addAll(changeTitle, changeTitleColor, changeTitleFontSize, changeTitleFont);
 			setA.getItems().addAll(changeNameA, changeSetAColor, changeSetAFontSize, changeSetAFont);
 			setB.getItems().addAll(changeNameB, changeSetBColor, changeSetBFontSize, changeSetBFont);
+
 			
 			menuBarContextMenu.getItems().addAll(WipeClean, title, setA, setB);
 
@@ -732,6 +746,7 @@ public class MainController {
 				this.rightTextArea.setOpacity(0);
 				rightLabel.setOpacity(1);
 				leftTextArea.setText("");
+
 				this.rightTextArea.setDisable(true);
 				this.rightTextArea.setOpacity(0);
 				this.rightLabel.setDisable(false);
@@ -807,6 +822,7 @@ public class MainController {
 	private void setLabelFont(Label label, String family) {
 		if (notBlank(family)) {
 			label.setFont(Font.font(family));
+
 		}
 	}
 
@@ -906,7 +922,9 @@ public class MainController {
 	@FXML
 	public void takeSnapshot() throws IOException, AWTException {
 //		WritableImage snap = new WritableImage(1000,611);
+
 		WritableImage snap = new WritableImage(781, 624);
+
 		secondAnchor.snapshot(new SnapshotParameters(), snap);
 //		MainAnchor.snapshot(new SnapshotParameters(), snap);
 
@@ -921,7 +939,9 @@ public class MainController {
 			ImageIO.write(SwingFXUtils.fromFXImage(snap, null), "png", file);
 //	    	ImageIO.write(snap, "png", file);
 		} catch (IOException e) {
+
 			// TODO: handle exception here
+
 		}
 
 		/*
@@ -1402,7 +1422,9 @@ public class MainController {
 				}
 				
 				catch (Exception e) {
+
 					//TODO
+
 				}
 			}
 			popupwindow.close();
@@ -1418,6 +1440,7 @@ public class MainController {
 				
 				catch (Exception e) {
 					//TODO
+
 				}
 			}
 			popupwindow.close();
@@ -1452,12 +1475,15 @@ public class MainController {
 		test.setOnAction((event) -> {
 			if (notBlank(test.getText())) {
 				try {
+
 					setLabelFont(title, test.getText());
 					setLabelFontSize(title, 30);
+
 				}
 				
 				catch (Exception e) {
 					//TODO
+
 				}
 			}
 			popupwindow.close();
@@ -1638,6 +1664,7 @@ public class MainController {
 				
 				catch (Exception e) {
 					//TODO
+
 				}
 			}
 			popupwindow.close();
@@ -1694,6 +1721,7 @@ public class MainController {
 				
 				catch (Exception e) {
 					//TODO
+
 				}
 			}
 			popupwindow.close();
@@ -1873,4 +1901,5 @@ public class MainController {
 		popupwindow.showAndWait();
 
 	}
+
 }
