@@ -224,7 +224,7 @@ public class MainController {
 			   y=event.getSceneY();
 			   test.setLayoutX(x);
 			   test.setLayoutY(y);
-				System.out.print("x:"+test.getLayoutX());
+				System.out.print("x:"+test.getLayoutX() +" Y"+test.getLayoutY()+" center"+this.Left_Circle.getCenterX());
 
 		   });
 		   

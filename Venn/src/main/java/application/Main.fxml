@@ -22,7 +22,7 @@
             </Label>
             <TextField fx:id="rightTextArea" disable="true" layoutX="472.0" layoutY="88.0" onInputMethodTextChanged="#donothing" onKeyReleased="#rightname" onKeyTyped="#donothing" opacity="0.0" />
             <TextField fx:id="leftTextArea" disable="true" layoutX="216.0" layoutY="88.0" onInputMethodTextChanged="#donothing" onKeyReleased="#leftname" onKeyTyped="#donothing" opacity="0.0" />
-            <Circle id="Left_Circle" fill="#30068f" layoutX="309.0" layoutY="398.0" opacity="0.38" radius="261.0" stroke="BLACK" strokeWidth="4.0" />
+            <Circle fx:id="Left_Circle" fill="#30068f" layoutX="309.0" layoutY="398.0" opacity="0.38" radius="261.0" stroke="BLACK" strokeWidth="4.0" />
             <Circle id="Right_Circle" fill="RED" layoutX="544.0" layoutY="398.0" opacity="0.39" radius="259.0" stroke="#4d3f3f" strokeWidth="4.0" />
             <ListView fx:id="left" layoutX="81.0" layoutY="206.0" onKeyPressed="#keyPressLeft" onMouseClicked="#menuLeft" onMouseEntered="#detectLeft" onMouseReleased="#detectRelease" prefHeight="368.0" prefWidth="202.0" />
             <ListView fx:id="middle" layoutX="331.0" layoutY="201.0" onKeyPressed="#keyPressMiddle" onMouseClicked="#menuMiddle" onMouseEntered="#detectMiddle" prefHeight="405.0" prefWidth="202.0" />
