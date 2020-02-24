@@ -30,6 +30,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -133,7 +134,7 @@ public class MainController {
 	@FXML
 	private ResourceBundle resources;
 
-	
+	int elementNum=0;
 
 	// =============================================//
 	
@@ -187,9 +188,47 @@ public class MainController {
 	}
 
 	// =============================================// Master List Operations
+	
+
+	
+	 private void sizeTextAreaToText(TextArea textArea, String text) {
+	        Text t = new Text(text);
+	        t.setFont(textArea.getFont());
+	        StackPane pane = new StackPane(t);
+	        pane.layout();
+	        double width = t.getLayoutBounds().getWidth();
+	        double padding = 20 ;
+	        textArea.setMaxWidth(width+padding);
+	        textArea.setText(text);
+
+	    }
+	 @FXML
+	 private void detectFreefloater(TextArea a) {
+		 System.out.print("Clicked"+ a.getId() );
+	 }
 
 	@FXML
 	private void printOutput() { // gets input text and adds it to master list
+		TextArea test=new TextArea();
+		String id=elementNum+"";
+		test.setId(id);
+		
+		
+		
+		sizeTextAreaToText(test, inputText.getText());
+		test.setMaxHeight(10);
+		
+		test.setText(inputText.getText());
+		test.setLayoutX(15);
+		test.setLayoutY(310+elementNum*40);
+		
+		   test.setOnMousePressed(event->{
+			   System.out.print("gesfdgs");
+		   });
+		
+		 MainAnchor.getChildren().add(test);
+			elementNum++;
+
 		String place = inputText.getText();
 		if (notBlank(place)) {
 			holder.getItems().add(place);
@@ -197,6 +236,7 @@ public class MainController {
 			elements.add(place);
 		}
 	}
+	
 
 	@FXML
 	public void handle(KeyEvent keyEvent) {// checks for button enter
