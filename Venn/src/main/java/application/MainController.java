@@ -593,6 +593,7 @@ public class MainController {
 
 //			ContextMenu contextMenu = new ContextMenu();
 			MenuItem fontList = new MenuItem("Show Available Fonts");
+			MenuItem projDevs = new MenuItem("Project Developers");
 //			MenuItem Snapshot=new MenuItem("Snapshot");
 
 			fontList.setOnAction((event) -> {
@@ -617,8 +618,12 @@ public class MainController {
 				popupwindow.showAndWait();
 				
 			});
-
-			menuBarContextMenu.getItems().addAll(fontList);
+			
+			projDevs.setOnAction((event) -> {
+				popUpNames();
+			});
+			
+			menuBarContextMenu.getItems().addAll(projDevs, fontList);
 //			File_menu.setContextMenu(contextMenu);
 			menuBarContextMenu.show(About_menu, e.getScreenX(), e.getScreenY());
 //			e.consume();
@@ -1990,6 +1995,30 @@ public class MainController {
 		popupwindow.showAndWait();
 	}
 
+	public void popUpNames() {
+
+		Stage popupwindow = new Stage();
+
+		popupwindow.initModality(Modality.APPLICATION_MODAL);
+		popupwindow.setTitle("Project Developers");
+
+		Label dev = new Label("This project was developed by: ");
+		Label Mohaimen = new Label("Mohaimen Hassan");
+		Label Luke = new Label("Luke Linigari");
+		Label Ratul = new Label("Ratul Momen");
+		Label Jiahao = new Label("Jiahao Li");
+
+		VBox layout = new VBox(10);
+
+		layout.getChildren().addAll(dev, Mohaimen, Luke, Ratul, Jiahao);
+		layout.setAlignment(Pos.CENTER);
+
+		Scene scene1 = new Scene(layout, 300, 150);
+
+		popupwindow.setScene(scene1);
+
+		popupwindow.showAndWait();
+	}
 
 
 
