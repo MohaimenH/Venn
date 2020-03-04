@@ -57,7 +57,8 @@ import javafx.application.Application;
 
 
 public class MainController {
-	
+	int stackPointer =-1;
+	int[] stack =new int[100];
 	double x;
 	double y;
 	String left_label_String;
@@ -174,8 +175,43 @@ public class MainController {
 		
 
 	}
+	//==============================================//Undo Stack
+	/*table of operations
+	 * 0:no operation
+	 * 1:
+	 * 2:
+	 * 3:
+	 * 4:
+	 * 5:
+	 */
+	public int size() {
+		return stackPointer+1;
+	}
+	public boolean isEmpty() {
+		return (stackPointer == -1);
+	}
+	public void push(int x) {
+		if(size()==stack.length) {
+			System.out.println("stack if full,do something");
+		}
+		stack[++stackPointer]=x;
+	}
+	public int top() {
+		if(isEmpty()) {
+			return 0;
+		}
+		return stack[stackPointer];
+	}
+	public int pop() {
+		int temp=stack[stackPointer];
+		stack[stackPointer]=0;
+		stackPointer--;
+		return temp;
+	}
 
 	// =============================================// Helper Methods
+	
+	
 
 	public boolean notBlank(String a) {
 		if (a.isEmpty() || a.trim().isEmpty() || a == null) {
