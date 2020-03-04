@@ -178,11 +178,18 @@ public class MainController {
 	//==============================================//Undo Stack
 	/*table of operations
 	 * 0:no operation
-	 * 1:
-	 * 2:
-	 * 3:
-	 * 4:
-	 * 5:
+	 * 1:move to left 
+	 * 2:move to middle
+	 * 3:move to right
+	 * 4:delete left
+	 * 5:delete middle
+	 * 6:delete right
+	 * 7.change label 1
+	 * 8:change label 2
+	 * 9:change title
+	 * 10:change color of left 
+	 * 11:change color of right
+	 * 12:clear set
 	 */
 	public int size() {
 		return stackPointer+1;
@@ -207,6 +214,14 @@ public class MainController {
 		stack[stackPointer]=0;
 		stackPointer--;
 		return temp;
+	}
+	public void view() {
+		int n=size();
+		for(int i=0;i<n;i++) {
+			System.out.print(" "+stack[i]);
+		}
+		System.out.println("");
+
 	}
 
 	// =============================================// Helper Methods
@@ -256,49 +271,16 @@ public class MainController {
 	
 
 	@FXML
-	private void printOutput() { // gets input text and adds it to master list
-		Text test =new Text();
-		String id=elementNum+"";
-		test.setId(id);
-		
-		
-	
-		test.setText(inputText.getText());
-		free.add(test);
-		test.setLayoutX(15);
-		test.setLayoutY(320+count*20);
-		
-		   test.setOnMousePressed(event->{
-			  // System.out.println(event.getTarget());
-		   });
-		   
-		   
-		   test.setOnMouseReleased(event->{
-			   System.out.println("drag done");
-			   x=event.getSceneX();
-			   y=event.getSceneY();
-			   test.setLayoutX(x);
-			   test.setLayoutY(y);
-				//System.out.print("x:"+test.getLayoutX() +" Y"+test.getLayoutY()+" center"+setA.getCenterX());
-
-		   });
-		   
-		   
-		   
-		   
-		  // System.out.println("number of elems:"+elementNum+" number of count:"+count);
-		//   System.out.println(free.get(elementNum)+"  rad"+Left_Circle.get );
-		 MainAnchor.getChildren().add(test);
-			elementNum++;
-			count++;
-			  
-			
-			
+	private void printOutput() { // gets input text and adds it to master list		
 		String place = inputText.getText();
 		if (notBlank(place)) {
 			holder.getItems().add(place);
 			inputText.clear();
 			elements.add(place);
+			
+			
+			
+			
 		}
 	}
 
@@ -361,7 +343,7 @@ public class MainController {
 			index = holder.getSelectionModel().getSelectedIndex();
 			temp = holder.getItems().get(index);
 			selected = true;
-			detectMiddle();
+			detectMiddle(null);
 			holder.getItems().remove(temp);
 			selected = false;
 		}
@@ -370,7 +352,7 @@ public class MainController {
 			index = holder.getSelectionModel().getSelectedIndex();
 			temp = holder.getItems().get(index);
 			selected = true;
-			detectLeft();
+			detectLeft(null);
 			holder.getItems().remove(temp);
 			selected = false;
 		}
@@ -379,7 +361,7 @@ public class MainController {
 			index = holder.getSelectionModel().getSelectedIndex();
 			temp = holder.getItems().get(index);
 			selected = true;
-			detectRight();
+			detectRight(null);
 			holder.getItems().remove(temp);
 			selected = false;
 		}
@@ -403,29 +385,71 @@ public class MainController {
 		index = holder.getSelectionModel().getSelectedIndex();
 		selected = true;
 		temp = holder.getSelectionModel().getSelectedItem();
-//		System.out.print(temp);
-//		selected=false;
+	}
+	private void MovableText(MouseEvent e) {
+		System.out.print("clicked");
+		
+		Text test =new Text();
+		String id=elementNum+"";
+		test.setId(id);
+		
+		int i = holder.getSelectionModel().getSelectedIndex();
+		String t = holder.getItems().get(i);
+		test.setText(t);
+		//test.setText(inputText.getText());
+		
+		free.add(test);
+		test.setLayoutX(e.getSceneX());
+		test.setLayoutY(e.getSceneY());
+		
+		   test.setOnMousePressed(event->{
+			  // System.out.println(event.getTarget());
+			   System.out.print(" clicked the free floater");
+		   });
+		   
+		   
+		   test.setOnMouseReleased(event->{
+			   System.out.println(" drag done");
+			   x=event.getSceneX();
+			   y=event.getSceneY();
+			   test.setLayoutX(x);
+			   test.setLayoutY(y);
+				//System.out.print("x:"+test.getLayoutX() +" Y"+test.getLayoutY()+" center"+setA.getCenterX());
+
+		   });
+		   
+		   
+		   
+		   
+		  // System.out.println("number of elems:"+elementNum+" number of count:"+count);
+		//   System.out.println(free.get(elementNum)+"  rad"+Left_Circle.get );
+		 MainAnchor.getChildren().add(test);
+			elementNum++;
+			count++;
 	}
 
 	// ==============================================// Set Operations
 
 	@FXML
-	private void detectLeft() {
+	private void detectLeft(MouseEvent e) {
 
 		if (selected && (leftElems.contains(temp) != true) && (midElems.contains(temp) != true) && notBlank(temp)) {
 
 			if (rightElems.contains(temp)) {
-				detectMiddle();
-//				 index=rightElems.indexOf(temp);
-//				 System.out.println("Before: " + left.getItems().indexOf(temp));
-//				 left.getItems().remove(index);
-//				 System.out.println("After: " + left.getItems().indexOf(temp));
-//				 holder.getItems().remove(index);
+				detectMiddle(null);
+
 			}
 
 			else {
-			
+			push(1);//push action to stack, 1: move to right set
+			view();
 
+			
+			///////////////////////movable text 
+			MovableText(e);
+			///////////////////////
+			
+		
 				left.getItems().add(temp);
 				holder.getItems().remove(temp);
 				leftElems.add(temp);
@@ -443,15 +467,21 @@ public class MainController {
 	}
 
 	@FXML
-	private void detectRight() {
+	private void detectRight(MouseEvent e) {
 
 		if (selected && (rightElems.contains(temp) != true) && (midElems.contains(temp) != true) && notBlank(temp)) {
 
 			if (leftElems.contains(temp)) {
-				detectMiddle();
+				detectMiddle(null);
 			}
 
 			else {
+				push(2);
+				view();
+				////////////////////////movable text
+				MovableText(e);
+				////////////////////////
+				
 				right.getItems().add(temp);
 				holder.getItems().remove(temp);
 				rightElems.add(temp);
@@ -469,8 +499,13 @@ public class MainController {
 	}
 
 	@FXML
-	private void detectMiddle() {
+	private void detectMiddle(MouseEvent e) {
 		if (selected && (midElems.contains(temp) != true) && notBlank(temp)) {
+			push(3);
+			view();
+			////////////////// movable text things
+			MovableText(e);			
+			/////////////////
 			middle.getItems().add(temp);
 			holder.getItems().remove(temp);
 			midElems.add(temp);
@@ -557,6 +592,8 @@ public class MainController {
 			MenuItem changeSetBFont = new MenuItem("Change Label Font");
 
 			WipeClean.setOnAction((event) -> {
+				push(12);
+				view();
 				clearLeftSet();
 				clearRightSet();
 				System.out.print("clear all clicked");
@@ -1184,7 +1221,7 @@ public class MainController {
 //				addToLeft(middle.getSelectionModel().getSelectedItem());
 				selected = true;
 				temp = holder.getSelectionModel().getSelectedItem();
-				detectLeft();
+				detectLeft(null);
 //				delElemsClick(middle, midElems);
 				selected = false;
 			});
@@ -1192,7 +1229,7 @@ public class MainController {
 			moveRight.setOnAction((event) -> {
 				selected = true;
 				temp = holder.getSelectionModel().getSelectedItem();
-				detectRight();
+				detectRight(null);
 				selected = false;
 //				addToRight(middle.getSelectionModel().getSelectedItem());
 //				delElemsClick(middle, midElems);
@@ -1201,7 +1238,7 @@ public class MainController {
 			moveMid.setOnAction((event) -> {
 				selected = true;
 				temp = holder.getSelectionModel().getSelectedItem();
-				detectMiddle();
+				detectMiddle(null);
 				selected = false;
 //				addToRight(middle.getSelectionModel().getSelectedItem());
 //				delElemsClick(middle, midElems);
@@ -1214,7 +1251,7 @@ public class MainController {
 				for (int i = 0; i < size; i++) {
 					selected = true;
 					temp = arr[i].toString();
-					detectLeft();
+					detectLeft(null);
 					selected = false;
 				}
 			});
@@ -1226,7 +1263,7 @@ public class MainController {
 				for (int i = 0; i < size; i++) {
 					selected = true;
 					temp = arr[i].toString();
-					detectRight();
+					detectRight(null);
 					selected = false;
 				}
 
@@ -1241,7 +1278,7 @@ public class MainController {
 				for (int i = 0; i < size; i++) {
 					selected = true;
 					temp = arr[i].toString();
-					detectMiddle();
+					detectMiddle(null);
 					selected = false;
 				}
 //				addToRight(middle.getSelectionModel().getSelectedItem());
