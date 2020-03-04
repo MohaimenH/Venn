@@ -14,7 +14,7 @@
    <children>
       <AnchorPane fx:id="secondAnchor" layoutX="246.0" layoutY="12.0" prefHeight="701.0" prefWidth="838.0">
          <children>
-            <Label fx:id="title" alignment="CENTER" contentDisplay="CENTER" layoutX="59.0" layoutY="14.0" onMouseClicked="#detectTitleClick" prefHeight="59.0" prefWidth="740.0" text="Venn" textAlignment="CENTER">
+            <Label fx:id="title" alignment="CENTER" contentDisplay="CENTER" layoutX="59.0" layoutY="14.0"  prefHeight="59.0" prefWidth="740.0" text="Venn" textAlignment="CENTER">
               
                      <font>
                   <Font size="48.0" />
@@ -24,7 +24,7 @@
             <TextField fx:id="leftTextArea" disable="true" layoutX="216.0" layoutY="88.0" onInputMethodTextChanged="#donothing" onKeyReleased="#leftname" onKeyTyped="#donothing" opacity="0.0" />
             <Circle id="Left Circle" fx:id="setA" fill="#30068f" layoutX="309.0" layoutY="398.0" opacity="0.38" radius="261.0" stroke="BLACK" strokeWidth="4.0" />
             <Circle id="Right Circle" fx:id="setB" fill="RED" layoutX="544.0" layoutY="398.0" opacity="0.39" radius="259.0" stroke="#4d3f3f" strokeWidth="4.0" />
-            <ListView fx:id="left" layoutX="81.0" layoutY="206.0" onKeyPressed="#keyPressLeft" onMouseClicked="#menuLeft" onMouseEntered="#detectLeft" onMouseMoved="#points" prefHeight="368.0" prefWidth="202.0" />
+            <ListView fx:id="left" layoutX="81.0" layoutY="206.0" onKeyPressed="#keyPressLeft" onMouseClicked="#menuLeft" onMouseEntered="#detectLeft"  prefHeight="368.0" prefWidth="202.0" />
             <ListView fx:id="middle" layoutX="331.0" layoutY="201.0" onKeyPressed="#keyPressMiddle" onMouseClicked="#menuMiddle" onMouseEntered="#detectMiddle" prefHeight="405.0" prefWidth="202.0" />
             <ListView fx:id="right" layoutX="572.0" layoutY="206.0" onKeyPressed="#keyPressRight" onMouseClicked="#menuRight" onMouseEntered="#detectRight" prefHeight="368.0" prefWidth="186.0" />
             <ListView fx:id="decoyLeft" layoutX="197.0" layoutY="585.0" onMouseEntered="#detectLeft" opacity="0.0" prefHeight="59.0" prefWidth="120.0" />
