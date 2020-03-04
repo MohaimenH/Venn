@@ -737,6 +737,31 @@ public class MainController {
 			
 		}
 	}
+	@FXML
+	public void detectTitleClick(MouseEvent e) {
+		if (e.getButton() == MouseButton.SECONDARY) {
+			ContextMenu contextMenu = new ContextMenu();
+			MenuItem editTitleColor = new MenuItem("Change Title Color");
+			MenuItem editTitleSize = new MenuItem("Change Title Size");
+
+			editTitleColor.setOnAction((event) -> {
+				popUpChangeTitleColor();
+			});
+
+			editTitleSize.setOnAction((event) -> {
+				popUpChangeTitleSize();
+			});
+			
+			contextMenu.getItems().addAll(editTitleColor, editTitleSize);
+			title.setContextMenu(contextMenu);
+		}
+//		if (e.getButton() == MouseButton.PRIMARY) {
+//			title.setOpacity(0);
+//			this.title.setDisable(true);
+//			leftname();
+//			
+//		}
+	}
 
 	@FXML
 	public void detectLabel2Click(MouseEvent e) {
