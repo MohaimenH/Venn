@@ -57,6 +57,8 @@ import javafx.application.Application;
 
 
 public class MainController {
+	boolean control;
+	boolean zKey;
 	int stackPointer =-1;
 	int[] stack =new int[100];
 	double x;
@@ -85,6 +87,7 @@ public class MainController {
 	//////////////////
 	//@FXML
 	//private Circle setA;
+	
 	@FXML
 	private MenuButton TestMenu;
 	@FXML
@@ -223,6 +226,61 @@ public class MainController {
 		System.out.println("");
 
 	}
+	@FXML
+	public void detectUndo(KeyEvent e) {// on key pressed of main anchor
+		if(e.getCode()== KeyCode.Z) {
+			zKey=true;
+			System.out.println("Pressed z");
+		}else if(e.getCode()== KeyCode.CONTROL) {
+			control=true;
+			System.out.println("Pressed ctrl");
+
+		}
+		if(zKey && control) {
+			undo(stack);
+		}
+	}
+	@FXML
+	public void resetBooleansForUndo(KeyEvent e) {//on button released for main anchor pane
+		if(e.getCode()== KeyCode.Z) {
+			zKey=false;
+		}else if(e.getCode()==KeyCode.CONTROL) {
+			control=false;
+		}
+	}
+	
+	public void undo(int[] thing) {// interprets the opcode passed to if from the stack
+			int op=0;
+		if(stackPointer==-1) {
+			System.out.println("nothing to undo");
+		}else {
+			 op=thing[stackPointer];
+			
+		}
+		
+		if(op==1) {
+			System.out.println("Moved to left: opposite is ");
+			pop();
+		}else if(op==2) {
+			System.out.println("Moved to middle: opposite is ");
+			pop();
+
+		}else if(op==3) {
+			System.out.println("Moved to right: opposite is ");
+			pop();
+		}else if(op==4) {
+			System.out.println("delete from left: opposite is ");
+			pop();
+
+		}else if(op==5) {
+			System.out.println("delete from middle: opposite is ");
+			pop();
+		}else if(op==6) {
+			System.out.println("delete from right: opposite is ");
+			pop();
+		}
+	}
+	
 
 	// =============================================// Helper Methods
 	
@@ -385,6 +443,10 @@ public class MainController {
 		index = holder.getSelectionModel().getSelectedIndex();
 		selected = true;
 		temp = holder.getSelectionModel().getSelectedItem();
+	}
+	@FXML
+	private void testingDrag() {
+		System.out.print("better system");
 	}
 	private void MovableText(MouseEvent e) {
 		System.out.print("clicked");

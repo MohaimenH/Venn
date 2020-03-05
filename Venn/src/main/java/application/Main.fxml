@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="MainAnchor" onMouseEntered="#detectLeft" prefHeight="716.0" prefWidth="1110.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
+<AnchorPane fx:id="MainAnchor" onKeyPressed="#detectUndo" onKeyReleased="#resetBooleansForUndo" onMouseEntered="#detectLeft" prefHeight="716.0" prefWidth="1110.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
    <children>
       <AnchorPane fx:id="secondAnchor" layoutX="246.0" layoutY="12.0" prefHeight="701.0" prefWidth="838.0">
          <children>
