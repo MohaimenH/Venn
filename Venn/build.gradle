@@ -8,7 +8,7 @@
 
 plugins {
     // Apply the java-library plugin to add support for Java Library
-    id 'java-library'
+    id 'java'
 }
 
 repositories {
@@ -25,5 +25,11 @@ dependencies {
     implementation 'com.google.guava:guava:28.0-jre'
 
     // Use JUnit test framework
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.4.0'
+}
+
+jar {
+	manifest {
+		attributes 'Main-Class': 'application.Main'
+	}
 }
