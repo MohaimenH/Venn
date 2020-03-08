@@ -602,7 +602,7 @@ public class MainController {
 //			ContextMenu contextMenu = new ContextMenu();
 			MenuItem fontList = new MenuItem("Show Available Fonts");
 			MenuItem projDevs = new MenuItem("Project Developers");
-//			MenuItem userman = new MenuItem("User Manual");
+			MenuItem userman = new MenuItem("User Manual");
 //			MenuItem proj = new MenuItem("URL");
 			
 //			MenuItem Snapshot=new MenuItem("Snapshot");
@@ -634,16 +634,16 @@ public class MainController {
 				popUpNames();
 			});
 			
-//			userman.setOnAction((event) -> {
-//				File htmlFile = new File("UserMan.html");
-//				try {
-//					Desktop.getDesktop().browse(htmlFile.toURI());
-//				} catch (IOException e1) {
-//					// TODO Auto-generated catch block
-//					e1.printStackTrace();
-//				}
-//			});
-//			
+			userman.setOnAction((event) -> {
+				File htmlFile = new File("UserMan.html");
+				try {
+					Desktop.getDesktop().browse(htmlFile.toURI());
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			});
+			
 //			proj.setOnAction((event) -> {
 //				try {
 //					browse();
@@ -653,7 +653,7 @@ public class MainController {
 //				}
 //			});
 			
-			menuBarContextMenu.getItems().addAll(projDevs, fontList);
+			menuBarContextMenu.getItems().addAll(projDevs, fontList, userman);
 //			File_menu.setContextMenu(contextMenu);
 			menuBarContextMenu.show(About_menu, e.getScreenX(), e.getScreenY());
 //			e.consume();
