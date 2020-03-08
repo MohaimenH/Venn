@@ -8,7 +8,11 @@ jobs:
     docker:
       # specify the version you desire here
       #- image: circleci/openjdk:8-jdk
-      - image: danielmapar/gradle_and_node:2.0
+      #- image: danielmapar/gradle_and_node:2.0
+      - image: store/oracle/serverjre:1.8.0_241-b07
+        auth:
+          username: mohaimenh  # can specify string literal values
+          password: $DOCKERHUB_PASSWORD  # or project environment variable reference
       
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
