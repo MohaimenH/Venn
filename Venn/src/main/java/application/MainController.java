@@ -70,7 +70,7 @@ public class MainController {
 	int index;
 	public static AccSys sys;
 	static ContextMenu menuBarContextMenu = new ContextMenu();
-	
+	private ArrayList<Node> deleteID=new ArrayList<>();//holds id's of things that need to be deleted
 	private ArrayList<Object> free=new ArrayList<>();//holds array of text objects
 
 	private Set<String> elements = new HashSet<>(); // All elements
@@ -99,7 +99,7 @@ public class MainController {
 	@FXML
 	private Label About_menu;
 	@FXML
-	private AnchorPane MainAnchor;
+	private AnchorPane MainAnchor;//the good one
 	@FXML
 	private AnchorPane secondAnchor;
 	@FXML
@@ -161,8 +161,10 @@ public class MainController {
 
 	@FXML
 	private ResourceBundle resources;
-
+	
 	int elementNum=0;
+	int LeftNumOfElements=0;
+	int RightNumOfElements=0;
 	int count=0;
 	int rows=1;
 
@@ -259,24 +261,24 @@ public class MainController {
 		}
 		
 		if(op==1) {
-			System.out.println("Moved to left: opposite is ");
+			System.out.println("Moved to left: opposite is move back to holder");
 			pop();
 		}else if(op==2) {
-			System.out.println("Moved to middle: opposite is ");
+			System.out.println("Moved to right: opposite is is move back to holder ");
 			pop();
 
 		}else if(op==3) {
-			System.out.println("Moved to right: opposite is ");
+			System.out.println("Moved to middle: opposite is is move back to holder");
 			pop();
 		}else if(op==4) {
-			System.out.println("delete from left: opposite is ");
+			System.out.println("delete from left: opposite is add back to left ");
 			pop();
 
 		}else if(op==5) {
-			System.out.println("delete from middle: opposite is ");
+			System.out.println("delete from middle: opposite is add back to middle");
 			pop();
 		}else if(op==6) {
-			System.out.println("delete from right: opposite is ");
+			System.out.println("delete from right: opposite is add back to right");
 			pop();
 		}
 	}
@@ -439,20 +441,16 @@ public class MainController {
 	}
 	@FXML
 	private void detactDrag() {
-
 		index = holder.getSelectionModel().getSelectedIndex();
 		selected = true;
 		temp = holder.getSelectionModel().getSelectedItem();
 	}
-	@FXML
-	private void testingDrag() {
-		System.out.print("better system");
-	}
+	
 	private void MovableText(MouseEvent e) {
-		System.out.print("clicked");
 		
 		Text test =new Text();
 		String id=elementNum+"";
+		deleteID.add(test);
 		test.setId(id);
 		
 		int i = holder.getSelectionModel().getSelectedIndex();
@@ -466,17 +464,14 @@ public class MainController {
 		
 		   test.setOnMousePressed(event->{
 			  // System.out.println(event.getTarget());
-			   System.out.print(" clicked the free floater");
 		   });
 		   
 		   
 		   test.setOnMouseReleased(event->{
-			   System.out.println(" drag done");
 			   x=event.getSceneX();
 			   y=event.getSceneY();
 			   test.setLayoutX(x);
 			   test.setLayoutY(y);
-				//System.out.print("x:"+test.getLayoutX() +" Y"+test.getLayoutY()+" center"+setA.getCenterX());
 
 		   });
 		   
@@ -498,7 +493,7 @@ public class MainController {
 		if (selected && (leftElems.contains(temp) != true) && (midElems.contains(temp) != true) && notBlank(temp)) {
 
 			if (rightElems.contains(temp)) {
-				detectMiddle(null);
+				detectMiddle(e);
 
 			}
 
@@ -659,6 +654,10 @@ public class MainController {
 				clearLeftSet();
 				clearRightSet();
 				System.out.print("clear all clicked");
+				int len=deleteID.size();
+				for(int i=0;i<len;i++) {
+					MainAnchor.getChildren().remove(deleteID.get(i));
+				}
 			});
 			
 			changeTitle.setOnAction((event) -> {
@@ -1283,7 +1282,7 @@ public class MainController {
 //				addToLeft(middle.getSelectionModel().getSelectedItem());
 				selected = true;
 				temp = holder.getSelectionModel().getSelectedItem();
-				detectLeft(null);
+				detectLeft(mouseEvent);
 //				delElemsClick(middle, midElems);
 				selected = false;
 			});
@@ -1291,7 +1290,7 @@ public class MainController {
 			moveRight.setOnAction((event) -> {
 				selected = true;
 				temp = holder.getSelectionModel().getSelectedItem();
-				detectRight(null);
+				detectRight(mouseEvent);
 				selected = false;
 //				addToRight(middle.getSelectionModel().getSelectedItem());
 //				delElemsClick(middle, midElems);
@@ -1300,7 +1299,7 @@ public class MainController {
 			moveMid.setOnAction((event) -> {
 				selected = true;
 				temp = holder.getSelectionModel().getSelectedItem();
-				detectMiddle(null);
+				detectMiddle(mouseEvent);
 				selected = false;
 //				addToRight(middle.getSelectionModel().getSelectedItem());
 //				delElemsClick(middle, midElems);

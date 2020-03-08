@@ -6,6 +6,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Ellipse?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
@@ -22,10 +23,10 @@
             </Label>
             <TextField fx:id="rightTextArea" disable="true" layoutX="472.0" layoutY="88.0" onInputMethodTextChanged="#donothing" onKeyReleased="#rightname" onKeyTyped="#donothing" opacity="0.0" />
             <TextField fx:id="leftTextArea" disable="true" layoutX="216.0" layoutY="88.0" onInputMethodTextChanged="#donothing" onKeyReleased="#leftname" onKeyTyped="#donothing" opacity="0.0" />
-            <Circle id="Left Circle" fx:id="setA" fill="#30068f" layoutX="309.0" layoutY="398.0" opacity="0.38" radius="261.0" stroke="BLACK" strokeWidth="4.0" />
-            <Circle id="Right Circle" fx:id="setB" fill="RED" layoutX="544.0" layoutY="398.0" opacity="0.39" radius="259.0" stroke="#4d3f3f" strokeWidth="4.0" />
-            <ListView fx:id="left" layoutX="81.0" layoutY="206.0" onKeyPressed="#keyPressLeft" onMouseClicked="#menuLeft" onMouseEntered="#detectLeft" onMouseReleased="#detectRelease" prefHeight="368.0" prefWidth="202.0" />
-            <ListView fx:id="middle" layoutX="331.0" layoutY="201.0" onKeyPressed="#keyPressMiddle" onMouseClicked="#menuMiddle" onMouseEntered="#detectMiddle" prefHeight="405.0" prefWidth="202.0" />
+            <Circle id="Left Circle" fx:id="setA" fill="#30068f" layoutX="309.0" layoutY="398.0" onMouseEntered="#detectLeft" opacity="0.38" radius="261.0" stroke="BLACK" strokeWidth="4.0" />
+            <Circle id="Right Circle" fx:id="setB" fill="RED" layoutX="544.0" layoutY="398.0" onMouseEntered="#detectRight" opacity="0.39" radius="259.0" stroke="#4d3f3f" strokeWidth="4.0" />
+            <ListView fx:id="left" layoutX="81.0" layoutY="206.0" onKeyPressed="#keyPressLeft" onMouseClicked="#menuLeft" onMouseEntered="#detectLeft" prefHeight="368.0" prefWidth="202.0" />
+            <ListView fx:id="middle" layoutX="351.0" layoutY="231.0" onKeyPressed="#keyPressMiddle" onMouseClicked="#menuMiddle" onMouseEntered="#detectMiddle" prefHeight="337.0" prefWidth="159.0" />
             <ListView fx:id="right" layoutX="572.0" layoutY="206.0" onKeyPressed="#keyPressRight" onMouseClicked="#menuRight" onMouseEntered="#detectRight" prefHeight="368.0" prefWidth="186.0" />
             <ListView fx:id="decoyLeft" layoutX="197.0" layoutY="585.0" onMouseEntered="#detectLeft" opacity="0.0" prefHeight="59.0" prefWidth="120.0" />
             <ListView fx:id="decoyRight" layoutX="572.0" layoutY="592.0" onMouseEntered="#detectRight" opacity="0.0" prefHeight="45.0" prefWidth="62.0" />
@@ -38,13 +39,18 @@
                   <Font size="25.0" />
                </font>
             </Label>
+            <ListView fx:id="L2" layoutX="130.0" layoutY="172.0" onMouseEntered="#detectLeft" prefHeight="34.0" prefWidth="240.0" />
+            <ListView fx:id="L1" layoutX="184.0" layoutY="137.0" onMouseEntered="#detectLeft" prefHeight="34.0" prefWidth="240.0" />
+            <ListView fx:id="L4" layoutX="111.0" layoutY="575.0" onMouseEntered="#detectLeft" prefHeight="34.0" prefWidth="240.0" />
+            <ListView fx:id="L5" layoutX="157.0" layoutY="609.0" onMouseEntered="#detectLeft" prefHeight="34.0" prefWidth="240.0" />
+            <ListView fx:id="L3" layoutX="48.0" layoutY="262.0" onMouseEntered="#detectLeft" prefHeight="267.0" prefWidth="34.0" />
+            <Ellipse fx:id="elipse" fill="WHITE" layoutX="429.0" layoutY="397.0" onDragEntered="#detectMiddle" onMouseEntered="#detectMiddle" opacity="0.28" radiusX="141.0" radiusY="211.0" stroke="BLACK" strokeType="INSIDE" />
          </children>
       </AnchorPane>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b7c4d1" height="26.0" layoutX="16.0" layoutY="7.0" stroke="BLACK" strokeType="INSIDE" width="229.0" />
       <Label fx:id="Edit_menu" layoutX="81.0" layoutY="12.0" onMouseClicked="#Menubar_edit" text="Edit" />
       <Label fx:id="Export_menu" layoutX="132.0" layoutY="12.0" onMouseClicked="#Menubar_export" text="Export" />   
       <Button id="test" fx:id="submit" layoutX="43.0" layoutY="217.0" mnemonicParsing="false" onAction="#printOutput" prefHeight="34.0" prefWidth="75.0" text="Add" />
-      <TextField fx:id="inputText" alignment="TOP_LEFT" layoutX="42.0" layoutY="106.0" onKeyPressed="#handle" prefHeight="87.0" prefWidth="176.0" promptText="Please Type Elements.." />
       <ListView fx:id="holder" layoutX="43.0" layoutY="348.0" onDragDetected="#detactDrag" onKeyPressed="#keyPressHolder" onMouseClicked="#menuHolder" prefHeight="320.0" prefWidth="176.0" />
       <Text layoutX="24.0" layoutY="430.0" opacity="0.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Left Circle" />
       <Text layoutX="19.0" layoutY="499.0" opacity="0.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Right Circle" />
@@ -55,7 +61,8 @@
          <font>
             <Font size="15.0" />
          </font>
-      </Label> 
+      </Label>
+      <TextField fx:id="inputText" alignment="TOP_LEFT" layoutX="44.0" layoutY="121.0" onKeyPressed="#handle" prefHeight="87.0" prefWidth="176.0" promptText="Please Type Elements.." /> 
 
 
    </children>
