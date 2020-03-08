@@ -29,6 +29,15 @@ dependencies {
     testImplementation 'junit:junit:4.12'
 }
 
+sourceSets {
+  main {
+    resources {
+        srcDirs = ["src/main/java"]
+        includes = ["**/*.fxml"]
+    }
+  }
+}
+
 jar {
 	manifest {
 		attributes 'Main-Class': 'application.Main'
