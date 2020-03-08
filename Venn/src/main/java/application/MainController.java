@@ -38,6 +38,7 @@ import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -49,6 +50,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
@@ -621,6 +623,8 @@ public class MainController {
 				darkMode.setText("Switch to Light Mode");
 			}
 			
+			MenuItem imageToSets = new MenuItem("Image to Sets");
+			
 //			MenuItem userman = new MenuItem("User Manual");
 //			MenuItem proj = new MenuItem("URL");
 			
@@ -657,6 +661,10 @@ public class MainController {
 				switchToDark();
 			});
 			
+			imageToSets.setOnAction((event) -> {
+				imageToSets();
+			});
+			
 //			userman.setOnAction((event) -> {
 //				File htmlFile = new File("UserMan.html");
 //				try {
@@ -676,7 +684,7 @@ public class MainController {
 //				}
 //			});
 			
-			menuBarContextMenu.getItems().addAll(projDevs, fontList, darkMode);
+			menuBarContextMenu.getItems().addAll(projDevs, fontList, darkMode, imageToSets);
 //			File_menu.setContextMenu(contextMenu);
 			menuBarContextMenu.show(About_menu, e.getScreenX(), e.getScreenY());
 //			e.consume();
@@ -2079,6 +2087,14 @@ public class MainController {
 		popupwindow.showAndWait();
 	}
 
+	public void imageToSets() {
+		Image img = new Image("icon/fb.jpg");
+		Image img2 = new Image("icon/twitter.jpg");
+		
+		setA.setFill(new ImagePattern(img));
+		setB.setFill(new ImagePattern(img2));
+	}
+	
 	public void switchToDark() {
 
 		if (isDark == false) {
