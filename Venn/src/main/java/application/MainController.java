@@ -25,6 +25,7 @@ import database.AccSys;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
@@ -37,14 +38,19 @@ import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
@@ -61,6 +67,7 @@ public class MainController {
 	int index;
 	public static AccSys sys;
 	static ContextMenu menuBarContextMenu = new ContextMenu();
+	static boolean isDark = false;
 
 	private Set<String> elements = new HashSet<>(); // All elements
 
@@ -118,6 +125,12 @@ public class MainController {
 	private TextField rightTextArea;
 	@FXML
 	private TextField titleTextArea;
+	@FXML
+	private TextField referenceTextField;
+	@FXML
+	private ListView<String> referenceListView;
+	@FXML
+	private Label dragDropDummyText;
 	// =============================================//
 
 	@FXML
@@ -146,11 +159,13 @@ public class MainController {
 
 	@FXML
 	private ResourceBundle resources;
-
+	
+	
 	// =============================================//
 	public MainController() {
 		leftTextArea = new TextField();
 		this.leftTextArea.setOpacity(0);
+		
 	}
 
 	@FXML
@@ -242,7 +257,7 @@ public class MainController {
 			delElemsHelper(right, rightElems);
 		}
 	}
-
+//
 	public void keyPressMiddle(KeyEvent keyEvent) {
 		if (keyEvent.getCode() == KeyCode.DELETE) {
 			// Remove element
@@ -602,7 +617,15 @@ public class MainController {
 //			ContextMenu contextMenu = new ContextMenu();
 			MenuItem fontList = new MenuItem("Show Available Fonts");
 			MenuItem projDevs = new MenuItem("Project Developers");
-			MenuItem userman = new MenuItem("User Manual");
+			MenuItem darkMode = new MenuItem("Switch to Dark Mode");
+			
+			if (isDark) {
+				darkMode.setText("Switch to Light Mode");
+			}
+			
+			MenuItem imageToSets = new MenuItem("Image to Sets");
+			
+//			MenuItem userman = new MenuItem("User Manual");
 //			MenuItem proj = new MenuItem("URL");
 			
 //			MenuItem Snapshot=new MenuItem("Snapshot");
@@ -634,16 +657,24 @@ public class MainController {
 				popUpNames();
 			});
 			
-			userman.setOnAction((event) -> {
-				File htmlFile = new File("UserMan.html");
-				try {
-					Desktop.getDesktop().browse(htmlFile.toURI());
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+			darkMode.setOnAction((event) -> {
+				switchToDark();
 			});
 			
+			imageToSets.setOnAction((event) -> {
+				imageToSets();
+			});
+			
+//			userman.setOnAction((event) -> {
+//				File htmlFile = new File("UserMan.html");
+//				try {
+//					Desktop.getDesktop().browse(htmlFile.toURI());
+//				} catch (IOException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
+//			});
+//			
 //			proj.setOnAction((event) -> {
 //				try {
 //					browse();
@@ -653,7 +684,7 @@ public class MainController {
 //				}
 //			});
 			
-			menuBarContextMenu.getItems().addAll(projDevs, fontList, userman);
+			menuBarContextMenu.getItems().addAll(projDevs, fontList, darkMode, imageToSets);
 //			File_menu.setContextMenu(contextMenu);
 			menuBarContextMenu.show(About_menu, e.getScreenX(), e.getScreenY());
 //			e.consume();
@@ -859,6 +890,12 @@ public class MainController {
 		
 		label.setTextFill(Color.valueOf(c));
 	}
+	
+	private void setLabelColor(Label label, Color c) {
+		
+		label.setTextFill(c);
+	}
+	
 	private void setTitle(String name) {
 		title.setText(name);
 	}
@@ -2050,6 +2087,51 @@ public class MainController {
 		popupwindow.showAndWait();
 	}
 
+	public void imageToSets() {
+		Image img = new Image("icon/fb.jpg");
+		Image img2 = new Image("icon/twitter.jpg");
+		
+		setA.setFill(new ImagePattern(img));
+		setB.setFill(new ImagePattern(img2));
+	}
+	
+	public void switchToDark() {
+
+		if (isDark == false) {
+			isDark = true;
+			MainAnchor.setBackground(new Background(new BackgroundFill(Color.gray(0.1), CornerRadii.EMPTY, Insets.EMPTY)));
+			secondAnchor.setBackground(new Background(new BackgroundFill(Color.gray(0.1), CornerRadii.EMPTY, Insets.EMPTY)));
+			
+			setLabelColor(leftLabel, Color.gray(0.8));
+			setLabelColor(rightLabel, Color.gray(0.8));
+			setLabelColor(title, Color.gray(0.8));
+			setLabelColor(dragDropDummyText, Color.gray(0.8));
+			
+			setB.setFill(Color.DARKSEAGREEN);
+//			setA.setStroke(Color.GREY);
+//			setB.setStroke(Color.GREY);
+			
+			holder.setBackground(new Background(new BackgroundFill(Color.gray(0.6), CornerRadii.EMPTY, Insets.EMPTY)));
+			inputText.setBackground(new Background(new BackgroundFill(Color.gray(0.6), CornerRadii.EMPTY, Insets.EMPTY)));
+		}
+		
+		else {
+			isDark=false;
+			MainAnchor.setBackground(new Background(new BackgroundFill(Color.web("0xf4f4f4ff"), CornerRadii.EMPTY, Insets.EMPTY)));
+			secondAnchor.setBackground(new Background(new BackgroundFill(Color.web("0xf4f4f4ff"), CornerRadii.EMPTY, Insets.EMPTY)));
+			
+			setLabelColor(leftLabel, Color.gray(0));
+			setLabelColor(rightLabel, Color.gray(0));
+			setLabelColor(title, Color.gray(0));
+			setLabelColor(dragDropDummyText, Color.web("#515151"));
+			
+			setB.setFill(Color.RED);
+			
+			holder.setBackground(referenceListView.getBackground());
+			inputText.setBackground(referenceTextField.getBackground());
+		}
+		
+	}
 //	public void browse() throws URISyntaxException { 
 //		Desktop desktop = Desktop.getDesktop();
 //		try {
