@@ -242,7 +242,7 @@ public class MainController {
 			delElemsHelper(right, rightElems);
 		}
 	}
-
+//
 	public void keyPressMiddle(KeyEvent keyEvent) {
 		if (keyEvent.getCode() == KeyCode.DELETE) {
 			// Remove element
