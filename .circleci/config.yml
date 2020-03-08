@@ -6,11 +6,12 @@ version: 2
 jobs:
   build:
     docker:
+      image: circleci/openjdk:8u242
       # specify the version you desire here
-      - image: store/oracle/serverjre:1.8.0_241-b07
-        auth:
-          username: mohaimenh  # can specify string literal values
-          password: $DOCKERHUB_PASSWORD  # or project environment variable reference
+      # - image: store/oracle/serverjre:1.8.0_241-b07
+        # auth:
+          # username: mohaimenh  # can specify string literal values
+          # password: $DOCKERHUB_PASSWORD  # or project environment variable reference
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
