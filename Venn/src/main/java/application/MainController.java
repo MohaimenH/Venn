@@ -25,6 +25,7 @@ import database.AccSys;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
@@ -43,6 +44,9 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -61,6 +65,7 @@ public class MainController {
 	int index;
 	public static AccSys sys;
 	static ContextMenu menuBarContextMenu = new ContextMenu();
+	static boolean isDark = false;
 
 	private Set<String> elements = new HashSet<>(); // All elements
 
@@ -118,6 +123,12 @@ public class MainController {
 	private TextField rightTextArea;
 	@FXML
 	private TextField titleTextArea;
+	@FXML
+	private TextField referenceTextField;
+	@FXML
+	private ListView<String> referenceListView;
+	@FXML
+	private Label dragDropDummyText;
 	// =============================================//
 
 	@FXML
@@ -146,11 +157,13 @@ public class MainController {
 
 	@FXML
 	private ResourceBundle resources;
-
+	
+	
 	// =============================================//
 	public MainController() {
 		leftTextArea = new TextField();
 		this.leftTextArea.setOpacity(0);
+		
 	}
 
 	@FXML
@@ -602,6 +615,12 @@ public class MainController {
 //			ContextMenu contextMenu = new ContextMenu();
 			MenuItem fontList = new MenuItem("Show Available Fonts");
 			MenuItem projDevs = new MenuItem("Project Developers");
+			MenuItem darkMode = new MenuItem("Switch to Dark Mode");
+			
+			if (isDark) {
+				darkMode.setText("Switch to Light Mode");
+			}
+			
 //			MenuItem userman = new MenuItem("User Manual");
 //			MenuItem proj = new MenuItem("URL");
 			
@@ -634,6 +653,10 @@ public class MainController {
 				popUpNames();
 			});
 			
+			darkMode.setOnAction((event) -> {
+				switchToDark();
+			});
+			
 //			userman.setOnAction((event) -> {
 //				File htmlFile = new File("UserMan.html");
 //				try {
@@ -653,7 +676,7 @@ public class MainController {
 //				}
 //			});
 			
-			menuBarContextMenu.getItems().addAll(projDevs, fontList);
+			menuBarContextMenu.getItems().addAll(projDevs, fontList, darkMode);
 //			File_menu.setContextMenu(contextMenu);
 			menuBarContextMenu.show(About_menu, e.getScreenX(), e.getScreenY());
 //			e.consume();
@@ -859,6 +882,12 @@ public class MainController {
 		
 		label.setTextFill(Color.valueOf(c));
 	}
+	
+	private void setLabelColor(Label label, Color c) {
+		
+		label.setTextFill(c);
+	}
+	
 	private void setTitle(String name) {
 		title.setText(name);
 	}
@@ -2050,6 +2079,43 @@ public class MainController {
 		popupwindow.showAndWait();
 	}
 
+	public void switchToDark() {
+
+		if (isDark == false) {
+			isDark = true;
+			MainAnchor.setBackground(new Background(new BackgroundFill(Color.gray(0.1), CornerRadii.EMPTY, Insets.EMPTY)));
+			secondAnchor.setBackground(new Background(new BackgroundFill(Color.gray(0.1), CornerRadii.EMPTY, Insets.EMPTY)));
+			
+			setLabelColor(leftLabel, Color.gray(0.8));
+			setLabelColor(rightLabel, Color.gray(0.8));
+			setLabelColor(title, Color.gray(0.8));
+			setLabelColor(dragDropDummyText, Color.gray(0.8));
+			
+			setB.setFill(Color.DARKSEAGREEN);
+//			setA.setStroke(Color.GREY);
+//			setB.setStroke(Color.GREY);
+			
+			holder.setBackground(new Background(new BackgroundFill(Color.gray(0.6), CornerRadii.EMPTY, Insets.EMPTY)));
+			inputText.setBackground(new Background(new BackgroundFill(Color.gray(0.6), CornerRadii.EMPTY, Insets.EMPTY)));
+		}
+		
+		else {
+			isDark=false;
+			MainAnchor.setBackground(new Background(new BackgroundFill(Color.web("0xf4f4f4ff"), CornerRadii.EMPTY, Insets.EMPTY)));
+			secondAnchor.setBackground(new Background(new BackgroundFill(Color.web("0xf4f4f4ff"), CornerRadii.EMPTY, Insets.EMPTY)));
+			
+			setLabelColor(leftLabel, Color.gray(0));
+			setLabelColor(rightLabel, Color.gray(0));
+			setLabelColor(title, Color.gray(0));
+			setLabelColor(dragDropDummyText, Color.web("#515151"));
+			
+			setB.setFill(Color.RED);
+			
+			holder.setBackground(referenceListView.getBackground());
+			inputText.setBackground(referenceTextField.getBackground());
+		}
+		
+	}
 //	public void browse() throws URISyntaxException { 
 //		Desktop desktop = Desktop.getDesktop();
 //		try {
