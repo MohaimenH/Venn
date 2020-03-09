@@ -59,8 +59,10 @@ import javafx.application.Application;
 public class MainController {
 	boolean control;
 	boolean zKey;
+	////////////////////////stack stuff
 	int stackPointer =-1;
 	int[] stack =new int[100];
+	/////////////////////////
 	double x;
 	double y;
 	String left_label_String;
@@ -84,6 +86,9 @@ public class MainController {
 //	ArrayList<String> rightElems = new ArrayList<>();
 //	ArrayList<String> midElems = new ArrayList<>();
 
+	//////////////////
+	//leftCircle Center: x:570 y:398 r:261
+	//right Circle center x:805 y:398 r:261
 	//////////////////
 	//@FXML
 	//private Circle setA;
@@ -159,15 +164,23 @@ public class MainController {
 	@FXML
 	private URL location;
 
+		@FXML
+		private Label thing;
 	@FXML
 	private ResourceBundle resources;
-	
 	int elementNum=0;
 	int LeftNumOfElements=0;
 	int RightNumOfElements=0;
 	int count=0;
-	int rows=1;
-
+	int LeftCount=0;
+	int RightCount=0;
+	int IntersectionCount=0;
+	Boolean MoveLeft=false;
+	Boolean MoveRight=false;
+	Boolean MoveIntersection=false;
+	Boolean MoveAllLeft=false;
+	Boolean MoveAllRight=false;
+	Boolean MoveAllIntersection=false;
 	// =============================================//
 	
 	public MainController() {
@@ -333,14 +346,15 @@ public class MainController {
 	@FXML
 	private void printOutput() { // gets input text and adds it to master list		
 		String place = inputText.getText();
+		if(count<0) {
+			count=0;
+		}else {
+			count++;//counts the number of elements in the holder
+		}
 		if (notBlank(place)) {
 			holder.getItems().add(place);
 			inputText.clear();
-			elements.add(place);
-			
-			
-			
-			
+			elements.add(place);		
 		}
 	}
 
@@ -448,41 +462,68 @@ public class MainController {
 	
 	private void MovableText(MouseEvent e) {
 		
-		Text test =new Text();
+		Label test =new Label();
 		String id=elementNum+"";
 		deleteID.add(test);
 		test.setId(id);
-		
 		int i = holder.getSelectionModel().getSelectedIndex();
 		String t = holder.getItems().get(i);
 		test.setText(t);
 		//test.setText(inputText.getText());
 		
 		free.add(test);
+		if(MoveLeft) {//handles right click movement
+			double x=left.getLayoutX();
+			double y=left.getLayoutY();
+			test.setLayoutX(x+300);
+			test.setLayoutY(y+100+(20*LeftCount+1));
+			MoveLeft=false;//reset
+		}else if(MoveRight) {
+			double x=right.getLayoutX();
+			double y=right.getLayoutY();
+			test.setLayoutX(x+250);
+			test.setLayoutY(y+100+(20*RightCount));
+			MoveRight=false;
+		}else if(MoveIntersection) {
+			double x=600.0;
+			double y=right.getLayoutY();
+			test.setLayoutX(x);
+			test.setLayoutY(y+100+(20*IntersectionCount));
+			MoveIntersection=false;
+		}else if(MoveAllLeft) {
+			
+		}else if(MoveAllRight) {
+			
+		}else if(MoveAllIntersection) {
+			
+		}else {//handles norma drag and stuff
 		test.setLayoutX(e.getSceneX());
 		test.setLayoutY(e.getSceneY());
-		
+		}
 		   test.setOnMousePressed(event->{
-			  // System.out.println(event.getTarget());
+			   String hold=test.getId();
+			   System.out.println("thing"+"ID: "+hold);
+			   if(leftElems.contains(test.getText())) {
+				   menuLeft(event,test);
+			   }else if(rightElems.contains(test.getText())) {
+				   menuRight(event,test);
+			   }else if(midElems.contains(test.getText())) {
+				   menuMiddle(event,test);
+			   }
+			   
 		   });
 		   
 		   
-		   test.setOnMouseReleased(event->{
+		   test.setOnMouseReleased(event->{//allows us to drag anywhere,here we can do detection into other sets
+			   if(event.getButton() == MouseButton.PRIMARY) {
 			   x=event.getSceneX();
 			   y=event.getSceneY();
 			   test.setLayoutX(x);
 			   test.setLayoutY(y);
-
-		   });
-		   
-		   
-		   
-		   
-		  // System.out.println("number of elems:"+elementNum+" number of count:"+count);
-		//   System.out.println(free.get(elementNum)+"  rad"+Left_Circle.get );
-		 MainAnchor.getChildren().add(test);
-			elementNum++;
-			count++;
+			   }
+		   });	 
+		 MainAnchor.getChildren().add(test);//ads to the main anchor,
+			elementNum++;//number of actual text elements
 	}
 
 	// ==============================================// Set Operations
@@ -561,7 +602,7 @@ public class MainController {
 			push(3);
 			view();
 			////////////////// movable text things
-			MovableText(e);			
+			MovableText(e);	
 			/////////////////
 			middle.getItems().add(temp);
 			holder.getItems().remove(temp);
@@ -1112,7 +1153,7 @@ public class MainController {
 	// ============================================// Right Click Menus
 
 	@FXML
-	public void menuLeft(MouseEvent mouseEvent) {
+	public void menuLeft(MouseEvent mouseEvent, Label test) {
 		if (mouseEvent.getButton() == MouseButton.SECONDARY && (left.getItems().size() > 0)) {
 
 //			System.out.println("RIGHT CLICK!");
@@ -1151,13 +1192,13 @@ public class MainController {
 			contextMenu.getItems().addAll(delMenu, moveMenu);
 
 //			contextMenu.getItems().addAll(del, moveMid, moveRight, delAll);
-			left.setContextMenu(contextMenu);
+			test.setContextMenu(contextMenu);
 
 		}
 	}
 
 	@FXML
-	public void menuRight(MouseEvent mouseEvent) {
+	public void menuRight(MouseEvent mouseEvent, Label test) {
 		if (mouseEvent.getButton() == MouseButton.SECONDARY && (right.getItems().size() > 0)) {
 
 //			System.out.println("RIGHT CLICK!");
@@ -1197,13 +1238,13 @@ public class MainController {
 			contextMenu.getItems().addAll(delMenu, moveMenu);
 
 //			contextMenu.getItems().addAll(del, moveMid, moveLeft, delAll);
-			right.setContextMenu(contextMenu);
+			test.setContextMenu(contextMenu);
 
 		}
 	}
 
 	@FXML
-	public void menuMiddle(MouseEvent mouseEvent) {
+	public void menuMiddle(MouseEvent mouseEvent, Label test) {
 		if (mouseEvent.getButton() == MouseButton.SECONDARY && (middle.getItems().size() > 0)) {
 
 //			System.out.println("RIGHT CLICK!");
@@ -1244,7 +1285,7 @@ public class MainController {
 			contextMenu.getItems().addAll(delMenu, moveMenu);
 
 //			contextMenu.getItems().addAll(del,moveLeft, moveRight, delAll);
-			middle.setContextMenu(contextMenu);
+			test.setContextMenu(contextMenu);
 
 		}
 	}
@@ -1275,6 +1316,10 @@ public class MainController {
 //				delElemsClick(middle, midElems);
 				index = holder.getSelectionModel().getSelectedIndex();
 				holder.getItems().remove(index);
+				count--;
+				if(count<0) {
+					count=0;
+				}
 				selected = false;
 			});
 
@@ -1282,7 +1327,10 @@ public class MainController {
 //				addToLeft(middle.getSelectionModel().getSelectedItem());
 				selected = true;
 				temp = holder.getSelectionModel().getSelectedItem();
+				MoveLeft=true;//must be before detectLeft call!!!!!
 				detectLeft(mouseEvent);
+				LeftCount++;
+
 //				delElemsClick(middle, midElems);
 				selected = false;
 			});
@@ -1290,7 +1338,9 @@ public class MainController {
 			moveRight.setOnAction((event) -> {
 				selected = true;
 				temp = holder.getSelectionModel().getSelectedItem();
+				MoveRight=true;
 				detectRight(mouseEvent);
+				RightCount++;
 				selected = false;
 //				addToRight(middle.getSelectionModel().getSelectedItem());
 //				delElemsClick(middle, midElems);
@@ -1299,7 +1349,9 @@ public class MainController {
 			moveMid.setOnAction((event) -> {
 				selected = true;
 				temp = holder.getSelectionModel().getSelectedItem();
+				MoveIntersection=true;
 				detectMiddle(mouseEvent);
+				IntersectionCount++;
 				selected = false;
 //				addToRight(middle.getSelectionModel().getSelectedItem());
 //				delElemsClick(middle, midElems);
@@ -1312,7 +1364,8 @@ public class MainController {
 				for (int i = 0; i < size; i++) {
 					selected = true;
 					temp = arr[i].toString();
-					detectLeft(null);
+					MoveAllLeft=true;
+					detectLeft(mouseEvent);
 					selected = false;
 				}
 			});
@@ -1324,6 +1377,7 @@ public class MainController {
 				for (int i = 0; i < size; i++) {
 					selected = true;
 					temp = arr[i].toString();
+					MoveAllRight=true;
 					detectRight(null);
 					selected = false;
 				}
@@ -1339,7 +1393,8 @@ public class MainController {
 				for (int i = 0; i < size; i++) {
 					selected = true;
 					temp = arr[i].toString();
-					detectMiddle(null);
+					MoveAllIntersection=true;
+					detectMiddle(mouseEvent);
 					selected = false;
 				}
 //				addToRight(middle.getSelectionModel().getSelectedItem());
@@ -1351,6 +1406,7 @@ public class MainController {
 //				delElemsClick(middle, midElems);
 				holder.getItems().clear();
 				selected = false;
+				count=0;
 			});
 
 			delMenu.getItems().addAll(del, delAll);
