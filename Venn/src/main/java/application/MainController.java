@@ -661,10 +661,10 @@ public class MainController {
 				switchToDark();
 			});
 			
-			imageToSets.setOnAction((event) -> {
-				imageToSets();
-			});
-			
+//			imageToSets.setOnAction((event) -> {
+//				imageToSets();
+//			});
+//			
 //			userman.setOnAction((event) -> {
 //				File htmlFile = new File("UserMan.html");
 //				try {
@@ -684,7 +684,7 @@ public class MainController {
 //				}
 //			});
 			
-			menuBarContextMenu.getItems().addAll(projDevs, fontList, darkMode, imageToSets);
+			menuBarContextMenu.getItems().addAll(projDevs, fontList, darkMode);
 //			File_menu.setContextMenu(contextMenu);
 			menuBarContextMenu.show(About_menu, e.getScreenX(), e.getScreenY());
 //			e.consume();
