@@ -40,7 +40,7 @@ sourceSets {
 
 jar {
 	manifest {
-		attributes 'Main-Class': 'application.MainController'
+		attributes 'Main-Class': 'application.Main'
 	}
 
 //task relocateShadowJar(type: ConfigureShadowRelocation) {
@@ -49,5 +49,5 @@ jar {
 	
 //tasks.shadowJar.dependsOn tasks.relocateShadowJar
 
-	//from configurations.runtime.collect { zipTree(it) }
+	from configurations.runtime.collect { zipTree(it) }
 	}
