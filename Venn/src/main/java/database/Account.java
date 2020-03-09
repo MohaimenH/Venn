@@ -6,8 +6,8 @@ import java.util.List;
 public abstract class Account {
 	String name;
 	long pwd;
-	static int User = 0;
-	List<Venn> venn;
+	public static int User = 0;
+	public List<Venn> venn;
 	public Account(String name, long pwd) {
 		this.name = name;
 		this.pwd = pwd;
@@ -22,7 +22,9 @@ public abstract class Account {
 //		return result;
 //	}
 	
-	public abstract String getname();
+	public String getname() {
+		return this.name;
+	};
 	
 	public long getpwd() {
 		return this.pwd;

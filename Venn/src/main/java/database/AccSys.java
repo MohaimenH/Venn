@@ -18,10 +18,13 @@ public class AccSys {
 	public List<Account> accounts;
 	public SuperAcc superacc;
 	public static String filepath = "src/main/java/database/users.txt";
+	public static Record record;
+	
 	public AccSys() throws IOException {
 		accounts = new ArrayList<Account>();
 		superacc = new SuperAcc("super", getpwcode("iamsuper"));
 		this.accounts = this.getaccounts();
+		record = new Record();
 		
 	}
 	

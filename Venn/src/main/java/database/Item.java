@@ -1,25 +1,27 @@
 package database;
 
-public class Item {
+import javafx.scene.control.Label;
+import javafx.scene.text.Text;
 
+public class Item {
+	
+	Label id;
 	private String name;
-	private boolean attribute;
+	private int x;
+	private int y;
 	
-	private Item(String name) {
+	public Item(Label id, String name, int x, int y) {
 		this.name = name;
-		this.attribute = false;
+		this.x = x;
+		this.y = y;
 	}
 	
-	public static Item newItem(String name) {
-		return new Item(name);
+	public int getX() {
+		return this.x;
 	}
 	
-	public void hasCategory() {
-		this.attribute = true;
-	}
-	
-	public void exitCategory() {
-		this.attribute = false;
+	public int getY() {
+		return this.y;
 	}
 	
 	@Override
