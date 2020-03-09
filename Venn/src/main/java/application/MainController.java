@@ -70,7 +70,6 @@ public class MainController {
 	static boolean isDark = false;
 
 	private Set<String> elements = new HashSet<>(); // All elements
-
 	private Set<String> leftElems = new HashSet<>(); // Set A for 2 Sets Version ||| Set B for 3 Sets Version
 	private Set<String> rightElems = new HashSet<>(); // Set B for 2 Sets Version ||| Set C for 3 Sets Version
 	private Set<String> midElems = new HashSet<>(); // Intersection of all sets
@@ -2139,7 +2138,7 @@ public class MainController {
 //			desktop.browse(url);
 //		}
 //		catch (Exception e) {
-//			
+//			//random changes
 //		}
 //		
 //	}
