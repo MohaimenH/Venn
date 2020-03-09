@@ -8,6 +8,7 @@
 
 plugins {
     // Apply the java-library plugin to add support for Java Library
+    id 'com.github.johnrengelman.shadow' version '5.2.0'
     id 'java'
 }
 
@@ -40,6 +41,14 @@ sourceSets {
 
 jar {
 	manifest {
-		attributes 'Main-Class': 'application.Main'
+		attributes 'Main-Class': 'application.MainController'
 	}
-}
+
+//task relocateShadowJar(type: ConfigureShadowRelocation) {
+  //  target = tasks.shadowJar
+	//}
+	
+//tasks.shadowJar.dependsOn tasks.relocateShadowJar
+
+	//from configurations.runtime.collect { zipTree(it) }
+	}

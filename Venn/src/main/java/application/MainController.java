@@ -48,6 +48,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -481,9 +482,7 @@ public class MainController {
 			MenuItem changeSetBFont = new MenuItem("Change Label Font");
 
 			WipeClean.setOnAction((event) -> {
-				clearLeftSet();
-				clearRightSet();
-				System.out.print("clear all clicked");
+				popUpClearElems("all");
 			});
 			
 			changeTitle.setOnAction((event) -> {
@@ -1044,7 +1043,7 @@ public class MainController {
 			});
 
 			delAll.setOnAction((event) -> {
-				clearLeftSet();
+				popUpClearElems("left");
 			});
 
 			delMenu.getItems().addAll(del, delAll);
@@ -1090,7 +1089,7 @@ public class MainController {
 			});
 
 			delAll.setOnAction((event) -> {
-				clearRightSet();
+				popUpClearElems("right");
 			});
 
 			delMenu.getItems().addAll(del, delAll);
@@ -1136,8 +1135,7 @@ public class MainController {
 			});
 
 			delAll.setOnAction((event) -> {
-				middle.getItems().clear();
-				midElems.clear();
+				popUpClearElems("mid");
 			});
 
 			delMenu.getItems().addAll(del, delAll);
@@ -2085,6 +2083,65 @@ public class MainController {
 
 		popupwindow.showAndWait();
 	}
+	
+	public void popUpClearElems(String set) {
+
+		Stage popupwindow = new Stage();
+
+		popupwindow.initModality(Modality.APPLICATION_MODAL);
+		popupwindow.setTitle("Clear elements");
+
+		Label label = new Label("Are you sure you want to clear the element(s)?");
+
+		VBox layout = new VBox(2);
+		HBox layout2 = new HBox(2);
+		
+		Button button1 = new Button("Yes");
+
+		button1.setOnAction((event) -> {
+			if (set.equals("all")) {
+				clearLeftSet();
+				clearRightSet();
+				popupwindow.close();
+			}
+			
+			if (set.equals("left")) {
+				clearLeftSet();
+				popupwindow.close();
+			}
+			
+			if (set.equals("right")) {
+				clearRightSet();
+				popupwindow.close();
+			}
+			
+			if (set.equals("mid")) {
+				middle.getItems().clear();
+				midElems.clear();
+				popupwindow.close();
+			}
+		});
+		
+		Button button2 = new Button("No");
+		button2.setOnAction((event) -> {
+			popupwindow.close();
+		});
+		
+		layout2.getChildren().addAll(button1, button2);
+		layout2.setAlignment(Pos.CENTER);
+		layout2.setSpacing(10);
+		
+		layout.getChildren().addAll(label, layout2);
+		layout.setAlignment(Pos.CENTER);
+		
+		layout.setSpacing(20.0);
+
+		Scene scene1 = new Scene(layout, 350, 100);
+
+		popupwindow.setScene(scene1);
+
+		popupwindow.showAndWait();
+	}
 
 	public void imageToSets() {
 		Image img = new Image("icon/fb.jpg");
@@ -2131,6 +2188,8 @@ public class MainController {
 		}
 		
 	}
+
+
 //	public void browse() throws URISyntaxException { 
 //		Desktop desktop = Desktop.getDesktop();
 //		try {
