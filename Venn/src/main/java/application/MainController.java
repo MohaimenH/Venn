@@ -2162,8 +2162,9 @@ public class MainController {
 			setLabelColor(rightLabel, Color.gray(0.8));
 			setLabelColor(title, Color.gray(0.8));
 			setLabelColor(dragDropDummyText, Color.gray(0.8));
-			
-			setB.setFill(Color.DARKSEAGREEN);
+			if (setB.getFill().equals(Color.RED)) {
+				setB.setFill(Color.DARKSEAGREEN);
+			}
 //			setA.setStroke(Color.GREY);
 //			setB.setStroke(Color.GREY);
 			
@@ -2181,7 +2182,9 @@ public class MainController {
 			setLabelColor(title, Color.gray(0));
 			setLabelColor(dragDropDummyText, Color.web("#515151"));
 			
-			setB.setFill(Color.RED);
+			if (setB.getFill().equals(Color.DARKSEAGREEN)) {
+				setB.setFill(Color.RED);
+			}
 			
 			holder.setBackground(referenceListView.getBackground());
 			inputText.setBackground(referenceTextField.getBackground());
