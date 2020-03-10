@@ -1305,17 +1305,24 @@ public class MainController {
 
 			del.setOnAction((event) -> {
 //			    System.out.println("Delete clicked!");
-				delElemsHelper(middle, midElems);
+				delElemsHelper(test, midElems);
+				int id=Integer.parseInt(test.getId()); 
+				MainAnchor.getChildren().remove(test);
 			});
 
 			moveLeft.setOnAction((event) -> {
-				addToLeft(middle.getSelectionModel().getSelectedItem());
-				delElemsHelper(middle, midElems);
+				addToLeft(test.getText());
+				delElemsHelper(test, midElems);
+				MoveLeft=true;
+				InCircleActions(mouseEvent,test);
+				
 			});
 
 			moveRight.setOnAction((event) -> {
-				addToRight(middle.getSelectionModel().getSelectedItem());
-				delElemsHelper(middle, midElems);
+				addToRight(test.getText());
+				delElemsHelper(test, midElems);
+				MoveRight=true;
+				InCircleActions(mouseEvent,test);
 			});
 
 			delAll.setOnAction((event) -> {
