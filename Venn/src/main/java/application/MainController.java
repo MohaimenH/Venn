@@ -181,6 +181,7 @@ public class MainController {
 	Boolean MoveAllLeft=false;
 	Boolean MoveAllRight=false;
 	Boolean MoveAllIntersection=false;
+	Boolean ActionInCircle=false;//true if the user wants to move something inside the sets
 	// =============================================//
 	
 	public MainController() {
@@ -309,10 +310,12 @@ public class MainController {
 		return true;
 	}
 
-	public void delElemsHelper(ListView<String> list, Set<String> set) {
-		index = list.getSelectionModel().getSelectedIndex();
-		temp = list.getItems().get(index);
-		list.getItems().remove(temp);
+	public void delElemsHelper(Label test, Set<String> set) {
+		//index = list.getSelectionModel().getSelectedIndex();
+		//temp = list.getItems().get(index);
+		//list.getItems().remove(temp);
+		
+		set.remove(test.getText());
 		set.remove(temp);
 	}
 
@@ -461,18 +464,19 @@ public class MainController {
 	}
 	
 	private void MovableText(MouseEvent e) {
-		
-		Label test =new Label();
-		String id=elementNum+"";
-		deleteID.add(test);
-		test.setId(id);
-		int i = holder.getSelectionModel().getSelectedIndex();
-		String t = holder.getItems().get(i);
-		test.setText(t);
-		//test.setText(inputText.getText());
-		
-		free.add(test);
-		if(MoveLeft) {//handles right click movement
+		Label test =new Label();//makes a new label object  
+
+	
+			String id=elementNum+"";//label id
+			deleteID.add(test);//adds label to a list in the case it needs to be deleted
+			test.setId(id);//set id
+			int i = holder.getSelectionModel().getSelectedIndex();//get text from master list
+			String t = holder.getItems().get(i);
+			test.setText(t);//set object text
+			
+			free.add(test);//add label object to list
+					
+		if(MoveLeft) {//handles right click movement/shortcuts between holder and sets
 			double x=left.getLayoutX();
 			double y=left.getLayoutY();
 			test.setLayoutX(x+300);
@@ -497,10 +501,13 @@ public class MainController {
 		}else if(MoveAllIntersection) {
 			
 		}else {//handles norma drag and stuff
-		test.setLayoutX(e.getSceneX());
+		test.setLayoutX(e.getSceneX());//default drag and drop
 		test.setLayoutY(e.getSceneY());
 		}
-		   test.setOnMousePressed(event->{
+		
+		
+		
+		   test.setOnMousePressed(event->{//handles right click for individual label objects
 			   String hold=test.getId();
 			   System.out.println("thing"+"ID: "+hold);
 			   if(leftElems.contains(test.getText())) {
@@ -527,6 +534,27 @@ public class MainController {
 	}
 
 	// ==============================================// Set Operations
+	private void InCircleActions(MouseEvent mouseEvent, Label test) {
+		if(MoveRight) {
+			double x=right.getLayoutX();
+			double y=right.getLayoutY();
+			test.setLayoutX(x+250);
+			test.setLayoutY(y+100+(20*RightCount));
+			MoveRight=false;
+		}else if(MoveLeft) {
+			double x=left.getLayoutX();
+			double y=left.getLayoutY();
+			test.setLayoutX(x+300);
+			test.setLayoutY(y+100+(20*LeftCount+1));
+			MoveLeft=false;//reset
+		}else if(MoveIntersection) {
+			double x=600.0;
+			double y=right.getLayoutY();
+			test.setLayoutX(x);
+			test.setLayoutY(y+100+(20*IntersectionCount));
+			MoveIntersection=false;
+		}
+	}
 
 	@FXML
 	private void detectLeft(MouseEvent e) {
@@ -1152,7 +1180,7 @@ public class MainController {
 
 	// ============================================// Right Click Menus
 
-	@FXML
+	
 	public void menuLeft(MouseEvent mouseEvent, Label test) {
 		if (mouseEvent.getButton() == MouseButton.SECONDARY && (left.getItems().size() > 0)) {
 
@@ -1169,17 +1197,27 @@ public class MainController {
 
 			del.setOnAction((event) -> {
 //			    System.out.println("Delete clicked!");
-				delElemsHelper(left, leftElems);
+				delElemsHelper(test, leftElems);
+				
+				int id=Integer.parseInt(test.getId()); 
+				MainAnchor.getChildren().remove(test);
+
+				
 			});
 
 			moveRight.setOnAction((event) -> {
-				addToRight(left.getSelectionModel().getSelectedItem());
-				delElemsHelper(left, leftElems);
+				addToRight(test.getText());//VERY IMPORTANT, adds to other set for later use
+				delElemsHelper(test, leftElems);
+				MoveRight=true;
+				InCircleActions(mouseEvent,test);
+				
 			});
 
 			moveMid.setOnAction((event) -> {
-				addToMiddle(left.getSelectionModel().getSelectedItem());
-				delElemsHelper(left, leftElems);
+				addToMiddle(test.getText());
+				delElemsHelper(test, leftElems);
+				MoveIntersection=true;
+				InCircleActions(mouseEvent,test);
 			});
 
 			delAll.setOnAction((event) -> {
@@ -1197,7 +1235,7 @@ public class MainController {
 		}
 	}
 
-	@FXML
+	
 	public void menuRight(MouseEvent mouseEvent, Label test) {
 		if (mouseEvent.getButton() == MouseButton.SECONDARY && (right.getItems().size() > 0)) {
 
@@ -1215,17 +1253,23 @@ public class MainController {
 
 			del.setOnAction((event) -> {
 //			    System.out.println("Delete clicked!");
-				delElemsHelper(right, rightElems);
+				delElemsHelper(test, rightElems);
+				int id=Integer.parseInt(test.getId()); 
+				MainAnchor.getChildren().remove(test);
 			});
 
 			moveLeft.setOnAction((event) -> {
-				addToLeft(right.getSelectionModel().getSelectedItem());
-				delElemsHelper(right, rightElems);
+				addToLeft(test.getText());
+				delElemsHelper(test, rightElems);
+				MoveLeft=true;
+				InCircleActions(mouseEvent,test);
 			});
 
 			moveMid.setOnAction((event) -> {
-				addToMiddle(right.getSelectionModel().getSelectedItem());
-				delElemsHelper(right, rightElems);
+				addToMiddle(test.getText());
+				delElemsHelper(test, rightElems);
+				MoveIntersection=true;
+				InCircleActions(mouseEvent,test);
 			});
 
 			delAll.setOnAction((event) -> {
@@ -1243,7 +1287,7 @@ public class MainController {
 		}
 	}
 
-	@FXML
+	
 	public void menuMiddle(MouseEvent mouseEvent, Label test) {
 		if (mouseEvent.getButton() == MouseButton.SECONDARY && (middle.getItems().size() > 0)) {
 
