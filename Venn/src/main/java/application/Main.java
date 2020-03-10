@@ -16,7 +16,7 @@ public class Main extends Application{
 			Parent root = FXMLLoader.load(getClass().getResource("/application/Main.fxml"));
 			primaryStage.getIcons().add(new Image("icon/icon.png"));
 			primaryStage.setTitle("Venn: Simple Venn Diagrams");
-			Scene scene = new Scene(root,1110,716);
+			Scene scene = new Scene(root,1074,716);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.show();
@@ -35,7 +35,8 @@ public class Main extends Application{
 		Parent root = FXMLLoader.load(getClass().getResource("/application/Main.fxml"));
 		primaryStage.getIcons().add(new Image("icon/icon.png"));
 		primaryStage.setTitle("Venn: Simple Venn Diagrams");
-		Scene scene = new Scene(root,1110,716);
+		Scene scene = new Scene(root,1074,716);
+
 		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 		primaryStage.setScene(scene);
 		primaryStage.show();// TODO Auto-generated method stub
