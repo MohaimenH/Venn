@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import javafx.scene.Node;
+
 public class Record {
 	List<Venn> venns;
 	int i;
@@ -15,7 +17,7 @@ public class Record {
 		this.size = 0;
 	}
 	
-	public void newop(Set<Item> left,Set<Item> middle,Set<Item> right) {
+	public void newop(List<Node> left,List<Node> middle,List<Node> right) {
 		if (i == size) {
 		venns.add(new Venn(left, middle, right));
 		this.i++;
