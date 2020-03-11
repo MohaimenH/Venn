@@ -83,7 +83,11 @@ public class MainController {
 	public static AccSys sys;
 	static ContextMenu menuBarContextMenu = new ContextMenu();
 	static boolean isDark = false;
-	private ArrayList<Node> deleteID=new ArrayList<>();//holds id's of things that need to be deleted
+	private ArrayList<Node> deleteID=new ArrayList<>();//holds id's of things that need to be deleted in all sets
+	private ArrayList<Node> deleteIDLeft=new ArrayList<>();//holds id's of things that need to be deleted in all sets
+	private ArrayList<Node> deleteIDRight=new ArrayList<>();//holds id's of things that need to be deleted in all sets
+	private ArrayList<Node> deleteIDIntersection=new ArrayList<>();//holds id's of things that need to be deleted in all sets
+
 	private ArrayList<Object> free=new ArrayList<>();//holds array of text objects
 
 	private Set<String> elements = new HashSet<>(); // All elements
@@ -201,6 +205,9 @@ public class MainController {
 	Boolean MoveAllRight=false;
 	Boolean MoveAllIntersection=false;
 	Boolean ActionInCircle=false;//true if the user wants to move something inside the sets
+	Boolean InLeft=false;
+	Boolean InRight=false;
+	Boolean InIntersection=false;
 	// =============================================//
 	
 	public MainController() {
@@ -501,6 +508,9 @@ public class MainController {
 			double y=left.getLayoutY();
 			test.setLayoutX(x+300);
 			test.setLayoutY(y+100+(20*LeftCount+1));
+			LeftCount++;
+			deleteIDLeft.add(test);
+			deleteIDRight.remove(test);
 			MoveLeft=false;//reset
 		}else if(MoveRight) {
 			double x=right.getLayoutX();
@@ -508,11 +518,18 @@ public class MainController {
 			test.setLayoutX(x+250);
 			test.setLayoutY(y+100+(20*RightCount));
 			MoveRight=false;
+			RightCount++;
+			deleteIDLeft.remove(test);
+			deleteIDRight.add(test);
 		}else if(MoveIntersection) {
 			double x=600.0;
 			double y=right.getLayoutY();
 			test.setLayoutX(x);
 			test.setLayoutY(y+100+(20*IntersectionCount));
+			IntersectionCount=IntersectionCount+LeftCount+RightCount;
+			deleteIDIntersection.add(test);
+			deleteIDLeft.remove(test);
+			deleteIDRight.remove(test);
 			MoveIntersection=false;
 		}else if(MoveAllLeft) {
 			
@@ -521,6 +538,16 @@ public class MainController {
 		}else if(MoveAllIntersection) {
 			
 		}else {//handles norma drag and stuff
+			if(InLeft) {
+				deleteIDLeft.add(test);
+				InLeft=false;
+			}else if(InRight) {
+				deleteIDRight.add(test);
+				InRight=false;
+			}else {
+				deleteIDIntersection.add(test);
+				InIntersection=false;
+			}
 		test.setLayoutX(e.getSceneX());//default drag and drop
 		test.setLayoutY(e.getSceneY());
 		}
@@ -592,6 +619,7 @@ public class MainController {
 
 			
 			///////////////////////movable text 
+			InLeft=true;
 			MovableText(e);
 			///////////////////////
 			
@@ -625,6 +653,7 @@ public class MainController {
 				push(2);
 				view();
 				////////////////////////movable text
+				InRight=true;
 				MovableText(e);
 				////////////////////////
 				
@@ -650,6 +679,7 @@ public class MainController {
 			push(3);
 			view();
 			////////////////// movable text things
+			InIntersection=true;
 			MovableText(e);	
 			/////////////////
 			middle.getItems().add(temp);
@@ -747,6 +777,7 @@ public class MainController {
 				int len=deleteID.size();
 				for(int i=0;i<len;i++) {
 					MainAnchor.getChildren().remove(deleteID.get(i));
+					LeftCount=RightCount=IntersectionCount=0;
 				}
 			});
 			
@@ -1295,6 +1326,11 @@ public class MainController {
 
 			delAll.setOnAction((event) -> {
 				popUpClearElems("left");
+				int size=deleteIDLeft.size();
+				for(int i=0;i<size;i++) {
+					MainAnchor.getChildren().remove(deleteIDLeft.get(i));
+					LeftCount=0;
+				}
 			});
 
 			delMenu.getItems().addAll(del, delAll);
@@ -1347,6 +1383,11 @@ public class MainController {
 
 			delAll.setOnAction((event) -> {
 				popUpClearElems("right");
+				int size=deleteIDRight.size();
+				for(int i=0;i<size;i++) {
+					MainAnchor.getChildren().remove(deleteIDRight.get(i));
+					RightCount=0;
+				}
 			});
 
 			delMenu.getItems().addAll(del, delAll);
@@ -1400,6 +1441,11 @@ public class MainController {
 
 			delAll.setOnAction((event) -> {
 				popUpClearElems("mid");
+				int size=deleteIDIntersection.size();
+				for(int i=0;i<size;i++) {
+					MainAnchor.getChildren().remove(deleteIDIntersection.get(i));
+					IntersectionCount=0;
+				}
 			});
 
 			delMenu.getItems().addAll(del, delAll);
@@ -1435,8 +1481,7 @@ public class MainController {
 			MenuItem delAll = new MenuItem("Delete All The Elements");
 
 			del.setOnAction((event) -> {
-//			    System.out.println("Delete clicked!");
-//				delElemsClick(middle, midElems);
+
 				index = holder.getSelectionModel().getSelectedIndex();
 				holder.getItems().remove(index);
 				count--;
