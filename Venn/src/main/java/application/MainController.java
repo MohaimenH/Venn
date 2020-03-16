@@ -545,13 +545,36 @@ public class MainController {
 			deleteIDRight.remove(test);
 			MoveIntersection=false;
 		}else if(MoveAllLeft) {
-			double x=left.getLayoutY();
-			double y=left.getLayoutY();
-			for(int j=0;j<RightCount;j++) {
 			
-				deleteIDRight.get(j).setLayoutX(x+250);
-				deleteIDRight.get(j).setLayoutY(y+100+(20*LeftCount));
+			Object[] arr = holder.getItems().toArray();
+			ArrayList<Node> ref =new ArrayList<>();
+			int holderCount=arr.length;//num of elements in master list
+			LeftCount=LeftCount+holderCount;//add to the number of existing elements in left
+
+			for(int j=0;j<holderCount;j++) {//to add all from the master list to the circles, we need to create new label objects in a loop
+				
+				System.out.println("A");
+				Label moveAllLeftLabel=new Label();//make a new label 
+				ref.add(moveAllLeftLabel);
+				String temp =holder.getItems().get(j);//get the text from  holder
+				String AllLeftID=elementNum+"";
+				moveAllLeftLabel.setId(AllLeftID);//set its id, consistent with others
+				moveAllLeftLabel.setText(temp);//set text
+				deleteIDLeft.add(moveAllLeftLabel);//add it to the deletion list for the left set
+				deleteID.add(moveAllLeftLabel);//move it to the master list in case all nodes need to be deleted
+				
 			}
+			for(Node u: ref) {
+				int c=1;
+				u.setLayoutX(100);
+				u.setLayoutY(100+(c*50));
+				c++;
+				if(c>=holderCount) {
+					c=0;
+				}
+			}
+			
+			holderCount=0;
 			MoveAllLeft=false;
 		}else if(MoveAllRight) {
 			
@@ -1548,18 +1571,17 @@ public class MainController {
 				detectMiddle(mouseEvent);
 				IntersectionCount++;
 				selected = false;
-//				addToRight(middle.getSelectionModel().getSelectedItem());
-//				delElemsClick(middle, midElems);
+
 			});
 
 			moveAllLeft.setOnAction((event) -> {
-//				addToLeft(middle.getSelectionModel().getSelectedItem());
 				Object[] arr = holder.getItems().toArray();
 				int size = arr.length;
+				MoveAllLeft=true;
 				for (int i = 0; i < size; i++) {
 					selected = true;
 					temp = arr[i].toString();
-					MoveAllLeft=true;
+					//MoveAllLeft=true;dont use the for loop here, instead do it above
 					detectLeft(mouseEvent);
 					selected = false;
 				}
