@@ -19,6 +19,8 @@ public class AccSys {
 	public SuperAcc superacc;
 	public static String filepath = "src/main/java/database/users.txt";
 	public static Record record;
+	public boolean valid = true;
+	public static Account current;
 	
 	public AccSys() throws IOException {
 		accounts = new ArrayList<Account>();
@@ -38,8 +40,13 @@ public class AccSys {
             while((s = br.readLine())!=null){
             	String [] arr = s.split("\\s+");
             	String name = arr[0];
-            	long pwd = Long.parseLong(arr[1]);
-                result.add(new User(name, pwd));
+            	try {
+            		long pwd = Long.parseLong(arr[1]);
+            		result.add(new User(name, pwd));
+            	}
+            	catch (Exception e){
+            		
+            	}
             }
             br.close();
         }catch(Exception e){
