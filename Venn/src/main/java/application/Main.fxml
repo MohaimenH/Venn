@@ -26,10 +26,10 @@
             <TextField fx:id="rightTextArea" disable="true" layoutX="472.0" layoutY="88.0" onInputMethodTextChanged="#donothing" onKeyReleased="#rightname" onKeyTyped="#donothing" opacity="0.0" />
             <TextField fx:id="leftTextArea" disable="true" layoutX="216.0" layoutY="88.0" onInputMethodTextChanged="#donothing" onKeyReleased="#leftname" onKeyTyped="#donothing" opacity="0.0" />
 
-            <Circle id="Left Circle" fx:id="setA" fill="#30068f" layoutX="309.0" layoutY="398.0" onMouseEntered="#detectLeft" opacity="0.38" radius="261.0" stroke="BLACK" strokeWidth="4.0" />
-            <Circle id="Right Circle" fx:id="setB" fill="RED" layoutX="544.0" layoutY="398.0" onMouseEntered="#detectRight" opacity="0.39" radius="261.0" stroke="#4d3f3f" strokeWidth="4.0" />
+            <Circle id="Left Circle" fx:id="setA" fill="#30068f" layoutX="309.0" layoutY="398.0" onKeyPressed="#keyPressLeft" onMouseEntered="#detectLeft" opacity="0.38" radius="261.0" stroke="BLACK" strokeWidth="4.0" />
+            <Circle id="Right Circle" fx:id="setB" fill="RED" layoutX="544.0" layoutY="398.0" onKeyPressed="#keyPressRight" onMouseEntered="#detectRight" opacity="0.39" radius="261.0" stroke="#4d3f3f" strokeWidth="4.0" />
             <ListView fx:id="left" layoutX="81.0" layoutY="206.0" onKeyPressed="#keyPressLeft" onMouseEntered="#detectLeft" prefHeight="368.0" prefWidth="202.0" />
-            <ListView fx:id="middle" layoutX="351.0" layoutY="231.0" onKeyPressed="#keyPressMiddle"  onMouseEntered="#detectMiddle" prefHeight="337.0" prefWidth="159.0" />
+            <ListView fx:id="middle" layoutX="351.0" layoutY="231.0" onKeyPressed="#keyPressMiddle" onMouseEntered="#detectMiddle" prefHeight="337.0" prefWidth="159.0" />
             <ListView fx:id="right" layoutX="572.0" layoutY="206.0" onKeyPressed="#keyPressRight" onMouseEntered="#detectRight" prefHeight="368.0" prefWidth="186.0" />
             <ListView fx:id="decoyLeft" layoutX="197.0" layoutY="585.0" onMouseEntered="#detectLeft" opacity="0.0" prefHeight="59.0" prefWidth="120.0" />
             <ListView fx:id="decoyRight" layoutX="572.0" layoutY="592.0" onMouseEntered="#detectRight" opacity="0.0" prefHeight="45.0" prefWidth="62.0" />

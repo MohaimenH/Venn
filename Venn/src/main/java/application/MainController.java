@@ -106,7 +106,8 @@ public class MainController {
 	//////////////////
 	//@FXML
 	//private Circle setA;
-	
+	@FXML
+	private Cursor mouse;
 	@FXML
 	private MenuButton TestMenu;
 	@FXML
@@ -187,7 +188,7 @@ public class MainController {
 	private URL location;
 
 		@FXML
-		private Label thing;
+		private Label GlobalRef;
 	@FXML
 	private ResourceBundle resources;
 
@@ -407,8 +408,11 @@ public class MainController {
 //			leftElems.remove(left.getItems().get(index));
 //			left.getItems().remove(index);
 //			index=0;
-
-			delElemsHelper(left, leftElems);
+			
+			deleteIDLeft.remove(GlobalRef);
+			MainAnchor.getChildren().remove(GlobalRef);
+			
+			//delElemsHelper(left, leftElems);
 		}
 	}
 
@@ -420,7 +424,10 @@ public class MainController {
 //			right.getItems().remove(index);
 //			index=0;
 
-			delElemsHelper(right, rightElems);
+			deleteIDRight.remove(GlobalRef);
+			MainAnchor.getChildren().remove(GlobalRef);
+			
+			//delElemsHelper(right, rightElems);
 		}
 	}
 //
@@ -432,7 +439,11 @@ public class MainController {
 //			middle.getItems().remove(index);
 //			index=0;
 
-			delElemsHelper(middle, midElems);
+			deleteIDIntersection.remove(GlobalRef);
+			MainAnchor.getChildren().remove(GlobalRef);
+			
+			
+			//delElemsHelper(middle, midElems);
 		}
 	}
 
@@ -476,7 +487,7 @@ public class MainController {
 	private void detectDrop() {
 		
 		selected = true;
-
+		System.out.println("dropped");
 
 	}
 	@FXML
@@ -485,6 +496,8 @@ public class MainController {
 	}
 	@FXML
 	private void detactDrag() {
+		System.out.print("drag");// do some mouse stuff here
+		MainAnchor.getScene().setCursor(mouse.CLOSED_HAND);
 		index = holder.getSelectionModel().getSelectedIndex();
 		selected = true;
 		temp = holder.getSelectionModel().getSelectedItem();
@@ -532,7 +545,14 @@ public class MainController {
 			deleteIDRight.remove(test);
 			MoveIntersection=false;
 		}else if(MoveAllLeft) {
+			double x=left.getLayoutY();
+			double y=left.getLayoutY();
+			for(int j=0;j<RightCount;j++) {
 			
+				deleteIDRight.get(j).setLayoutX(x+250);
+				deleteIDRight.get(j).setLayoutY(y+100+(20*LeftCount));
+			}
+			MoveAllLeft=false;
 		}else if(MoveAllRight) {
 			
 		}else if(MoveAllIntersection) {
@@ -555,8 +575,12 @@ public class MainController {
 		
 		
 		   test.setOnMousePressed(event->{//handles right click for individual label objects
+				MainAnchor.getScene().setCursor(mouse.CLOSED_HAND);
+
 			   String hold=test.getId();
 			   System.out.println("thing"+"ID: "+hold);
+			   GlobalRef=test;//testing: global pointer to the currently selected moveable text thing
+			   System.out.print("Click");
 			   if(leftElems.contains(test.getText())) {
 				   menuLeft(event,test);
 			   }else if(rightElems.contains(test.getText())) {
@@ -574,6 +598,7 @@ public class MainController {
 			   y=event.getSceneY();
 			   test.setLayoutX(x);
 			   test.setLayoutY(y);
+				MainAnchor.getScene().setCursor(mouse.OPEN_HAND);
 			   }
 		   });	 
 		 MainAnchor.getChildren().add(test);//ads to the main anchor,
@@ -619,6 +644,8 @@ public class MainController {
 
 			
 			///////////////////////movable text 
+			MainAnchor.getScene().setCursor(mouse.OPEN_HAND);
+
 			InLeft=true;
 			MovableText(e);
 			///////////////////////
