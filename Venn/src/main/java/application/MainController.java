@@ -338,6 +338,15 @@ public class MainController {
 		return true;
 	}
 
+	public void delElemsHelper(ListView<String> list, Set<String> set) {
+		index = list.getSelectionModel().getSelectedIndex();
+		temp = list.getItems().get(index);
+		list.getItems().remove(temp);
+		
+//		set.remove(list.getText());
+//		set.remove(temp);
+	}
+	
 	public void delElemsHelper(Label test, Set<String> set) {
 		//index = list.getSelectionModel().getSelectedIndex();
 		//temp = list.getItems().get(index);

@@ -60,10 +60,9 @@ public class Login extends Application {
 		pwInput.setPrefWidth(100);
 
 		
-		//check boxes
-		CheckBox box1 = new CheckBox("Venn type:");
 		
-		// Button filed
+		
+		// Button filed ----------------------------------------------------------------------------------------
 		// Button login
 		Button loginButton = new Button("Log In");
 		loginButton.setPrefWidth(100);
@@ -75,16 +74,15 @@ public class Login extends Application {
 				i = sys.accounts.indexOf(a);
 			}
 			if (i != -1 && sys.accounts.get(i).getpwd() == AccSys.getpwcode(pwInput.getText())) {
-				Main main = new Main();
+				UserInterface ui = new UserInterface();
+				ui.sys = this.sys;
+				AccSys.current = this.sys.accounts.get(i);
+				window.close();
 				try {
-				window.close();
-				MainController.sys = this.sys;
-				main.run(new Stage());
-				} catch (IOException e1) {
-				AlertBox.display("Error", "Unknown Error occurs.");
-				e1.printStackTrace();
+					ui.run(window);
+				} catch (Exception e1) {
+					e1.printStackTrace();
 				}
-				window.close();
 			}
 			else {
 				AlertBox.display("Sorry", "You have wrong username or password!");
@@ -117,15 +115,32 @@ public class Login extends Application {
 						write.close();
 						nameInput.clear();
 						pwInput.clear();
+						AlertBox.display("Success", "Register success!");
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
 			}
 		});
 		
+		// Button login
+				Button visitor = new Button("Visitor Access");
+				loginButton.setPrefWidth(100);
+				GridPane.setConstraints(visitor, 3, 1);
+				visitor.setOnAction(e ->{
+					Main main = new Main();
+					try {
+					window.close();
+					MainController.sys = this.sys;
+					MainController.sys.valid = false;
+					main.run(new Stage());
+					} catch (IOException e1) {
+					AlertBox.display("Error", "Unknown Error occurs.");
+					e1.printStackTrace();
+					}
+				});
 		
-		grid.getChildren().addAll(label1, label2,nameInput, pwInput, loginButton, register);
-		Scene scene = new Scene(grid, 220, 100);
+		grid.getChildren().addAll(label1, label2,nameInput, pwInput, loginButton, register, visitor);
+		Scene scene = new Scene(grid, 335, 90);
 
 		window.setScene(scene);
 		window.show();
