@@ -106,7 +106,8 @@ public class MainController {
 	//////////////////
 	//@FXML
 	//private Circle setA;
-	
+	@FXML
+	private Cursor mouse;
 	@FXML
 	private MenuButton TestMenu;
 	@FXML
@@ -187,7 +188,7 @@ public class MainController {
 	private URL location;
 
 		@FXML
-		private Label thing;
+		private Label GlobalRef;
 	@FXML
 	private ResourceBundle resources;
 
@@ -337,15 +338,6 @@ public class MainController {
 		return true;
 	}
 
-	public void delElemsHelper(ListView<String> list, Set<String> set) {
-		index = list.getSelectionModel().getSelectedIndex();
-		temp = list.getItems().get(index);
-		list.getItems().remove(temp);
-		
-//		set.remove(list.getText());
-//		set.remove(temp);
-	}
-	
 	public void delElemsHelper(Label test, Set<String> set) {
 		//index = list.getSelectionModel().getSelectedIndex();
 		//temp = list.getItems().get(index);
@@ -416,8 +408,11 @@ public class MainController {
 //			leftElems.remove(left.getItems().get(index));
 //			left.getItems().remove(index);
 //			index=0;
-
-			delElemsHelper(left, leftElems);
+			
+			deleteIDLeft.remove(GlobalRef);
+			MainAnchor.getChildren().remove(GlobalRef);
+			
+			//delElemsHelper(left, leftElems);
 		}
 	}
 
@@ -429,7 +424,10 @@ public class MainController {
 //			right.getItems().remove(index);
 //			index=0;
 
-			delElemsHelper(right, rightElems);
+			deleteIDRight.remove(GlobalRef);
+			MainAnchor.getChildren().remove(GlobalRef);
+			
+			//delElemsHelper(right, rightElems);
 		}
 	}
 //
@@ -441,7 +439,11 @@ public class MainController {
 //			middle.getItems().remove(index);
 //			index=0;
 
-			delElemsHelper(middle, midElems);
+			deleteIDIntersection.remove(GlobalRef);
+			MainAnchor.getChildren().remove(GlobalRef);
+			
+			
+			//delElemsHelper(middle, midElems);
 		}
 	}
 
@@ -485,7 +487,7 @@ public class MainController {
 	private void detectDrop() {
 		
 		selected = true;
-
+		System.out.println("dropped");
 
 	}
 	@FXML
@@ -494,6 +496,8 @@ public class MainController {
 	}
 	@FXML
 	private void detactDrag() {
+		System.out.print("drag");// do some mouse stuff here
+		MainAnchor.getScene().setCursor(mouse.CLOSED_HAND);
 		index = holder.getSelectionModel().getSelectedIndex();
 		selected = true;
 		temp = holder.getSelectionModel().getSelectedItem();
@@ -542,6 +546,36 @@ public class MainController {
 			MoveIntersection=false;
 		}else if(MoveAllLeft) {
 			
+			Object[] arr = holder.getItems().toArray();
+			ArrayList<Node> ref =new ArrayList<>();
+			int holderCount=arr.length;//num of elements in master list
+			LeftCount=LeftCount+holderCount;//add to the number of existing elements in left
+
+			for(int j=0;j<holderCount;j++) {//to add all from the master list to the circles, we need to create new label objects in a loop
+				
+				System.out.println("A");
+				Label moveAllLeftLabel=new Label();//make a new label 
+				ref.add(moveAllLeftLabel);
+				String temp =holder.getItems().get(j);//get the text from  holder
+				String AllLeftID=elementNum+"";
+				moveAllLeftLabel.setId(AllLeftID);//set its id, consistent with others
+				moveAllLeftLabel.setText(temp);//set text
+				deleteIDLeft.add(moveAllLeftLabel);//add it to the deletion list for the left set
+				deleteID.add(moveAllLeftLabel);//move it to the master list in case all nodes need to be deleted
+				
+			}
+			for(Node u: ref) {
+				int c=1;
+				u.setLayoutX(100);
+				u.setLayoutY(100+(c*50));
+				c++;
+				if(c>=holderCount) {
+					c=0;
+				}
+			}
+			
+			holderCount=0;
+			MoveAllLeft=false;
 		}else if(MoveAllRight) {
 			
 		}else if(MoveAllIntersection) {
@@ -564,8 +598,12 @@ public class MainController {
 		
 		
 		   test.setOnMousePressed(event->{//handles right click for individual label objects
+				MainAnchor.getScene().setCursor(mouse.CLOSED_HAND);
+
 			   String hold=test.getId();
 			   System.out.println("thing"+"ID: "+hold);
+			   GlobalRef=test;//testing: global pointer to the currently selected moveable text thing
+			   System.out.print("Click");
 			   if(leftElems.contains(test.getText())) {
 				   menuLeft(event,test);
 			   }else if(rightElems.contains(test.getText())) {
@@ -583,6 +621,7 @@ public class MainController {
 			   y=event.getSceneY();
 			   test.setLayoutX(x);
 			   test.setLayoutY(y);
+				MainAnchor.getScene().setCursor(mouse.OPEN_HAND);
 			   }
 		   });	 
 		 MainAnchor.getChildren().add(test);//ads to the main anchor,
@@ -628,6 +667,8 @@ public class MainController {
 
 			
 			///////////////////////movable text 
+			MainAnchor.getScene().setCursor(mouse.OPEN_HAND);
+
 			InLeft=true;
 			MovableText(e);
 			///////////////////////
@@ -1530,18 +1571,17 @@ public class MainController {
 				detectMiddle(mouseEvent);
 				IntersectionCount++;
 				selected = false;
-//				addToRight(middle.getSelectionModel().getSelectedItem());
-//				delElemsClick(middle, midElems);
+
 			});
 
 			moveAllLeft.setOnAction((event) -> {
-//				addToLeft(middle.getSelectionModel().getSelectedItem());
 				Object[] arr = holder.getItems().toArray();
 				int size = arr.length;
+				MoveAllLeft=true;
 				for (int i = 0; i < size; i++) {
 					selected = true;
 					temp = arr[i].toString();
-					MoveAllLeft=true;
+					//MoveAllLeft=true;dont use the for loop here, instead do it above
 					detectLeft(mouseEvent);
 					selected = false;
 				}
