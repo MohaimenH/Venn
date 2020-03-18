@@ -28,17 +28,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-
-import javafx.scene.SnapshotParameters;
-import javafx.scene.control.Button;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyCode;
@@ -209,6 +198,8 @@ public class MainController {
 	Boolean InLeft=false;
 	Boolean InRight=false;
 	Boolean InIntersection=false;
+	Boolean AutoLeft=false;
+	Boolean AutoRight=false;
 	// =============================================//
 	
 	public MainController() {
@@ -539,42 +530,17 @@ public class MainController {
 			double y=right.getLayoutY();
 			test.setLayoutX(x);
 			test.setLayoutY(y+100+(20*IntersectionCount));
-			IntersectionCount=IntersectionCount+LeftCount+RightCount;
+			IntersectionCount=IntersectionCount++;
 			deleteIDIntersection.add(test);
 			deleteIDLeft.remove(test);
 			deleteIDRight.remove(test);
 			MoveIntersection=false;
 		}else if(MoveAllLeft) {
 			
-			Object[] arr = holder.getItems().toArray();
-			ArrayList<Node> ref =new ArrayList<>();
-			int holderCount=arr.length;//num of elements in master list
-			LeftCount=LeftCount+holderCount;//add to the number of existing elements in left
-
-			for(int j=0;j<holderCount;j++) {//to add all from the master list to the circles, we need to create new label objects in a loop
-				
-				System.out.println("A");
-				Label moveAllLeftLabel=new Label();//make a new label 
-				ref.add(moveAllLeftLabel);
-				String temp =holder.getItems().get(j);//get the text from  holder
-				String AllLeftID=elementNum+"";
-				moveAllLeftLabel.setId(AllLeftID);//set its id, consistent with others
-				moveAllLeftLabel.setText(temp);//set text
-				deleteIDLeft.add(moveAllLeftLabel);//add it to the deletion list for the left set
-				deleteID.add(moveAllLeftLabel);//move it to the master list in case all nodes need to be deleted
-				
-			}
-			for(Node u: ref) {
-				int c=1;
-				u.setLayoutX(100);
-				u.setLayoutY(100+(c*50));
-				c++;
-				if(c>=holderCount) {
-					c=0;
-				}
-			}
 			
-			holderCount=0;
+
+				
+				
 			MoveAllLeft=false;
 		}else if(MoveAllRight) {
 			
@@ -589,6 +555,43 @@ public class MainController {
 				InRight=false;
 			}else {
 				deleteIDIntersection.add(test);
+				if(AutoLeft || AutoRight) {
+					String tempID=test.getId();
+					String tempText=test.getText();
+					
+					Label temp=new Label();
+					temp.setText(tempText);
+					temp.setId(tempID);
+					temp.setLayoutX(600);
+					temp.setLayoutY(right.getLayoutY()+100+(20*IntersectionCount));
+					IntersectionCount++; 
+					deleteID.add(temp);
+					MainAnchor.getChildren().add(temp);//ads to the main anchor,	   
+					
+					if(AutoRight) {
+						Node a=deleteIDLeft.get(deleteIDLeft.size()-1);
+						int first=MainAnchor.getChildren().indexOf(a);
+
+						MainAnchor.getChildren().remove(first);
+
+					}
+					if(AutoLeft) {
+						Node b=deleteIDRight.get(deleteIDRight.size()-1);
+						int second=MainAnchor.getChildren().indexOf(b);
+						MainAnchor.getChildren().remove(second);
+
+					}
+				
+					
+					if(deleteIDLeft.size()>0 && deleteIDRight.size()>0) {
+					deleteIDLeft.remove(deleteIDLeft.size()-1);
+					deleteIDRight.remove(deleteIDRight.size()-1);
+
+					}
+					//MainAnchor.getChildren().add(test);//ads to the main anchor,
+						// elementNum++;
+					
+				}
 				InIntersection=false;
 			}
 		test.setLayoutX(e.getSceneX());//default drag and drop
@@ -623,30 +626,46 @@ public class MainController {
 			   test.setLayoutY(y);
 				MainAnchor.getScene().setCursor(mouse.OPEN_HAND);
 			   }
-		   });	 
-		 MainAnchor.getChildren().add(test);//ads to the main anchor,
-			elementNum++;//number of actual text elements
+		   });	
+		   if(AutoLeft==false && AutoRight==false) {
+				 MainAnchor.getChildren().add(test);//ads to the main anchor,	   
+		   }else {
+			   AutoLeft=false;
+			   AutoRight=false;
+		   }
+			elementNum++;//number of actual text elements create since start of program
 	}
 
 	// ==============================================// Set Operations
+	private void MoveAllLeft(ArrayList n, int num) {
+		
+	}
 	private void InCircleActions(MouseEvent mouseEvent, Label test) {
 		if(MoveRight) {
 			double x=right.getLayoutX();
 			double y=right.getLayoutY();
 			test.setLayoutX(x+250);
 			test.setLayoutY(y+100+(20*RightCount));
+			RightCount++;
+			LeftCount--;
 			MoveRight=false;
 		}else if(MoveLeft) {
 			double x=left.getLayoutX();
 			double y=left.getLayoutY();
 			test.setLayoutX(x+300);
 			test.setLayoutY(y+100+(20*LeftCount+1));
+			LeftCount++;
+			RightCount--;
 			MoveLeft=false;//reset
 		}else if(MoveIntersection) {
+			System.out.println("gfgs");
 			double x=600.0;
 			double y=right.getLayoutY();
 			test.setLayoutX(x);
 			test.setLayoutY(y+100+(20*IntersectionCount));
+			IntersectionCount++;
+			LeftCount--;
+			RightCount--;
 			MoveIntersection=false;
 		}
 	}
@@ -657,6 +676,8 @@ public class MainController {
 		if (selected && (leftElems.contains(temp) != true) && (midElems.contains(temp) != true) && notBlank(temp)) {
 
 			if (rightElems.contains(temp)) {
+				AutoLeft=true;//flag for auto intersection
+
 				detectMiddle(e);
 
 			}
@@ -667,7 +688,7 @@ public class MainController {
 
 			
 			///////////////////////movable text 
-			MainAnchor.getScene().setCursor(mouse.OPEN_HAND);
+			MainAnchor.getScene().setCursor(mouse.OPEN_HAND);//cool cursor
 
 			InLeft=true;
 			MovableText(e);
@@ -696,7 +717,9 @@ public class MainController {
 		if (selected && (rightElems.contains(temp) != true) && (midElems.contains(temp) != true) && notBlank(temp)) {
 
 			if (leftElems.contains(temp)) {
-				detectMiddle(null);
+				AutoRight=true;//flag for auto intersection
+				detectMiddle(e);
+
 			}
 
 			else {
@@ -1577,6 +1600,11 @@ public class MainController {
 			moveAllLeft.setOnAction((event) -> {
 				Object[] arr = holder.getItems().toArray();
 				int size = arr.length;
+				///////////////////////////// method MoveAll testing
+				for(int j=0;j<size;j++) {
+					
+				}
+				/////////////////////////////
 				MoveAllLeft=true;
 				for (int i = 0; i < size; i++) {
 					selected = true;
