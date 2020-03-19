@@ -26,10 +26,9 @@ import database.AccSys;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-
-import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
@@ -237,6 +236,31 @@ public class MainController {
 	 * 11:change color of right
 	 * 12:clear set
 	 */
+	
+	public void twoSetSelected(ActionEvent Event) throws IOException {
+		Parent twoSets = FXMLLoader.load(getClass().getResource("/application/Main.fxml"));
+		Scene twoSetScene = new Scene(twoSets);
+		Stage Window = (Stage)((Node)Event.getSource()).getScene().getWindow();
+		Window.setScene(twoSetScene);
+		Window.show();
+	}
+	
+	public void threeSetSelected(ActionEvent Event) throws IOException {
+		Parent threeSets = FXMLLoader.load(getClass().getResource("/application/TripleSet.fxml"));
+		Scene threeSetScene = new Scene(threeSets);
+		Stage Window = (Stage)((Node)Event.getSource()).getScene().getWindow();
+		Window.setScene(threeSetScene);
+		Window.show();
+	}
+	
+	public void goBackToSelect(ActionEvent Event) throws IOException {
+		Parent selectScene = FXMLLoader.load(getClass().getResource("/application/SelectScene.fxml"));
+		Scene SelectScene = new Scene(selectScene);
+		Stage Window = (Stage)((Node)Event.getSource()).getScene().getWindow();
+		Window.setScene(SelectScene);
+		Window.show();
+	}
+	
 	public int size() {
 		return stackPointer+1;
 	}
