@@ -58,6 +58,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
@@ -938,6 +939,7 @@ public class MainController {
 			MenuItem changeTitleFont = new MenuItem("Change Font");
 
 			Menu setA = new Menu(leftLabel.getText());
+			MenuItem changeSetACircleColor = new MenuItem("Change Set Color");
 			MenuItem changeNameA = new MenuItem("Change Label");
 			MenuItem changeSetAColor = new MenuItem("Change Label Color");
 			MenuItem changeSetAFontSize = new MenuItem("Change Label Size");
@@ -945,7 +947,7 @@ public class MainController {
 			MenuItem changeSetASize = new MenuItem("Change Size");
 
 			Menu setB = new Menu(rightLabel.getText());
-			
+			MenuItem changeSetBCircleColor = new MenuItem("Change Set Color");
 			MenuItem changeSetBSize = new MenuItem("Change Size");
 			MenuItem changeNameB = new MenuItem("Change Label");
 			MenuItem changeSetBColor = new MenuItem("Change Label Color");
@@ -982,6 +984,10 @@ public class MainController {
 				popUpChangeTitleFont();
 			});
 
+			changeSetACircleColor.setOnAction((event) -> {
+				popUpChangeSetACircleColor();
+			});
+			
 			changeNameA.setOnAction((event) -> {
 				popUpLeft();
 			});
@@ -1001,7 +1007,11 @@ public class MainController {
 			changeSetASize.setOnAction((event) -> {
 				circleSlider("left");
 			});
-
+			
+			changeSetBCircleColor.setOnAction((event) -> {
+				popUpChangeSetBCircleColor();
+			});
+			
 			changeNameB.setOnAction((event) -> {
 				popUpRight();
 			});
@@ -1023,8 +1033,8 @@ public class MainController {
 			});
 			
 			title.getItems().addAll(changeTitle, changeTitleColor, changeTitleFontSize, changeTitleFont);
-			setA.getItems().addAll(changeSetASize, changeNameA, changeSetAColor, changeSetAFontSize, changeSetAFont);
-			setB.getItems().addAll(changeSetBSize, changeNameB, changeSetBColor, changeSetBFontSize, changeSetBFont);
+			setA.getItems().addAll(changeSetACircleColor, changeSetASize, changeNameA, changeSetAColor, changeSetAFontSize, changeSetAFont);
+			setB.getItems().addAll(changeSetBCircleColor, changeSetBSize, changeNameB, changeSetBColor, changeSetBFontSize, changeSetBFont);
 
 			menuBarContextMenu.getItems().addAll(WipeClean, title, setA, setB);
 
@@ -2328,7 +2338,7 @@ public class MainController {
 		popupwindow.initModality(Modality.APPLICATION_MODAL);
 		popupwindow.setTitle("Change Color of Title");
 
-		Label current = new Label("Current Color Is " + title.getTextFill());
+		HBox current = colorName(title.getTextFill().toString());
 		Label label1 = new Label("Please Enter A Color: ");
 
 		TextField test = new TextField();
@@ -2382,7 +2392,7 @@ public class MainController {
 		popupwindow.initModality(Modality.APPLICATION_MODAL);
 		popupwindow.setTitle("Change Color");
 
-		Label current = new Label("Current Color Is " + leftLabel.getTextFill());
+		HBox current = colorName(leftLabel.getTextFill().toString());
 		Label label1 = new Label("Please Enter A Color: ");
 
 		TextField test = new TextField();
@@ -2436,7 +2446,7 @@ public class MainController {
 		popupwindow.initModality(Modality.APPLICATION_MODAL);
 		popupwindow.setTitle("Change Color");
 
-		Label current = new Label("Current Color Is " + rightLabel.getTextFill());
+		HBox current = colorName(rightLabel.getTextFill().toString());
 		Label label1 = new Label("Please Enter A Color: ");
 
 		TextField test = new TextField();
@@ -2484,15 +2494,24 @@ public class MainController {
 	}
 
 	public void popUpChangeSetACircleColor() {
+		
+		double initialOp = setA.getOpacity();
 
 		Stage popupwindow = new Stage();
 
 		popupwindow.initModality(Modality.APPLICATION_MODAL);
 		popupwindow.setTitle("Change Color of Set");
 
-		Label current = new Label("Current Color Is " + setA.getFill());
+		HBox current = colorName(setA.getFill().toString());
+		
+		Label opacity = new Label(" (Opacity: " + (Math.round(setA.getOpacity() * 100.0) / 100.0) + ") ");
+		current.getChildren().add(2, opacity);
+		
 		Label label1 = new Label("Please Enter A Color: ");
-
+		Label label2 = new Label("Use Slider Below To Adjust Opacity: ");
+		
+		Slider opacitySlider = circleOpacitySlider("left");
+		
 		TextField test = new TextField();
 
 		test.setAlignment(Pos.CENTER);
@@ -2509,7 +2528,7 @@ public class MainController {
 			popupwindow.close();
 		});
 
-		Button button1 = new Button("Set Color");
+		Button button1 = new Button("Set Color / Opacity");
 
 		button1.setOnAction((event) -> {
 			if (notBlank(test.getText())) {
@@ -2523,13 +2542,24 @@ public class MainController {
 			}
 			popupwindow.close();
 		});
-
+		
+		button1.setOnKeyPressed((event) -> {
+			setA.setOpacity(initialOp);
+			popupwindow.close();
+		});
+		
+		popupwindow.setOnCloseRequest((event) -> {
+			setA.setOpacity(initialOp);
+			popupwindow.close();
+		});
+		
+		
 		VBox layout = new VBox(10);
 
-		layout.getChildren().addAll(current, label1, test, button1);
+		layout.getChildren().addAll(current, label1, test, label2, opacitySlider, button1);
 		layout.setAlignment(Pos.CENTER);
 
-		Scene scene1 = new Scene(layout, 300, 150);
+		Scene scene1 = new Scene(layout, 310, 200);
 
 		popupwindow.setScene(scene1);
 
@@ -2537,14 +2567,24 @@ public class MainController {
 	}
 
 	public void popUpChangeSetBCircleColor() {
+		
+		double initialOp = setB.getOpacity();
+
 
 		Stage popupwindow = new Stage();
 
 		popupwindow.initModality(Modality.APPLICATION_MODAL);
 		popupwindow.setTitle("Change Color of Set");
 
-		Label current = new Label("Current Color Is " + setB.getFill());
+		HBox current = colorName(setB.getFill().toString());
+		Label opacity = new Label(" (Opacity: " + (Math.round(setB.getOpacity() * 100.0) / 100.0) + ") ");
+		current.getChildren().add(2, opacity);
 		Label label1 = new Label("Please Enter A Color: ");
+		
+		Label label2 = new Label("Use Slider Below To Adjust Opacity: ");
+		
+		Slider opacitySlider = circleOpacitySlider("right");
+		
 
 		TextField test = new TextField();
 
@@ -2562,7 +2602,7 @@ public class MainController {
 			popupwindow.close();
 		});
 
-		Button button1 = new Button("Set Color");
+		Button button1 = new Button("Set Color / Opacity");
 
 		button1.setOnAction((event) -> {
 			if (notBlank(test.getText())) {
@@ -2576,13 +2616,24 @@ public class MainController {
 			}
 			popupwindow.close();
 		});
+		
+		button1.setOnKeyPressed((event) -> {
+			setB.setOpacity(initialOp);
+			popupwindow.close();
+		});
+		
+		popupwindow.setOnCloseRequest((event) -> {
+			setB.setOpacity(initialOp);
+			popupwindow.close();
+		});
+		
 
 		VBox layout = new VBox(10);
 
-		layout.getChildren().addAll(current, label1, test, button1);
+		layout.getChildren().addAll(current, label1, test, label2, opacitySlider, button1);
 		layout.setAlignment(Pos.CENTER);
 
-		Scene scene1 = new Scene(layout, 300, 150);
+		Scene scene1 = new Scene(layout, 310, 200);
 
 		popupwindow.setScene(scene1);
 
@@ -2783,6 +2834,37 @@ public class MainController {
 		
 	}
 	
+	public Slider circleOpacitySlider(String set) {
+		
+		Circle temp;
+		
+		if (set.equals("left")) {
+			temp = setA;
+		}
+			
+		else {
+			temp = setB;
+		}
+		
+		Slider circleOpacity = new Slider();
+		
+		circleOpacity.setMax(0.8);
+		circleOpacity.setMin(0.3);
+		circleOpacity.setValue(temp.getOpacity());
+		
+		circleOpacity.valueProperty().addListener(new ChangeListener<Number>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				temp.setOpacity(newValue.doubleValue());
+			}
+			
+		});
+		
+		return circleOpacity;
+		
+	}
+	
 	public void popUpLabelsEdit(Label label) {
 		
 		Stage popupwindow = new Stage();
@@ -2790,7 +2872,8 @@ public class MainController {
 		popupwindow.initModality(Modality.APPLICATION_MODAL);
 		popupwindow.setTitle("Edit Element");
 
-		Label current = new Label("Current Color Is " + label.getTextFill());
+		HBox current = colorName(label.getTextFill().toString());
+		
 		Label label1 = new Label("Please Enter A Color: ");
 
 		TextField test = new TextField();
@@ -2867,6 +2950,25 @@ public class MainController {
 		popupwindow.setScene(scene1);
 
 		popupwindow.showAndWait();
+		
+	}
+	
+	public HBox colorName(String color) {
+		
+		HBox colorHBox = new HBox(3);
+		
+		Label currentColor = new Label("Current Color: ");
+		currentColor.setStyle("-fx-font-weight: bold");
+		
+//		Rectangle colorBlock = new Rectangle(25,15);
+		Circle colorBlock = new Circle(7);
+		
+		colorBlock.setFill(Color.valueOf(color));
+		
+		colorHBox.getChildren().addAll(currentColor, colorBlock);
+		colorHBox.setAlignment(Pos.CENTER);
+		
+		return colorHBox;
 		
 	}
 //	public void browse() throws URISyntaxException { 
