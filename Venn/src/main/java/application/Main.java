@@ -1,5 +1,6 @@
 package application;
 	
+import java.awt.RenderingHints.Key;
 import java.io.IOException;
 
 import javafx.application.Application;
@@ -10,6 +11,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -123,11 +126,29 @@ public class Main extends Application{
 				popupwindow.close();
 			});
 			
+			button1.setOnKeyPressed((KeyEvent keyEvent) -> {
+				if (keyEvent.getCode() == KeyCode.ENTER) {
+					popupwindow.close();
+				}
+				
+				if (keyEvent.getCode() == KeyCode.ESCAPE) {
+					event1.consume();
+					popupwindow.close();
+				}
+			});
+			
 			Button button2 = new Button("No");
 			
 			button2.setOnAction((event) -> {
 				event1.consume();
 				popupwindow.close();
+			});
+			
+			button2.setOnKeyPressed((KeyEvent keyEvent) -> {
+				if (keyEvent.getCode() == KeyCode.ENTER || keyEvent.getCode() == KeyCode.ESCAPE) {
+					event1.consume();
+					popupwindow.close();
+				}
 			});
 			
 			layout2.getChildren().addAll(button1, button2);
