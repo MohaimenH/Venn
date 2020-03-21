@@ -17,19 +17,23 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.imageio.ImageIO;
 
+import org.checkerframework.common.reflection.qual.NewInstance;
+
 import database.AccSys;
+import database.Record;
+import database.Venn;
+import database.Venn.Item;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-
-import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
@@ -42,6 +46,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -69,9 +75,6 @@ import javafx.application.Application;
 public class MainController {
 	boolean control;
 	boolean zKey;
-	////////////////////////stack stuff
-	int stackPointer =-1;
-	int[] stack =new int[100];
 	/////////////////////////
 	double x;
 	double y;
@@ -81,6 +84,7 @@ public class MainController {
 	String temp;
 	int index;
 	public static AccSys sys;
+	public final static  Font defaultfont = new Font("Arial", 20);
 	static ContextMenu menuBarContextMenu = new ContextMenu();
 	static boolean isDark = false;
 	private ArrayList<Node> deleteID=new ArrayList<>();//holds id's of things that need to be deleted in all sets
@@ -182,6 +186,10 @@ public class MainController {
 	@FXML
 	private ListView<String> decoyLeft;
 	@FXML
+	private Button redobutton;
+	@FXML
+	private Button undobutton;
+	@FXML
 	private Button submit;
 	// =============================================//
 	@FXML
@@ -214,118 +222,108 @@ public class MainController {
 	public MainController() {
 		leftTextArea = new TextField();
 		this.leftTextArea.setOpacity(0);
-		
+		try {
+			sys = new AccSys();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@FXML
 	private void initialize() {
+	}
+	//==============================================//Undo and Re-do
+	// undo method by ctrl-z or undo button
+	public void undo() {
+		Venn tmp = AccSys.record.undo();
+		this.redobutton.setDisable(false);
+		if (AccSys.record.i == -1) {
+			this.undobutton.setDisable(true);
+		}
+		else {
+			this.undobutton.setDisable(false);
+		}
 		
-
-	}
-	//==============================================//Undo Stack
-	/*table of operations
-	 * 0:no operation
-	 * 1:move to left 
-	 * 2:move to middle
-	 * 3:move to right
-	 * 4:delete left
-	 * 5:delete middle
-	 * 6:delete right
-	 * 7.change label 1
-	 * 8:change label 2
-	 * 9:change title
-	 * 10:change color of left 
-	 * 11:change color of right
-	 * 12:clear set
-	 */
-	public int size() {
-		return stackPointer+1;
-	}
-	public boolean isEmpty() {
-		return (stackPointer == -1);
-	}
-	public void push(int x) {
-		if(size()==stack.length) {
-			System.out.println("stack if full,do something");
-		}
-		stack[++stackPointer]=x;
-	}
-	public int top() {
-		if(isEmpty()) {
-			return 0;
-		}
-		return stack[stackPointer];
-	}
-	public int pop() {
-		int temp=stack[stackPointer];
-		stack[stackPointer]=0;
-		stackPointer--;
-		return temp;
-	}
-	public void view() {
-		int n=size();
-		for(int i=0;i<n;i++) {
-			System.out.print(" "+stack[i]);
-		}
-		System.out.println("");
-
-	}
-	@FXML
-	public void detectUndo(KeyEvent e) {// on key pressed of main anchor
-		if(e.getCode()== KeyCode.Z) {
-			zKey=true;
-			System.out.println("Pressed z");
-		}else if(e.getCode()== KeyCode.CONTROL) {
-			control=true;
-			System.out.println("Pressed ctrl");
-
-		}
-		if(zKey && control) {
-			undo(stack);
-		}
-	}
-	@FXML
-	public void resetBooleansForUndo(KeyEvent e) {//on button released for main anchor pane
-		if(e.getCode()== KeyCode.Z) {
-			zKey=false;
-		}else if(e.getCode()==KeyCode.CONTROL) {
-			control=false;
-		}
-	}
-	
-	public void undo(int[] thing) {// interprets the opcode passed to if from the stack
-			int op=0;
-		if(stackPointer==-1) {
-			System.out.println("nothing to undo");
-		}else {
-			 op=thing[stackPointer];
+		if (tmp == null) {
+			for (Node l : this.deleteID) {
+				MainAnchor.getChildren().remove(l);
+			}
 			
+			this.deleteID.clear();
+			return;
 		}
 		
-		if(op==1) {
-			System.out.println("Moved to left: opposite is move back to holder");
-			pop();
-		}else if(op==2) {
-			System.out.println("Moved to right: opposite is is move back to holder ");
-			pop();
-
-		}else if(op==3) {
-			System.out.println("Moved to middle: opposite is is move back to holder");
-			pop();
-		}else if(op==4) {
-			System.out.println("delete from left: opposite is add back to left ");
-			pop();
-
-		}else if(op==5) {
-			System.out.println("delete from middle: opposite is add back to middle");
-			pop();
-		}else if(op==6) {
-			System.out.println("delete from right: opposite is add back to right");
-			pop();
+		for(Item i : tmp.nodes) {
+			if(this.deleteID.contains((Node) i.id)) {
+				Label l = (Label) this.deleteID.get((this.deleteID.indexOf((Node) i.id)));
+				if (l.getLayoutX() == i.x && l.getLayoutY() == i.y) {
+					continue;
+				}
+				else {
+					System.out.println(((Label) i.id).getText());
+					l.setLayoutX(i.x);
+					l.setLayoutY(i.y);
+				}
+			}
+			else {
+				this.deleteID.add((Node)i.id);
+				Label test = (Label) i.id;
+				MainAnchor.getChildren().add(test);
+			}
+		}
+		for (int j = 0; j < this.deleteID.size(); j++) {
+			if (!tmp.nodes.contains(new Item(this.deleteID.get(j)))){
+				System.out.println(((Label) this.deleteID.get(j)).getText());
+				MainAnchor.getChildren().remove(this.deleteID.get(j));
+				this.deleteID.remove(j);
+			}
 		}
 	}
 	
-
+	public void redo() {
+		Venn tmp = AccSys.record.redo();
+		this.undobutton.setDisable(false);
+		if (AccSys.record.i == AccSys.record.size - 1) {
+			this.redobutton.setDisable(true);
+		}
+		else {
+			this.redobutton.setDisable(false);
+		}
+		for(Item i : tmp.nodes) {
+			if(this.deleteID.contains(i.id)) {
+				Node l = (Node) i.id;
+				if (l.getLayoutX() == i.x && l.getLayoutY() == i.y) {
+					continue;
+				}
+				else {
+					l.setLayoutX(i.x);
+					l.setLayoutY(i.y);
+				}
+			}
+			else {
+				this.deleteID.add((Node)i.id);
+				Label test = (Label) i.id;
+				MainAnchor.getChildren().add(test);
+			}
+		}
+		for (int j = 0; j < this.deleteID.size(); j++) {
+			if (!tmp.nodes.contains(new Item(this.deleteID.get(j)))){
+				MainAnchor.getChildren().remove(this.deleteID.get(j));
+				this.deleteID.remove(j);
+			}
+		}
+	}
+	
+	private void newop() {
+		AccSys.record.newop(this.deleteID);
+		System.out.println(this.deleteID.size());
+		this.redobutton.setDisable(true);
+		this.undobutton.setDisable(false);
+	}
+	
+	//===================================================================
+	
 	// =============================================// Helper Methods
 	
 	
@@ -504,6 +502,7 @@ public class MainController {
 	}
 	
 	private void MovableText(MouseEvent e) {
+		
 		Label test =new Label();//makes a new label object  
 
 	
@@ -513,7 +512,7 @@ public class MainController {
 			int i = holder.getSelectionModel().getSelectedIndex();//get text from master list
 			String t = holder.getItems().get(i);
 			test.setText(t);//set object text
-			
+			test.setFont(defaultfont);
 			free.add(test);//add label object to list
 					
 		if(MoveLeft) {//handles right click movement/shortcuts between holder and sets
@@ -544,42 +543,7 @@ public class MainController {
 			deleteIDLeft.remove(test);
 			deleteIDRight.remove(test);
 			MoveIntersection=false;
-		}else if(MoveAllLeft) {
-			
-			Object[] arr = holder.getItems().toArray();
-			ArrayList<Node> ref =new ArrayList<>();
-			int holderCount=arr.length;//num of elements in master list
-			LeftCount=LeftCount+holderCount;//add to the number of existing elements in left
-
-			for(int j=0;j<holderCount;j++) {//to add all from the master list to the circles, we need to create new label objects in a loop
-				
-				System.out.println("A");
-				Label moveAllLeftLabel=new Label();//make a new label 
-				ref.add(moveAllLeftLabel);
-				String temp =holder.getItems().get(j);//get the text from  holder
-				String AllLeftID=elementNum+"";
-				moveAllLeftLabel.setId(AllLeftID);//set its id, consistent with others
-				moveAllLeftLabel.setText(temp);//set text
-				deleteIDLeft.add(moveAllLeftLabel);//add it to the deletion list for the left set
-				deleteID.add(moveAllLeftLabel);//move it to the master list in case all nodes need to be deleted
-				
-			}
-			for(Node u: ref) {
-				int c=1;
-				u.setLayoutX(100);
-				u.setLayoutY(100+(c*50));
-				c++;
-				if(c>=holderCount) {
-					c=0;
-				}
-			}
-			
-			holderCount=0;
-			MoveAllLeft=false;
-		}else if(MoveAllRight) {
-			
-		}else if(MoveAllIntersection) {
-			
+		
 		}else {//handles norma drag and stuff
 			if(InLeft) {
 				deleteIDLeft.add(test);
@@ -622,9 +586,12 @@ public class MainController {
 			   test.setLayoutX(x);
 			   test.setLayoutY(y);
 				MainAnchor.getScene().setCursor(mouse.OPEN_HAND);
+				newop();
 			   }
-		   });	 
-		 MainAnchor.getChildren().add(test);//ads to the main anchor,
+		   });	
+//		   if (!this.deleteID.contains(test)) {
+			   MainAnchor.getChildren().add(test);
+		//ads to the main anchor,
 			elementNum++;//number of actual text elements
 	}
 
@@ -662,8 +629,7 @@ public class MainController {
 			}
 
 			else {
-			push(1);//push action to stack, 1: move to right set
-			view();
+			
 
 			
 			///////////////////////movable text 
@@ -672,9 +638,9 @@ public class MainController {
 			InLeft=true;
 			MovableText(e);
 			///////////////////////
-			
+			newop();
 		
-				left.getItems().add(temp);
+				//left.getItems().add(temp);
 				holder.getItems().remove(temp);
 				leftElems.add(temp);
 				selected = false;
@@ -690,6 +656,7 @@ public class MainController {
 		}
 	}
 
+
 	@FXML
 	private void detectRight(MouseEvent e) {
 
@@ -700,14 +667,13 @@ public class MainController {
 			}
 
 			else {
-				push(2);
-				view();
+				
 				////////////////////////movable text
 				InRight=true;
 				MovableText(e);
 				////////////////////////
-				
-				right.getItems().add(temp);
+				newop();
+				//right.getItems().add(temp);
 				holder.getItems().remove(temp);
 				rightElems.add(temp);
 				selected = false;
@@ -726,20 +692,20 @@ public class MainController {
 	@FXML
 	private void detectMiddle(MouseEvent e) {
 		if (selected && (midElems.contains(temp) != true) && notBlank(temp)) {
-			push(3);
-			view();
+			
 			////////////////// movable text things
 			InIntersection=true;
 			MovableText(e);	
+			newop();
 			/////////////////
-			middle.getItems().add(temp);
+			//middle.getItems().add(temp);
 			holder.getItems().remove(temp);
 			midElems.add(temp);
 
-			left.getItems().remove(temp);
+			//left.getItems().remove(temp);
 			leftElems.remove(temp);
 
-			right.getItems().remove(temp);
+			//right.getItems().remove(temp);
 			rightElems.remove(temp);
 
 			selected = false;
@@ -819,8 +785,6 @@ public class MainController {
 
 			WipeClean.setOnAction((event) -> {
 				popUpClearElems("all");
-				push(12);
-				view();
 				clearLeftSet();
 				clearRightSet();
 				System.out.print("clear all clicked");
@@ -1336,7 +1300,7 @@ public class MainController {
 
 	
 	public void menuLeft(MouseEvent mouseEvent, Label test) {
-		if (mouseEvent.getButton() == MouseButton.SECONDARY && (left.getItems().size() > 0)) {
+		if (mouseEvent.getButton() == MouseButton.SECONDARY ) {
 
 //			System.out.println("RIGHT CLICK!");
 
@@ -1453,7 +1417,7 @@ public class MainController {
 
 	
 	public void menuMiddle(MouseEvent mouseEvent, Label test) {
-		if (mouseEvent.getButton() == MouseButton.SECONDARY && (middle.getItems().size() > 0)) {
+		if (mouseEvent.getButton() == MouseButton.SECONDARY ) {
 
 //			System.out.println("RIGHT CLICK!");
 
