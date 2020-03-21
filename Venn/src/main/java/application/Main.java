@@ -1,6 +1,5 @@
 package application;
 	
-import java.awt.RenderingHints.Key;
 import java.io.IOException;
 
 import javafx.application.Application;
@@ -32,6 +31,9 @@ public class Main extends Application{
 			primaryStage.setScene(scene);
 			primaryStage.show();
 			
+			primaryStage.setMinHeight(726);
+			primaryStage.setMinWidth(1074);
+			
 			primaryStage.setOnCloseRequest((WindowEvent event1) -> {			
 //			    System.out.println("Exit clicked!");
 //			    int status = popUpExit(primaryStage);
@@ -56,12 +58,31 @@ public class Main extends Application{
 					popupwindow.close();
 				});
 				
+				button1.setOnKeyPressed((KeyEvent keyEvent) -> {
+					if (keyEvent.getCode() == KeyCode.ENTER) {
+						popupwindow.close();
+					}
+					
+					if (keyEvent.getCode() == KeyCode.ESCAPE) {
+						event1.consume();
+						popupwindow.close();
+					}
+				});
+				
 				Button button2 = new Button("No");
 				
 				button2.setOnAction((event) -> {
 					event1.consume();
 					popupwindow.close();
 				});
+				
+				button2.setOnKeyPressed((KeyEvent keyEvent) -> {
+					if (keyEvent.getCode() == KeyCode.ENTER || keyEvent.getCode() == KeyCode.ESCAPE) {
+						event1.consume();
+						popupwindow.close();
+					}
+				});
+				
 				
 				layout2.getChildren().addAll(button1, button2);
 				layout2.setAlignment(Pos.CENTER);
@@ -99,7 +120,8 @@ public class Main extends Application{
 		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 		primaryStage.setScene(scene);
 		primaryStage.show();// TODO Auto-generated method stub
-		
+		primaryStage.setMinHeight(726);
+		primaryStage.setMinWidth(1074);
 		primaryStage.setOnCloseRequest((WindowEvent event1) -> {			
 //		    System.out.println("Exit clicked!");
 //		    int status = popUpExit(primaryStage);
