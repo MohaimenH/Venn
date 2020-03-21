@@ -567,8 +567,15 @@ public class MainController {
 		free.add(test);// add label object to list, consider removing bc it may be useless now
 		String s=test.getText();//text of label
 
+
+		////////////////////////testing sets
+		for(int y=0;y<deleteID.size();y++) {
+			System.out.println(deleteID.get(y));
+		}
 		
-		
+		//////////////////////////
+	
+
 		if (MoveLeft) {// handles right click movement/shortcuts between holder and sets
 			if(AutoLeft || AutoRight) {
 				intersectionHelper(test);
@@ -714,8 +721,29 @@ public class MainController {
 		temp.setLayoutY(right.getLayoutY()+100+(20*IntersectionCount));
 		IntersectionCount++; 
 		deleteID.add(temp);
+		deleteIDIntersection.add(temp);
 		MainAnchor.getChildren().add(temp);//ads to the main anchor,	   
 		
+		
+		///////////because we create a new label object, it needs new event listeners
+		
+		 temp.setOnMousePressed(event->{//handles right click for individual label objects
+				//	MainAnchor.getScene().setCursor(mouse.CLOSED_HAND);
+
+				   String hold=temp.getId();
+				   GlobalRef=temp;//testing: global pointer to the currently selected moveable text thing
+				   if(deleteIDLeft.contains(temp)) {
+					   menuLeft(event,temp);
+				   }else if(deleteIDRight.contains(temp)) {
+					   menuRight(event,temp);
+				   }else if(deleteIDIntersection.contains(temp)) {
+					   menuMiddle(event,temp);
+				   }
+				   
+			   });
+		 
+		 
+		/////////now we remove the orogional 2 duplicates from the main anchor
 		if(AutoRight) {
 			Node a=deleteIDLeft.get(deleteIDLeft.size()-1);
 			int first=MainAnchor.getChildren().indexOf(a);
@@ -963,6 +991,8 @@ public class MainController {
 					MainAnchor.getChildren().remove(deleteID.get(i));
 					LeftCount = RightCount = IntersectionCount = 0;
 				}
+				deleteID.clear();
+				elementNum=0;
 			});
 
 			changeTitle.setOnAction((event) -> {
