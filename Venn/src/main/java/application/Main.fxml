@@ -33,6 +33,11 @@
 
             <Circle id="Left Circle" fx:id="setA" fill="#30068f" layoutX="309.0" layoutY="398.0" onKeyPressed="#keyPressLeft" onMouseEntered="#detectLeft" opacity="0.38" radius="261.0" stroke="BLACK" strokeWidth="4.0" />
             <Circle id="Right Circle" fx:id="setB" fill="RED" layoutX="544.0" layoutY="398.0" onKeyPressed="#keyPressRight" onMouseEntered="#detectRight" opacity="0.39" radius="261.0" stroke="#4d3f3f" strokeWidth="4.0" />
+
+            <ListView fx:id="left" layoutX="81.0" layoutY="206.0" onKeyPressed="#keyPressLeft" onMouseEntered="#detectLeft" opacity="0.0" prefHeight="368.0" prefWidth="202.0" />
+            <ListView fx:id="middle" layoutX="351.0" layoutY="231.0" onKeyPressed="#keyPressMiddle" onMouseEntered="#detectMiddle" opacity="0.0" prefHeight="337.0" prefWidth="159.0" />
+            <ListView fx:id="right" layoutX="572.0" layoutY="206.0" onKeyPressed="#keyPressRight" onMouseEntered="#detectRight" opacity="0.0" prefHeight="368.0" prefWidth="186.0" />
+
             <ListView fx:id="decoyLeft" layoutX="197.0" layoutY="585.0" onMouseEntered="#detectLeft" opacity="0.0" prefHeight="59.0" prefWidth="120.0" />
             <ListView fx:id="decoyRight" layoutX="572.0" layoutY="592.0" onMouseEntered="#detectRight" opacity="0.0" prefHeight="45.0" prefWidth="62.0" />
             <Label fx:id="rightLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="448.0" layoutY="78.0" onMouseClicked="#detectLabel2Click" prefHeight="45.0" prefWidth="212.0" text="Set B" textAlignment="CENTER">
@@ -44,7 +49,13 @@
                   <Font size="25.0" />
                </font>
             </Label>
+            <ListView fx:id="L2" layoutX="130.0" layoutY="172.0" onMouseEntered="#detectLeft" opacity="0.0" prefHeight="34.0" prefWidth="240.0" />
+            <ListView fx:id="L1" layoutX="184.0" layoutY="137.0" onMouseEntered="#detectLeft" opacity="0.0" prefHeight="34.0" prefWidth="240.0" />
+            <ListView fx:id="L4" layoutX="111.0" layoutY="575.0" onMouseEntered="#detectLeft" opacity="0.0" prefHeight="34.0" prefWidth="240.0" />
+            <ListView fx:id="L5" layoutX="157.0" layoutY="609.0" onMouseEntered="#detectLeft" opacity="0.0" prefHeight="34.0" prefWidth="240.0" />
+            <ListView fx:id="L3" layoutX="48.0" layoutY="262.0" onMouseEntered="#detectLeft" opacity="0.0" prefHeight="267.0" prefWidth="34.0" />
             <Ellipse fx:id="elipse" fill="WHITE" layoutX="427.0" layoutY="397.0" onDragEntered="#detectMiddle" onMouseEntered="#detectMiddle" opacity="0.0" radiusX="143.0" radiusY="211.0" stroke="BLACK" strokeType="INSIDE" />
+            <Button fx:id="goBackToSelect" layoutX="742.0" layoutY="18.0" mnemonicParsing="false" onAction="#goBackToSelect" text="Go Back To Select Screen" />
          </children>
       </AnchorPane>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b7c4d1" height="26.0" layoutX="16.0" layoutY="7.0" stroke="BLACK" strokeType="INSIDE" width="229.0" />
