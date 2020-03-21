@@ -657,11 +657,11 @@ public class MainController {
 			   System.out.println("thing"+"ID: "+hold);
 			   GlobalRef=test;//testing: global pointer to the currently selected moveable text thing
 			   System.out.print("Click");
-			   if(leftElems.contains(test.getText())) {
+			   if(deleteIDLeft.contains(test)) {
 				   menuLeft(event,test);
-			   }else if(rightElems.contains(test.getText())) {
+			   }else if(deleteIDRight.contains(test)) {
 				   menuRight(event,test);
-			   }else if(midElems.contains(test.getText())) {
+			   }else if(deleteIDIntersection.contains(test)) {
 				   menuMiddle(event,test);
 			   }
 			   
@@ -731,6 +731,8 @@ public class MainController {
 	private void InCircleActions(MouseEvent mouseEvent, Label test) {
 
 		if(MoveRight) {
+			deleteIDLeft.remove(test);
+			deleteIDRight.add(test);
 			double x=right.getLayoutX();
 			double y=right.getLayoutY();
 			test.setLayoutX(x+250);
@@ -739,6 +741,8 @@ public class MainController {
 			LeftCount--;
 			MoveRight=false;
 		}else if(MoveLeft) {
+			deleteIDLeft.add(test);
+			deleteIDRight.remove(test);
 			double x=left.getLayoutX();
 			double y=left.getLayoutY();
 			test.setLayoutX(x+300);
@@ -747,7 +751,7 @@ public class MainController {
 			RightCount--;
 			MoveLeft=false;//reset
 		}else if(MoveIntersection) {
-			System.out.println("gfgs");
+			
 			double x=600.0;
 			double y=right.getLayoutY();
 			test.setLayoutX(x);
