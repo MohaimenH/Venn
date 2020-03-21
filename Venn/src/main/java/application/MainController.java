@@ -1467,7 +1467,8 @@ public class MainController {
 			ContextMenu contextMenu = new ContextMenu();
 			Menu delMenu = new Menu("Delete Elements");
 			Menu moveMenu = new Menu("Move Elements");
-
+			
+			MenuItem editLabel = new MenuItem("Edit the text");
 			MenuItem del = new MenuItem("Delete Element");
 			MenuItem moveRight = new MenuItem("Move to Second Set");
 			MenuItem moveMid = new MenuItem("Move to Intersection");
@@ -1505,11 +1506,15 @@ public class MainController {
 					LeftCount = 0;
 				}
 			});
+			
+			editLabel.setOnAction((event) -> {
+				popUpLabelsEdit(test);
+			});
 
 			delMenu.getItems().addAll(del, delAll);
 			moveMenu.getItems().addAll(moveMid, moveRight);
 
-			contextMenu.getItems().addAll(delMenu, moveMenu);
+			contextMenu.getItems().addAll(delMenu, moveMenu, editLabel);
 
 //			contextMenu.getItems().addAll(del, moveMid, moveRight, delAll);
 			test.setContextMenu(contextMenu);
@@ -2755,6 +2760,93 @@ public class MainController {
 		layout.setSpacing(20);
 
 		Scene scene1 = new Scene(layout, 400, 120);
+
+		popupwindow.setScene(scene1);
+
+		popupwindow.showAndWait();
+		
+	}
+	
+	public void popUpLabelsEdit(Label label) {
+		
+		Stage popupwindow = new Stage();
+
+		popupwindow.initModality(Modality.APPLICATION_MODAL);
+		popupwindow.setTitle("Edit Element");
+
+		Label current = new Label("Current Color Is " + label.getTextFill());
+		Label label1 = new Label("Please Enter A Color: ");
+
+		TextField test = new TextField();
+
+		test.setAlignment(Pos.CENTER);
+		test.setOnAction((event) -> {
+			if (notBlank(test.getText())) {
+				try {
+					setLabelColor(label, test.getText());
+				}
+
+				catch (Exception e) {
+					// TODO
+				}
+			}
+			popupwindow.close();
+		});
+
+		Button button1 = new Button("Set Color");
+
+		button1.setOnAction((event) -> {
+			if (notBlank(test.getText())) {
+				try {
+					setLabelColor(label, test.getText());
+				}
+
+				catch (Exception e) {
+					// TODO
+				}
+			}
+			popupwindow.close();
+		});
+
+		Label label2 = new Label("Please Enter New Text");
+
+		TextField newText = new TextField();
+
+		newText.setAlignment(Pos.CENTER);
+		newText.setOnAction((event) -> {
+			if (notBlank(newText.getText())) {
+				try {
+					label.setText(newText.getText());
+				}
+
+				catch (Exception e) {
+					// TODO
+				}
+			}
+			popupwindow.close();
+		});
+
+		Button button2= new Button("Set Text");
+
+		button2.setOnAction((event) -> {
+			if (notBlank(newText.getText())) {
+				try {
+					label.setText(newText.getText());
+				}
+
+				catch (Exception e) {
+					// TODO
+				}
+			}
+			popupwindow.close();
+		});
+		
+		VBox layout = new VBox(10);
+
+		layout.getChildren().addAll(current, label1, test, button1, label2, newText, button2);
+		layout.setAlignment(Pos.CENTER);
+
+		Scene scene1 = new Scene(layout, 300, 250);
 
 		popupwindow.setScene(scene1);
 
