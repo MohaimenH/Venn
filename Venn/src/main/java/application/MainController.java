@@ -712,7 +712,7 @@ public class MainController {
 			MainAnchor.getChildren().remove(first);
 
 		}
-		if(AutoLeft) {
+		else if(AutoLeft) {
 			Node b=deleteIDRight.get(deleteIDRight.size()-1);
 			int second=MainAnchor.getChildren().indexOf(b);
 			MainAnchor.getChildren().remove(second);
