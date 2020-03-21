@@ -568,6 +568,10 @@ public class MainController {
 		free.add(test);// add label object to list
 
 		if (MoveLeft) {// handles right click movement/shortcuts between holder and sets
+			if(AutoLeft || AutoRight) {
+				intersectionHelper(test);
+				
+			}else {
 			double x = left.getLayoutX();
 			double y = left.getLayoutY();
 			test.setLayoutX(x + 300);
@@ -575,16 +579,24 @@ public class MainController {
 			LeftCount++;
 			deleteIDLeft.add(test);
 			deleteIDRight.remove(test);
+			}
 			MoveLeft = false;// reset
+
 		} else if (MoveRight) {
+			if(AutoLeft || AutoRight) {
+				intersectionHelper(test);
+				
+			}else {
 			double x = right.getLayoutX();
 			double y = right.getLayoutY();
 			test.setLayoutX(x + 250);
 			test.setLayoutY(y + 100 + (20 * RightCount));
-			MoveRight = false;
 			RightCount++;
 			deleteIDLeft.remove(test);
 			deleteIDRight.add(test);
+		}
+			MoveRight = false;
+
 		} else if (MoveIntersection) {
 			double x = 600.0;
 			double y = right.getLayoutY();
@@ -613,48 +625,23 @@ public class MainController {
 			if(InLeft) {
 
 				deleteIDLeft.add(test);
+				if(AutoLeft || AutoRight) {
+					intersectionHelper(test);
+					
+				}
 				InLeft = false;
 			} else if (InRight) {
 				deleteIDRight.add(test);
+				if(AutoLeft || AutoRight) {
+					intersectionHelper(test);
+					
+				}
 				InRight = false;
 			} else {
 				deleteIDIntersection.add(test);
 
 				if(AutoLeft || AutoRight) {
-					String tempID=test.getId();
-					String tempText=test.getText();
-					
-					Label temp=new Label();
-					temp.setText(tempText);
-					temp.setId(tempID);
-					temp.setLayoutX(600);
-					temp.setLayoutY(right.getLayoutY()+100+(20*IntersectionCount));
-					IntersectionCount++; 
-					deleteID.add(temp);
-					MainAnchor.getChildren().add(temp);//ads to the main anchor,	   
-					
-					if(AutoRight) {
-						Node a=deleteIDLeft.get(deleteIDLeft.size()-1);
-						int first=MainAnchor.getChildren().indexOf(a);
-
-						MainAnchor.getChildren().remove(first);
-
-					}
-					if(AutoLeft) {
-						Node b=deleteIDRight.get(deleteIDRight.size()-1);
-						int second=MainAnchor.getChildren().indexOf(b);
-						MainAnchor.getChildren().remove(second);
-
-					}
-				
-					
-					if(deleteIDLeft.size()>0 && deleteIDRight.size()>0) {
-					deleteIDLeft.remove(deleteIDLeft.size()-1);
-					deleteIDRight.remove(deleteIDRight.size()-1);
-
-					}
-					//MainAnchor.getChildren().add(test);//ads to the main anchor,
-						// elementNum++;
+					intersectionHelper(test);
 					
 				}
 				InIntersection=false;
@@ -671,11 +658,11 @@ public class MainController {
 			   System.out.println("thing"+"ID: "+hold);
 			   GlobalRef=test;//testing: global pointer to the currently selected moveable text thing
 			   System.out.print("Click");
-			   if(leftElems.contains(test.getText())) {
+			   if(deleteIDLeft.contains(test)) {
 				   menuLeft(event,test);
-			   }else if(rightElems.contains(test.getText())) {
+			   }else if(deleteIDRight.contains(test)) {
 				   menuRight(event,test);
-			   }else if(midElems.contains(test.getText())) {
+			   }else if(deleteIDIntersection.contains(test)) {
 				   menuMiddle(event,test);
 			   }
 			   
@@ -705,9 +692,48 @@ public class MainController {
 	private void MoveAllLeft(ArrayList n, int num) {
 		
 	}
+	
+	private void intersectionHelper(Label test) {//makes new label element for the auto intersection
+		String tempID=test.getId();
+		String tempText=test.getText();
+		
+		Label temp=new Label();
+		temp.setText(tempText);
+		temp.setId(tempID);
+		temp.setLayoutX(600);
+		temp.setLayoutY(right.getLayoutY()+100+(20*IntersectionCount));
+		IntersectionCount++; 
+		deleteID.add(temp);
+		MainAnchor.getChildren().add(temp);//ads to the main anchor,	   
+		
+		if(AutoRight) {
+			Node a=deleteIDLeft.get(deleteIDLeft.size()-1);
+			int first=MainAnchor.getChildren().indexOf(a);
+
+			MainAnchor.getChildren().remove(first);
+
+		}
+		else if(AutoLeft) {
+			Node b=deleteIDRight.get(deleteIDRight.size()-1);
+			int second=MainAnchor.getChildren().indexOf(b);
+			MainAnchor.getChildren().remove(second);
+
+		}
+	
+		
+		if(deleteIDLeft.size()>0 && deleteIDRight.size()>0) {
+		deleteIDLeft.remove(deleteIDLeft.size()-1);
+		deleteIDRight.remove(deleteIDRight.size()-1);
+
+		}
+		//MainAnchor.getChildren().add(test);//ads to the main anchor,
+			// elementNum++;
+	}
 	private void InCircleActions(MouseEvent mouseEvent, Label test) {
 
 		if(MoveRight) {
+			deleteIDLeft.remove(test);
+			deleteIDRight.add(test);
 			double x=right.getLayoutX();
 			double y=right.getLayoutY();
 			test.setLayoutX(x+250);
@@ -716,6 +742,8 @@ public class MainController {
 			LeftCount--;
 			MoveRight=false;
 		}else if(MoveLeft) {
+			deleteIDLeft.add(test);
+			deleteIDRight.remove(test);
 			double x=left.getLayoutX();
 			double y=left.getLayoutY();
 			test.setLayoutX(x+300);
@@ -724,7 +752,7 @@ public class MainController {
 			RightCount--;
 			MoveLeft=false;//reset
 		}else if(MoveIntersection) {
-			System.out.println("gfgs");
+			
 			double x=600.0;
 			double y=right.getLayoutY();
 			test.setLayoutX(x);
