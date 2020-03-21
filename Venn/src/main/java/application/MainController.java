@@ -268,6 +268,7 @@ public class MainController {
 	}
 	
 	public void goBackToSelect(ActionEvent Event) throws IOException {
+		isDark = false;
 		Parent selectScene = FXMLLoader.load(getClass().getResource("/application/SelectScene.fxml"));
 		Scene SelectScene = new Scene(selectScene);
 		Stage Window = (Stage)((Node)Event.getSource()).getScene().getWindow();
