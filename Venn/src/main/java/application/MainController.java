@@ -64,6 +64,8 @@ import javafx.stage.Stage;
 import javafx.scene.control.*;
 import javafx.scene.*;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 
 public class MainController {
 	boolean control;
@@ -71,6 +73,9 @@ public class MainController {
 	//////////////////////// stack stuff
 	int stackPointer = -1;
 	int[] stack = new int[100];
+	/////////////////////////
+	double leftCircleSize = 261;
+	double rightCircleSize = 261;
 	/////////////////////////
 	double x;
 	double y;
@@ -214,7 +219,6 @@ public class MainController {
 	public MainController() {
 		leftTextArea = new TextField();
 		this.leftTextArea.setOpacity(0);
-
 	}
 
 	@FXML
@@ -755,10 +759,12 @@ public class MainController {
 			MenuItem changeSetAColor = new MenuItem("Change Label Color");
 			MenuItem changeSetAFontSize = new MenuItem("Change Label Size");
 			MenuItem changeSetAFont = new MenuItem("Change Label Font");
+			MenuItem changeSetASize = new MenuItem("Change Size");
 
 			Menu setB = new Menu(rightLabel.getText());
+			
+			MenuItem changeSetBSize = new MenuItem("Change Size");
 			MenuItem changeNameB = new MenuItem("Change Label");
-
 			MenuItem changeSetBColor = new MenuItem("Change Label Color");
 			MenuItem changeSetBFontSize = new MenuItem("Change Label Size");
 			MenuItem changeSetBFont = new MenuItem("Change Label Font");
@@ -808,6 +814,10 @@ public class MainController {
 			changeSetAFont.setOnAction((event) -> {
 				popUpChangeSetAFont();
 			});
+			
+			changeSetASize.setOnAction((event) -> {
+				circleSlider("left");
+			});
 
 			changeNameB.setOnAction((event) -> {
 				popUpRight();
@@ -825,9 +835,13 @@ public class MainController {
 				popUpChangeSetBFont();
 			});
 
+			changeSetBSize.setOnAction((event) -> {
+				circleSlider("right");
+			});
+			
 			title.getItems().addAll(changeTitle, changeTitleColor, changeTitleFontSize, changeTitleFont);
-			setA.getItems().addAll(changeNameA, changeSetAColor, changeSetAFontSize, changeSetAFont);
-			setB.getItems().addAll(changeNameB, changeSetBColor, changeSetBFontSize, changeSetBFont);
+			setA.getItems().addAll(changeSetASize, changeNameA, changeSetAColor, changeSetAFontSize, changeSetAFont);
+			setB.getItems().addAll(changeSetBSize, changeNameB, changeSetBColor, changeSetBFontSize, changeSetBFont);
 
 			menuBarContextMenu.getItems().addAll(WipeClean, title, setA, setB);
 
@@ -2519,6 +2533,61 @@ public class MainController {
 
 	}
 
+	public void circleSlider(String set) {
+		Circle temp;
+		
+		if (set.equals("left")) {
+			temp = setA;
+		}
+			
+		else {
+			temp = setB;
+		}
+		
+		leftCircleSize = setA.getRadius();
+		rightCircleSize = setB.getRadius();
+		
+		Slider circleSize = new Slider();
+		
+		circleSize.setMax(280);
+		circleSize.setMin(180);
+		circleSize.setValue(temp.getRadius());
+		
+		circleSize.valueProperty().addListener(new ChangeListener<Number>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				temp.setRadius(newValue.doubleValue());
+			}
+			
+		});
+		
+		Stage popupwindow = new Stage();
+
+		popupwindow.initModality(Modality.APPLICATION_MODAL);
+		popupwindow.setTitle("Change Size of Circle");
+		
+		Label prompt = new Label("Use the slider below to adjust the size of the circle:");
+
+		Button button1 = new Button("Done");
+
+		button1.setOnAction((event) -> {
+			popupwindow.close();
+		});
+
+		VBox layout = new VBox(10);
+
+		layout.getChildren().addAll(prompt, circleSize, button1);
+		layout.setAlignment(Pos.CENTER);
+		layout.setSpacing(20);
+
+		Scene scene1 = new Scene(layout, 400, 120);
+
+		popupwindow.setScene(scene1);
+
+		popupwindow.showAndWait();
+		
+	}
 //	public void browse() throws URISyntaxException { 
 //		Desktop desktop = Desktop.getDesktop();
 //		try {

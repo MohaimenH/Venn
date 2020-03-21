@@ -33,6 +33,8 @@ public class Main extends Application{
 			
 			primaryStage.setMinHeight(726);
 			primaryStage.setMinWidth(1074);
+			primaryStage.centerOnScreen();
+			
 			
 			primaryStage.setOnCloseRequest((WindowEvent event1) -> {			
 //			    System.out.println("Exit clicked!");
@@ -116,15 +118,16 @@ public class Main extends Application{
 		primaryStage.getIcons().add(new Image("icon/icon.png"));
 		primaryStage.setTitle("Venn: Simple Venn Diagrams");
 		Scene scene = new Scene(root,1074,716);
-
 		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 		primaryStage.setScene(scene);
 		primaryStage.show();// TODO Auto-generated method stub
 		primaryStage.setMinHeight(726);
 		primaryStage.setMinWidth(1074);
+		primaryStage.centerOnScreen();
+		
 		primaryStage.setOnCloseRequest((WindowEvent event1) -> {			
 //		    System.out.println("Exit clicked!");
-//		    int status = popUpExit(primaryStage);
+//		    int status = popUpExit(primaryStaglefte);
 //		    
 //		    if (status == 1) {
 //		    	event1.consume();
