@@ -620,40 +620,7 @@ public class MainController {
 				deleteIDIntersection.add(test);
 
 				if(AutoLeft || AutoRight) {
-					String tempID=test.getId();
-					String tempText=test.getText();
-					
-					Label temp=new Label();
-					temp.setText(tempText);
-					temp.setId(tempID);
-					temp.setLayoutX(600);
-					temp.setLayoutY(right.getLayoutY()+100+(20*IntersectionCount));
-					IntersectionCount++; 
-					deleteID.add(temp);
-					MainAnchor.getChildren().add(temp);//ads to the main anchor,	   
-					
-					if(AutoRight) {
-						Node a=deleteIDLeft.get(deleteIDLeft.size()-1);
-						int first=MainAnchor.getChildren().indexOf(a);
-
-						MainAnchor.getChildren().remove(first);
-
-					}
-					if(AutoLeft) {
-						Node b=deleteIDRight.get(deleteIDRight.size()-1);
-						int second=MainAnchor.getChildren().indexOf(b);
-						MainAnchor.getChildren().remove(second);
-
-					}
-				
-					
-					if(deleteIDLeft.size()>0 && deleteIDRight.size()>0) {
-					deleteIDLeft.remove(deleteIDLeft.size()-1);
-					deleteIDRight.remove(deleteIDRight.size()-1);
-
-					}
-					//MainAnchor.getChildren().add(test);//ads to the main anchor,
-						// elementNum++;
+					intersectionHelper(test);
 					
 				}
 				InIntersection=false;
@@ -703,6 +670,43 @@ public class MainController {
 	// ==============================================// Set Operations
 	private void MoveAllLeft(ArrayList n, int num) {
 		
+	}
+	
+	private void intersectionHelper(Label test) {//makes new label element for the auto intersection
+		String tempID=test.getId();
+		String tempText=test.getText();
+		
+		Label temp=new Label();
+		temp.setText(tempText);
+		temp.setId(tempID);
+		temp.setLayoutX(600);
+		temp.setLayoutY(right.getLayoutY()+100+(20*IntersectionCount));
+		IntersectionCount++; 
+		deleteID.add(temp);
+		MainAnchor.getChildren().add(temp);//ads to the main anchor,	   
+		
+		if(AutoRight) {
+			Node a=deleteIDLeft.get(deleteIDLeft.size()-1);
+			int first=MainAnchor.getChildren().indexOf(a);
+
+			MainAnchor.getChildren().remove(first);
+
+		}
+		if(AutoLeft) {
+			Node b=deleteIDRight.get(deleteIDRight.size()-1);
+			int second=MainAnchor.getChildren().indexOf(b);
+			MainAnchor.getChildren().remove(second);
+
+		}
+	
+		
+		if(deleteIDLeft.size()>0 && deleteIDRight.size()>0) {
+		deleteIDLeft.remove(deleteIDLeft.size()-1);
+		deleteIDRight.remove(deleteIDRight.size()-1);
+
+		}
+		//MainAnchor.getChildren().add(test);//ads to the main anchor,
+			// elementNum++;
 	}
 	private void InCircleActions(MouseEvent mouseEvent, Label test) {
 
