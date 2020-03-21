@@ -567,6 +567,10 @@ public class MainController {
 		free.add(test);// add label object to list
 
 		if (MoveLeft) {// handles right click movement/shortcuts between holder and sets
+			if(AutoLeft || AutoRight) {
+				intersectionHelper(test);
+				
+			}else {
 			double x = left.getLayoutX();
 			double y = left.getLayoutY();
 			test.setLayoutX(x + 300);
@@ -574,16 +578,24 @@ public class MainController {
 			LeftCount++;
 			deleteIDLeft.add(test);
 			deleteIDRight.remove(test);
+			}
 			MoveLeft = false;// reset
+
 		} else if (MoveRight) {
+			if(AutoLeft || AutoRight) {
+				intersectionHelper(test);
+				
+			}else {
 			double x = right.getLayoutX();
 			double y = right.getLayoutY();
 			test.setLayoutX(x + 250);
 			test.setLayoutY(y + 100 + (20 * RightCount));
-			MoveRight = false;
 			RightCount++;
 			deleteIDLeft.remove(test);
 			deleteIDRight.add(test);
+		}
+			MoveRight = false;
+
 		} else if (MoveIntersection) {
 			double x = 600.0;
 			double y = right.getLayoutY();
@@ -612,9 +624,17 @@ public class MainController {
 			if(InLeft) {
 
 				deleteIDLeft.add(test);
+				if(AutoLeft || AutoRight) {
+					intersectionHelper(test);
+					
+				}
 				InLeft = false;
 			} else if (InRight) {
 				deleteIDRight.add(test);
+				if(AutoLeft || AutoRight) {
+					intersectionHelper(test);
+					
+				}
 				InRight = false;
 			} else {
 				deleteIDIntersection.add(test);
