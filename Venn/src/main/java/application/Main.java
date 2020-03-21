@@ -3,6 +3,8 @@ package application;
 import java.io.IOException;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -21,8 +23,18 @@ import javafx.stage.WindowEvent;
 
 
 public class Main extends Application{
-	// This method is called by other page
+	
+	@FXML
+	private Label selectLabel;
+	@FXML
+	private Button twoSetSelect;
+	@FXML
+	private Button threeSetSelect;
+	
+	
+	
 	public void run(Stage primaryStage) throws IOException {
+
 			Parent root = FXMLLoader.load(getClass().getResource("/application/Main.fxml"));
 			primaryStage.getIcons().add(new Image("icon/icon.png"));
 			primaryStage.setTitle("Venn: Simple Venn Diagrams");
@@ -114,16 +126,18 @@ public class Main extends Application{
 	// <run> and <main>
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		Parent root = FXMLLoader.load(getClass().getResource("/application/Main.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("SelectScene.fxml"));
 		primaryStage.getIcons().add(new Image("icon/icon.png"));
 		primaryStage.setTitle("Venn: Simple Venn Diagrams");
 		Scene scene = new Scene(root,1074,716);
 		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 		primaryStage.setScene(scene);
+
 		primaryStage.show();// TODO Auto-generated method stub
 		primaryStage.setMinHeight(726);
 		primaryStage.setMinWidth(1074);
 		primaryStage.centerOnScreen();
+
 		
 		primaryStage.setOnCloseRequest((WindowEvent event1) -> {			
 //		    System.out.println("Exit clicked!");
