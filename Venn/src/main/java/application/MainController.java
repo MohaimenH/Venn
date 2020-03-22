@@ -36,6 +36,7 @@ import database.AccSys;
 import database.User;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -565,15 +566,24 @@ public class MainController {
 		temp = holder.getSelectionModel().getSelectedItem();
 	}
 
-	private void MovableText(MouseEvent e) {
+	private void MovableText(MouseEvent e, Label input) {
 		Label test = new Label();// makes a new label object
 
 		String id = elementNum + "";// label id
 		deleteID.add(test);// adds label to a list in the case it needs to be deleted
 		test.setId(id);// set id
-		int i = holder.getSelectionModel().getSelectedIndex();// get text from master list
-		String t = holder.getItems().get(i);
-		test.setText(t);// set object text
+		if (input == null) {
+			int i = holder.getSelectionModel().getSelectedIndex();// get text from master list
+			String t = holder.getItems().get(i);	
+			test.setText(t);// set object text		
+		}
+		else {
+			test.setText(input.getText());
+			test.setFont(input.getFont());
+			test.setLayoutX(input.getLayoutX());
+			test.setLayoutY(input.getLayoutY());
+		}
+		
 
 		free.add(test);// add label object to list, consider removing bc it may be useless now
 		String s=test.getText();//text of label
@@ -673,8 +683,11 @@ public class MainController {
 				InIntersection=false;
 
 			}
+			if (input == null) {
 			test.setLayoutX(e.getSceneX());// default drag and drop
 			test.setLayoutY(e.getSceneY());
+			}
+				
 		}
 		
 		   test.setOnMousePressed(event->{//handles right click for individual label objects
@@ -848,7 +861,7 @@ public class MainController {
 			//MainAnchor.getScene().setCursor(mouse.OPEN_HAND);//cool cursor
 
 			InLeft=true;
-			MovableText(e);
+			MovableText(e, null);
 			///////////////////////
 			
 				left.getItems().add(temp);
@@ -883,7 +896,7 @@ public class MainController {
 				view();
 				//////////////////////// movable text
 				InRight = true;
-				MovableText(e);
+				MovableText(e, null);
 				////////////////////////
 
 				right.getItems().add(temp);
@@ -909,7 +922,7 @@ public class MainController {
 			view();
 			////////////////// movable text things
 			InIntersection = true;
-			MovableText(e);
+			MovableText(e, null);
 			/////////////////
 			middle.getItems().add(temp);
 			holder.getItems().remove(temp);
@@ -1926,7 +1939,7 @@ public class MainController {
 						this.deleteIDIntersection.add(label);
 					}
 					this.deleteID.add(label);
-					MainAnchor.getChildren().add(label);
+					this.MovableText(null, label);
 				}
 			}
 		} catch (Exception e) {
