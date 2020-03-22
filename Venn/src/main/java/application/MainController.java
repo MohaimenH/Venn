@@ -32,7 +32,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 
 import javafx.scene.SnapshotParameters;
-
+import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
@@ -2364,47 +2364,48 @@ public class MainController {
 	public void popUpChangeTitleColor() {
 
 		Stage popupwindow = new Stage();
+		Color initialColor = (Color) title.getTextFill();
 
 		popupwindow.initModality(Modality.APPLICATION_MODAL);
 		popupwindow.setTitle("Change Color of Title");
 
 		HBox current = colorName(title.getTextFill().toString());
-		Label label1 = new Label("Please Enter A Color: ");
+		Label label1 = new Label("Please Choose A Color: ");
+		
+		ColorPicker cp = new ColorPicker((Color)title.getTextFill());
 
-		TextField test = new TextField();
+		EventHandler<ActionEvent> cpEvent = new EventHandler<ActionEvent>() { 
+            public void handle(ActionEvent e) 
+            { 
+            	Color c = cp.getValue();
+            	setLabelColor(title, c);
+            }
+		};
+		
+		cp.setOnAction(cpEvent);
 
-		test.setAlignment(Pos.CENTER);
-		test.setOnAction((event) -> {
-			if (notBlank(test.getText())) {
-				try {
-					setLabelColor(title, test.getText());
-				}
-
-				catch (Exception e) {
-					// TODO
-				}
-			}
-			popupwindow.close();
-		});
 
 		Button button1 = new Button("Set Color");
 
 		button1.setOnAction((event) -> {
-			if (notBlank(test.getText())) {
-				try {
-					setLabelColor(title, test.getText());
-				}
-
-				catch (Exception e) {
-					// TODO
-				}
-			}
 			popupwindow.close();
 		});
-
+		
+		button1.setOnKeyPressed((keyEvent -> {
+			if(keyEvent.getCode() == KeyCode.ESCAPE) {
+				title.setTextFill(initialColor);
+			}
+			popupwindow.close();
+		}));
+		
+		popupwindow.setOnCloseRequest((event) -> {
+			title.setTextFill(initialColor);
+			popupwindow.close();
+		});
+	
 		VBox layout = new VBox(10);
 
-		layout.getChildren().addAll(current, label1, test, button1);
+		layout.getChildren().addAll(current, label1, cp, button1);
 		layout.setAlignment(Pos.CENTER);
 
 		Scene scene1 = new Scene(layout, 300, 150);
@@ -3000,6 +3001,14 @@ public class MainController {
 		
 		return colorHBox;
 		
+	}
+	
+	public ColorPicker colorPicker() {
+		ColorPicker colorPicker = new ColorPicker();
+		
+		
+		
+		return colorPicker; 
 	}
 //	public void browse() throws URISyntaxException { 
 //		Desktop desktop = Desktop.getDesktop();
