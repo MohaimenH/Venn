@@ -2859,46 +2859,20 @@ public class MainController {
 	public void popUpLabelsEdit(Label label) {
 
 		Stage popupwindow = new Stage();
-
-		popupwindow.initModality(Modality.APPLICATION_MODAL);
-		popupwindow.setTitle("Edit Element");
-
-		HBox current = colorName(label.getTextFill().toString());
-
-		Label label1 = new Label("Please Enter A Color: ");
-
-		TextField test = new TextField();
-
-		test.setAlignment(Pos.CENTER);
-		test.setOnAction((event) -> {
-			if (notBlank(test.getText())) {
-				try {
-					setLabelColor(label, test.getText());
-				}
-
-				catch (Exception e) {
-					// TODO
-				}
-			}
-			popupwindow.close();
-		});
-
-		Button button1 = new Button("Set Color");
-
-		button1.setOnAction((event) -> {
-			if (notBlank(test.getText())) {
-				try {
-					setLabelColor(label, test.getText());
-				}
-
-				catch (Exception e) {
-					// TODO
-				}
-			}
-			popupwindow.close();
-		});
-
-		Label label2 = new Label("Please Enter New Text");
+		TabPane tabPane = new TabPane();
+		
+		Tab tab0 = new Tab("Text");
+		Tab tab1 = new Tab("Color");
+		Tab tab2 = new Tab("Font");
+		tab0.setClosable(false);
+		tab1.setClosable(false);
+		tab2.setClosable(false);
+		
+		tabPane.getTabs().add(tab0);
+		tabPane.getTabs().add(tab1);
+        tabPane.getTabs().add(tab2);
+        
+        Label label2 = new Label("Please Enter New Text");
 
 		TextField newText = new TextField();
 
@@ -2930,13 +2904,58 @@ public class MainController {
 			}
 			popupwindow.close();
 		});
+		
+		VBox textVBox = new VBox(3);
+		
+		textVBox.setSpacing(10);
+		textVBox.setAlignment(Pos.CENTER);
+		textVBox.setPadding(new Insets(20));
+		textVBox.getChildren().addAll(label2, newText, button2);
+		
+		tab0.setContent(textVBox);
+				
+		Color initialColor = (Color) label.getTextFill();
 
-		VBox layout = new VBox(10);
+		popupwindow.initModality(Modality.APPLICATION_MODAL);
+		popupwindow.setTitle("Edit Element");
 
-		layout.getChildren().addAll(current, label1, test, button1, label2, newText, button2);
-		layout.setAlignment(Pos.CENTER);
+		HBox current = colorName(label.getTextFill().toString());
+		
+		VBox test = colorPicker(label);
 
-		Scene scene1 = new Scene(layout, 300, 250);
+		Button button1 = new Button("Set Color");
+
+		button1.setOnAction((event) -> {
+			popupwindow.close();
+		});
+
+		button1.setOnKeyPressed((keyEvent -> {
+			if (keyEvent.getCode() == KeyCode.ESCAPE) {
+				label.setTextFill(initialColor);
+			}
+			popupwindow.close();
+		}));
+
+		popupwindow.setOnCloseRequest((event) -> {
+			label.setTextFill(initialColor);
+			popupwindow.close();
+		});
+		
+		VBox colorVBox = new VBox(3);
+		
+		colorVBox.setSpacing(10);
+		colorVBox.setAlignment(Pos.CENTER);
+		colorVBox.setPadding(new Insets(20));
+		colorVBox.getChildren().addAll(current, test, button1);
+		
+		tab1.setContent(colorVBox);
+		
+
+		VBox layout = new VBox(tabPane);
+
+//		layout.setAlignment(Pos.CENTER);
+
+		Scene scene1 = new Scene(layout, 300, 200);
 
 		popupwindow.setScene(scene1);
 
