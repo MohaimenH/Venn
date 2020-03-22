@@ -1512,7 +1512,7 @@ public class MainController {
 			Menu delMenu = new Menu("Delete Elements");
 			Menu moveMenu = new Menu("Move Elements");
 
-			MenuItem editLabel = new MenuItem("Edit the text");
+			MenuItem editLabel = new MenuItem("Edit Element");
 			MenuItem del = new MenuItem("Delete Element");
 			MenuItem moveRight = new MenuItem("Move to Second Set");
 			MenuItem moveMid = new MenuItem("Move to Intersection");
@@ -1558,7 +1558,7 @@ public class MainController {
 			delMenu.getItems().addAll(del, delAll);
 			moveMenu.getItems().addAll(moveMid, moveRight);
 
-			contextMenu.getItems().addAll(delMenu, moveMenu, editLabel);
+			contextMenu.getItems().addAll(editLabel, delMenu, moveMenu);
 
 //			contextMenu.getItems().addAll(del, moveMid, moveRight, delAll);
 			test.setContextMenu(contextMenu);
@@ -1576,6 +1576,7 @@ public class MainController {
 			Menu delMenu = new Menu("Delete Elements");
 			Menu moveMenu = new Menu("Move Elements");
 
+			MenuItem editLabel = new MenuItem("Edit Element");
 			MenuItem del = new MenuItem("Delete Element");
 			MenuItem moveLeft = new MenuItem("Move to First Set");
 			MenuItem moveMid = new MenuItem("Move to Intersection");
@@ -1610,11 +1611,15 @@ public class MainController {
 					RightCount = 0;
 				}
 			});
+			
+			editLabel.setOnAction((event) -> {
+				popUpLabelsEdit(test);
+			});
 
 			delMenu.getItems().addAll(del, delAll);
 			moveMenu.getItems().addAll(moveMid, moveLeft);
 
-			contextMenu.getItems().addAll(delMenu, moveMenu);
+			contextMenu.getItems().addAll(editLabel, delMenu, moveMenu);
 
 //			contextMenu.getItems().addAll(del, moveMid, moveLeft, delAll);
 			test.setContextMenu(contextMenu);
@@ -1632,6 +1637,7 @@ public class MainController {
 			Menu delMenu = new Menu("Delete Elements");
 			Menu moveMenu = new Menu("Move Elements");
 
+			MenuItem editLabel = new MenuItem("Edit Element");
 			MenuItem del = new MenuItem("Delete Element");
 			MenuItem moveLeft = new MenuItem("Move to First Set");
 			MenuItem moveRight = new MenuItem("Move to Second Set");
@@ -1667,11 +1673,15 @@ public class MainController {
 					IntersectionCount = 0;
 				}
 			});
+			
+			editLabel.setOnAction((event) -> {
+				popUpLabelsEdit(test);
+			});
 
 			delMenu.getItems().addAll(del, delAll);
 			moveMenu.getItems().addAll(moveLeft, moveRight);
 
-			contextMenu.getItems().addAll(delMenu, moveMenu);
+			contextMenu.getItems().addAll(editLabel, delMenu, moveMenu);
 
 //			contextMenu.getItems().addAll(del,moveLeft, moveRight, delAll);
 			test.setContextMenu(contextMenu);
