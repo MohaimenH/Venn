@@ -548,7 +548,7 @@ public class MainController {
 	@FXML
 	private void detactDrag() {
 		System.out.print("drag");// do some mouse stuff here
-		MainAnchor.getScene().setCursor(mouse.CLOSED_HAND);
+		//MainAnchor.getScene().setCursor(mouse.CLOSED_HAND);
 		index = holder.getSelectionModel().getSelectedIndex();
 		selected = true;
 		temp = holder.getSelectionModel().getSelectedItem();
@@ -564,8 +564,16 @@ public class MainController {
 		String t = holder.getItems().get(i);
 		test.setText(t);// set object text
 
-		free.add(test);// add label object to list
+		free.add(test);// add label object to list, consider removing bc it may be useless now
+		String s=test.getText();//text of label
 
+		////////////////////////testing sets
+		for(int y=0;y<deleteID.size();y++) {
+			System.out.println(deleteID.get(y));
+		}
+		
+		//////////////////////////
+	
 		if (MoveLeft) {// handles right click movement/shortcuts between holder and sets
 			if(AutoLeft || AutoRight) {
 				intersectionHelper(test);
@@ -576,8 +584,10 @@ public class MainController {
 			test.setLayoutX(x + 300);
 			test.setLayoutY(y + 100 + (20 * LeftCount + 1));
 			LeftCount++;
-			deleteIDLeft.add(test);
-			deleteIDRight.remove(test);
+			deleteIDLeft.add(test);//node set for left, mainly used for deletion
+			deleteIDRight.remove(test);//node set for right
+			leftElems.add(s);//string set for left
+			rightElems.remove(s);
 			}
 			MoveLeft = false;// reset
 
@@ -591,6 +601,8 @@ public class MainController {
 			test.setLayoutX(x + 250);
 			test.setLayoutY(y + 100 + (20 * RightCount));
 			RightCount++;
+			leftElems.remove(s);
+			rightElems.add(s);
 			deleteIDLeft.remove(test);
 			deleteIDRight.add(test);
 		}
@@ -607,7 +619,9 @@ public class MainController {
 			deleteIDIntersection.add(test);
 			deleteIDLeft.remove(test);
 			deleteIDRight.remove(test);
-
+			midElems.add(s);
+			leftElems.remove(s);
+			rightElems.remove(s);
 			MoveIntersection=false;
 		}else if(MoveAllLeft) {
 			
@@ -624,6 +638,7 @@ public class MainController {
 			if(InLeft) {
 
 				deleteIDLeft.add(test);
+				leftElems.add(s);
 				if(AutoLeft || AutoRight) {
 					intersectionHelper(test);
 					
@@ -631,6 +646,7 @@ public class MainController {
 				InLeft = false;
 			} else if (InRight) {
 				deleteIDRight.add(test);
+				rightElems.add(s);
 				if(AutoLeft || AutoRight) {
 					intersectionHelper(test);
 					
@@ -638,7 +654,7 @@ public class MainController {
 				InRight = false;
 			} else {
 				deleteIDIntersection.add(test);
-
+				midElems.add(s);
 				if(AutoLeft || AutoRight) {
 					intersectionHelper(test);
 					
@@ -651,7 +667,7 @@ public class MainController {
 		}
 		
 		   test.setOnMousePressed(event->{//handles right click for individual label objects
-				MainAnchor.getScene().setCursor(mouse.CLOSED_HAND);
+			//	MainAnchor.getScene().setCursor(mouse.CLOSED_HAND);
 
 			   String hold=test.getId();
 			   System.out.println("thing"+"ID: "+hold);
@@ -674,7 +690,7 @@ public class MainController {
 			   y=event.getSceneY();
 			   test.setLayoutX(x);
 			   test.setLayoutY(y);
-				MainAnchor.getScene().setCursor(mouse.OPEN_HAND);
+				//MainAnchor.getScene().setCursor(mouse.OPEN_HAND);
 			   }
 		   });	
 		   if(AutoLeft==false && AutoRight==false) {
@@ -703,8 +719,39 @@ public class MainController {
 		temp.setLayoutY(right.getLayoutY()+100+(20*IntersectionCount));
 		IntersectionCount++; 
 		deleteID.add(temp);
+		deleteIDIntersection.add(temp);
 		MainAnchor.getChildren().add(temp);//ads to the main anchor,	   
 		
+		
+		///////////because we create a new label object, it needs new event listeners
+		
+		 temp.setOnMousePressed(event->{//handles right click for individual label objects
+				//	MainAnchor.getScene().setCursor(mouse.CLOSED_HAND);
+
+				   String hold=temp.getId();
+				   GlobalRef=temp;//testing: global pointer to the currently selected moveable text thing
+				   if(deleteIDLeft.contains(temp)) {
+					   menuLeft(event,temp);
+				   }else if(deleteIDRight.contains(temp)) {
+					   menuRight(event,temp);
+				   }else if(deleteIDIntersection.contains(temp)) {
+					   menuMiddle(event,temp);
+				   }
+				   
+			   });
+		 
+		 temp.setOnMouseReleased(event->{//allows us to drag anywhere,here we can do detection into other sets
+			   if(event.getButton() == MouseButton.PRIMARY) {
+			   x=event.getSceneX();
+			   y=event.getSceneY();
+			   temp.setLayoutX(x);
+			   temp.setLayoutY(y);
+				//MainAnchor.getScene().setCursor(mouse.OPEN_HAND);
+			   }
+		   });
+		 
+		 
+		/////////now we remove the orogional 2 duplicates from the main anchor
 		if(AutoRight) {
 			Node a=deleteIDLeft.get(deleteIDLeft.size()-1);
 			int first=MainAnchor.getChildren().indexOf(a);
@@ -712,7 +759,7 @@ public class MainController {
 			MainAnchor.getChildren().remove(first);
 
 		}
-		else if(AutoLeft) {
+		if(AutoLeft) {
 			Node b=deleteIDRight.get(deleteIDRight.size()-1);
 			int second=MainAnchor.getChildren().indexOf(b);
 			MainAnchor.getChildren().remove(second);
@@ -729,10 +776,12 @@ public class MainController {
 			// elementNum++;
 	}
 	private void InCircleActions(MouseEvent mouseEvent, Label test) {
-
+		String s=test.getText();
 		if(MoveRight) {
 			deleteIDLeft.remove(test);
 			deleteIDRight.add(test);
+			leftElems.remove(s);
+			rightElems.add(s);
 			double x=right.getLayoutX();
 			double y=right.getLayoutY();
 			test.setLayoutX(x+250);
@@ -741,6 +790,8 @@ public class MainController {
 			LeftCount--;
 			MoveRight=false;
 		}else if(MoveLeft) {
+			leftElems.add(s);
+			rightElems.remove(s);
 			deleteIDLeft.add(test);
 			deleteIDRight.remove(test);
 			double x=left.getLayoutX();
@@ -751,7 +802,8 @@ public class MainController {
 			RightCount--;
 			MoveLeft=false;//reset
 		}else if(MoveIntersection) {
-			
+			deleteIDIntersection.add(test);
+			midElems.add(s);
 			double x=600.0;
 			double y=right.getLayoutY();
 			test.setLayoutX(x);
@@ -782,7 +834,7 @@ public class MainController {
 				view();
 
 			///////////////////////movable text 
-			MainAnchor.getScene().setCursor(mouse.OPEN_HAND);//cool cursor
+			//MainAnchor.getScene().setCursor(mouse.OPEN_HAND);//cool cursor
 
 			InLeft=true;
 			MovableText(e);
@@ -947,6 +999,8 @@ public class MainController {
 					MainAnchor.getChildren().remove(deleteID.get(i));
 					LeftCount = RightCount = IntersectionCount = 0;
 				}
+				deleteID.clear();
+				elementNum=0;
 			});
 
 			changeTitle.setOnAction((event) -> {
