@@ -9,6 +9,7 @@ import java.awt.Point;
 //import database.AccSys;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -17,12 +18,22 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.imageio.ImageIO;
 
+import org.dom4j.Document;
+import org.dom4j.DocumentFactory;
+import org.dom4j.Element;
+import org.dom4j.io.OutputFormat;
+import org.dom4j.io.SAXReader;
+import org.dom4j.io.XMLWriter;
+import org.xml.sax.SAXException;
+
 import database.AccSys;
+import database.User;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -932,7 +943,7 @@ public class MainController {
 		if (e.getButton() == MouseButton.PRIMARY) {
 
 //			ContextMenu contextMenu = new ContextMenu();
-			MenuItem Import = new MenuItem("Import Text File (.txt)");
+			MenuItem Import = new MenuItem("Import Save File (.xml)");
 //			MenuItem Snapshot=new MenuItem("Snapshot");
 
 			Import.setOnAction((event) -> {
@@ -1086,8 +1097,9 @@ public class MainController {
 //			ContextMenu contextMenu=new ContextMenu();
 
 			MenuItem Snapshot = new MenuItem("As JPEG Image (.jpg)");
-			MenuItem Export = new MenuItem("As Text File (.txt)");
-
+			MenuItem Export = new MenuItem("As Readble Report (.txt)");
+			MenuItem Exportxml = new MenuItem("As Save File (.xml)");
+			
 			Export.setOnAction((event) -> {
 				try {
 					exportAsText();
@@ -1106,9 +1118,17 @@ public class MainController {
 					e1.printStackTrace();
 				}
 			});
-
+			
+			Exportxml.setOnAction(event ->{
+				try {
+					this.exportAsXML();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			});
+			
 //			contextMenu.getItems().addAll(Export);
-			menuBarContextMenu.getItems().addAll(Snapshot, Export);
+			menuBarContextMenu.getItems().addAll(Snapshot, Export, Exportxml);
 //			Export_menu.setContextMenu(contextMenu);
 			menuBarContextMenu.show(Export_menu, e.getScreenX(), e.getScreenY());
 //			contextMenu.show(Export_menu, e.getScreenX(), e.getScreenY());
@@ -1395,14 +1415,65 @@ public class MainController {
 	}
 
 	// ==============================================// Export Options
+	@FXML
+	public void exportAsXML() throws Exception{
+		DocumentFactory dbf = DocumentFactory.getInstance();
+		// 创建DocumentBuilder对象
+		Document doc = dbf.createDocument();
+		Element root = dbf.createElement("Venn");
+		doc.setRootElement(root);
+		root.setName("Venn");
+		for (Node n : this.deleteID) {
+			Label l = (Label) n;
+			Element sub = root.addElement(l.getText());
+			if (this.deleteIDLeft.contains(n)) {
+				sub.addAttribute("belong", "left");
+			}
+			else if (this.deleteIDRight.contains(n)) {
+				sub.addAttribute("belong", "right");
+			}
+			else if (this.deleteIDIntersection.contains(n)) {
+				sub.addAttribute("belong", "intersection");
+			}
+			sub.addElement("x").setText(l.getLayoutX() + "");
+			sub.addElement("y").setText(l.getLayoutY() + "");
+			Element font = sub.addElement("font");
+			font.setText(l.getFont().getStyle());
+			font.addAttribute("size", l.getFont().getSize() +"");
+		}
+		
+		String path = "";
+		try {
+			path = this.getpath(2);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		if (path.length() == 0) {
+			return;
+		}
+		
+		try {
+			FileOutputStream out = new FileOutputStream(path);
+			
+			OutputFormat format = OutputFormat.createPrettyPrint();
+			format.setEncoding("UTF-8");
+			XMLWriter writer = new XMLWriter(out, format);
+			writer.write(doc);
+			writer.close();
+		}
+		catch (Exception e){
+		
+		}
 
+	}
+	
+	
 	@FXML
 	public void exportAsText() throws IOException {
 //		int arr=0;
 //		String a = leftElems.iterator().next();
-		int sizeL = leftElems.size();
-		int sizeR = rightElems.size();
-		int sizeM = midElems.size();
 		String path = this.getpath(0);
 		if (path.length() == 0) {
 			return;
@@ -1411,28 +1482,23 @@ public class MainController {
 		FileWriter writer = new FileWriter(path); // Change to Your Directory of Choice - Preferably Desktop
 //		ArrayList<Object> a = new ArrayList<>(leftElems.toArray());
 
-		Object[] leftElements = leftElems.toArray();
-
-		writer.write("*Unique Elements of " + leftLabel.getText() + System.lineSeparator());
+		writer.write("*Unique Elements of " + this.leftLabel.getText() + System.lineSeparator());
 		writer.write("\n");
-		for (int i = 0; i < sizeL; i++) {
-			writer.write(leftElements[i].toString() + System.lineSeparator());
+		for (int i = 0; i < this.deleteIDLeft.size(); i++) {
+			writer.write( ((Label) this.deleteIDLeft.get(i)).getText() + System.lineSeparator());
 		}
 
-		Object[] rightElements = rightElems.toArray();
 
 //		System.out.println("=============================");
 
 //		String h = "Unique Elements of Set B:";
 
 		writer.write("\n\n");
-		writer.write("*Unique Elements of " + rightLabel.getText() + System.lineSeparator());
+		writer.write("*Unique Elements of " + this.rightLabel.getText() + System.lineSeparator());
 		writer.write("\n");
-		for (int i = 0; i < sizeR; i++) {
-			writer.write(rightElements[i].toString() + System.lineSeparator());
+		for (int i = 0; i < this.deleteIDRight.size(); i++) {
+			writer.write(((Label) this.deleteIDRight.get(i)).getText() + System.lineSeparator());
 		}
-
-		Object[] midElements = midElems.toArray();
 
 //		System.out.println("=============================");
 
@@ -1440,8 +1506,8 @@ public class MainController {
 		writer.write("\n\n");
 		writer.write("*Intersection of " + leftLabel.getText() + " & " + rightLabel.getText() + System.lineSeparator());
 		writer.write("\n");
-		for (int i = 0; i < sizeM; i++) {
-			writer.write(midElements[i].toString() + System.lineSeparator());
+		for (int i = 0; i < this.deleteIDIntersection.size(); i++) {
+			writer.write(((Label) this.deleteIDIntersection.get(i)).getText() + System.lineSeparator());
 		}
 
 		writer.close();
@@ -1455,7 +1521,7 @@ public class MainController {
 		Stage mainStage = null;
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Choose your path");
-		File selectedFile = new File("src/main/java/users");
+		File selectedFile = new File("");
 		if (i == 0) {
 			fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("TXT", "*.txt"));
 			selectedFile = fileChooser.showSaveDialog(mainStage);
@@ -1465,7 +1531,10 @@ public class MainController {
 					new FileChooser.ExtensionFilter("PNG", "*.png"));
 			selectedFile = fileChooser.showSaveDialog(mainStage);
 		} else if (i == 2) {
-			fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("TXT", "*.txt"));
+			fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("XML", "*.xml"));
+			selectedFile = fileChooser.showSaveDialog(mainStage);
+		} else if (i == 3) {
+			fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("XML", "*.xml"));
 			selectedFile = fileChooser.showOpenDialog(mainStage);
 		}
 
@@ -1474,7 +1543,7 @@ public class MainController {
 		try {
 			return path = selectedFile.getPath();
 		} catch (NullPointerException e) {
-
+			
 		}
 		return path;
 	}
@@ -1823,73 +1892,60 @@ public class MainController {
 	public void importer(ActionEvent event) throws IOException {
 
 		String line;
-		String path = getpath(2);
+		String path = getpath(3);
 		if (path.length() == 0) {
 			return;
 		}
-		BufferedReader reader = new BufferedReader(new FileReader(new File(path)));
-		int flag = -1;
-
-		while ((line = reader.readLine()) != null) {
-			String[] str = line.split("\\s+");
-			if (line.length() != 0 && line.charAt(0) == '*') {
-				switch (++flag) {
-				case 0:
-					leftLabel.setText(str[str.length - 1]);
-					break;
-				case 1:
-					rightLabel.setText(str[str.length - 1]);
-					break;
+		try {
+			SAXReader reader = new SAXReader();
+			Document doc = reader.read(path);
+			Element root = doc.getRootElement();
+			
+			for (Iterator<Element> rootIter = root.elementIterator(); rootIter.hasNext();) {
+				Element venn = rootIter.next();
+				
+				if (checkcontain(venn.getName())) {
+					Label label = new Label();
+					String name = venn.getName();
+					String set = venn.attributeValue("belong");
+					Double x = Double.parseDouble((venn.element("x").getText()));
+					Double y = Double.parseDouble((venn.element("y").getText()));
+					Font font = new Font(venn.element("font").getText(), Double.parseDouble(venn.element("font").attributeValue("size")));
+					
+					label.setText(name);
+					label.setLayoutX(x);
+					label.setLayoutY(y);
+					label.setFont(font);
+					if (set.equals("left")) {
+						this.deleteIDLeft.add(label);
+					}
+					else if (set.equals("right")) {
+						this.deleteIDRight.add(label);
+					}
+					else if (set.equals("intersection")) {
+						this.deleteIDIntersection.add(label);
+					}
+					this.deleteID.add(label);
+					MainAnchor.getChildren().add(label);
 				}
-			} else if (!line.equals("")) {
-				switch (flag) {
-				case 0:
-					if (!this.leftElems.contains(line)) {
-						if (!this.rightElems.contains(line)) {
-							left.getItems().add(line);
-							this.leftElems.add(line);
-						} else {
-							right.getItems().remove(line);
-							this.rightElems.remove(line);
-							middle.getItems().add(str[0]);
-							this.midElems.add(line);
-						}
-
-					}
-					break;
-				case 1:
-					if (!this.rightElems.contains(line)) {
-						if (!this.leftElems.contains(line)) {
-							right.getItems().add(str[0]);
-							this.rightElems.add(line);
-						} else {
-							left.getItems().remove(line);
-							this.leftElems.remove(line);
-							middle.getItems().add(str[0]);
-							this.midElems.add(line);
-						}
-					}
-					break;
-				case 2:
-					if (this.leftElems.contains(line)) {
-						left.getItems().remove(line);
-						this.leftElems.remove(line);
-					}
-					if (this.rightElems.contains(line)) {
-						right.getItems().remove(line);
-						this.rightElems.remove(line);
-					}
-					if (!this.midElems.contains(line)) {
-						middle.getItems().add(str[0]);
-						this.midElems.add(line);
-						break;
-					}
-				}
-
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * This method check duplication:
+	 * Return flase if contain : true if not contain
+	*/
+	private boolean checkcontain(String name) {
+		for (Node n :this.deleteID) {
+			Label l = (Label) n;
+			if (l.getText().equals(name)) {
+				return false;
 			}
 		}
-
-		reader.close();
+		return true;
 	}
 
 	// =========================================Label Changer pop-ups//
