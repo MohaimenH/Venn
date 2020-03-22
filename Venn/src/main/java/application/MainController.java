@@ -2872,6 +2872,7 @@ public class MainController {
 		tabPane.getTabs().add(tab1);
         tabPane.getTabs().add(tab2);
         
+        // Text Changes 
         Label label2 = new Label("Please Enter New Text");
 
 		TextField newText = new TextField();
@@ -2913,6 +2914,8 @@ public class MainController {
 		textVBox.getChildren().addAll(label2, newText, button2);
 		
 		tab0.setContent(textVBox);
+		
+		// Color changes
 				
 		Color initialColor = (Color) label.getTextFill();
 
@@ -2950,6 +2953,50 @@ public class MainController {
 		
 		tab1.setContent(colorVBox);
 		
+		// Font Size Change
+		
+		Label currentFont = new Label("Current Font Size Is " + label.getFont().getSize());
+		Label fontSizeLabel = new Label("Please Enter A Font Size: ");
+
+		TextField fontSize = new TextField();
+
+		fontSize.setAlignment(Pos.CENTER);
+		fontSize.setOnAction((event) -> {
+			if (notBlank(fontSize.getText())) {
+				try {
+					setLabelFontSize(label, Double.valueOf(fontSize.getText()));
+				}
+
+				catch (Exception e) {
+					// TODO
+				}
+			}
+			popupwindow.close();
+		});
+
+		Button fontButton = new Button("Set Font Size");
+
+		button1.setOnAction((event) -> {
+			if (notBlank(fontSize.getText())) {
+				try {
+					setLabelFontSize(label, Double.valueOf(fontSize.getText()));
+				}
+
+				catch (Exception e) {
+					// TODO
+				}
+			}
+			popupwindow.close();
+		});
+		
+		VBox fontVBox = new VBox(3);
+		
+		fontVBox.setSpacing(10);
+		fontVBox.setAlignment(Pos.CENTER);
+		fontVBox.setPadding(new Insets(20));
+		fontVBox.getChildren().addAll(currentFont, fontSizeLabel, fontSize, fontButton);
+		
+		tab2.setContent(fontVBox);
 
 		VBox layout = new VBox(tabPane);
 
