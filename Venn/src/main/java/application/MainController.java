@@ -17,25 +17,17 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.imageio.ImageIO;
 
-import org.checkerframework.common.reflection.qual.NewInstance;
-
 import database.AccSys;
-import database.Record;
-import database.Venn;
-import database.Venn.Item;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-
-import javafx.geometry.Pos;
 
 import javafx.geometry.Pos;
 
@@ -53,8 +45,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
-import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -98,7 +88,6 @@ public class MainController {
 	String temp;
 	int index;
 	public static AccSys sys;
-	public final static  Font defaultfont = new Font("Arial", 20);
 	static ContextMenu menuBarContextMenu = new ContextMenu();
 	static boolean isDark = false;
 	private ArrayList<Node> deleteID = new ArrayList<>();// holds id's of things that need to be deleted in all sets
@@ -207,10 +196,6 @@ public class MainController {
 	@FXML
 	private ListView<String> decoyLeft;
 	@FXML
-	private Button redobutton;
-	@FXML
-	private Button undobutton;
-	@FXML
 	private Button submit;
 	// =============================================//
 	@FXML
@@ -251,18 +236,12 @@ public class MainController {
 	public MainController() {
 		leftTextArea = new TextField();
 		this.leftTextArea.setOpacity(0);
-		try {
-			sys = new AccSys();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	@FXML
 	private void initialize() {
+
 	}
-	
 
 	// ==============================================//Undo Stack
 	/*
@@ -365,6 +344,7 @@ public class MainController {
 		} else {
 			op = thing[stackPointer];
 
+		}
 
 		if (op == 1) {
 			System.out.println("Moved to left: opposite is move back to holder");
@@ -387,9 +367,8 @@ public class MainController {
 			System.out.println("delete from right: opposite is add back to right");
 			pop();
 		}
-		}
 	}
-	
+
 	// =============================================// Helper Methods
 
 	public boolean notBlank(String a) {
@@ -575,8 +554,6 @@ public class MainController {
 		temp = holder.getSelectionModel().getSelectedItem();
 	}
 
-	
-	
 	private void MovableText(MouseEvent e) {
 		Label test = new Label();// makes a new label object
 
@@ -700,10 +677,6 @@ public class MainController {
 				MainAnchor.getScene().setCursor(mouse.OPEN_HAND);
 			   }
 		   });	
-//		   if (!this.deleteID.contains(test)) {
-			   MainAnchor.getChildren().add(test);
-		//ads to the main anchor,
-			elementNum++;//number of actual text elements
 		   if(AutoLeft==false && AutoRight==false) {
 				 MainAnchor.getChildren().add(test);//ads to the main anchor,	   
 		   }else {
@@ -808,14 +781,13 @@ public class MainController {
 				push(1);// push action to stack, 1: move to right set
 				view();
 
-
 			///////////////////////movable text 
 			MainAnchor.getScene().setCursor(mouse.OPEN_HAND);//cool cursor
 
 			InLeft=true;
 			MovableText(e);
 			///////////////////////
-
+			
 				left.getItems().add(temp);
 				holder.getItems().remove(temp);
 				leftElems.add(temp);
@@ -832,7 +804,6 @@ public class MainController {
 		}
 	}
 
-
 	@FXML
 	private void detectRight(MouseEvent e) {
 
@@ -845,14 +816,10 @@ public class MainController {
 			}
 
 			else {
-
-				////////////////////////movable text
-				InRight=true;
 				push(2);
 				view();
 				//////////////////////// movable text
 				InRight = true;
-
 				MovableText(e);
 				////////////////////////
 
@@ -875,22 +842,20 @@ public class MainController {
 	@FXML
 	private void detectMiddle(MouseEvent e) {
 		if (selected && (midElems.contains(temp) != true) && notBlank(temp)) {
-			
+			push(3);
+			view();
 			////////////////// movable text things
-
-			InIntersection=true;
-			MovableText(e);	
 			InIntersection = true;
 			MovableText(e);
 			/////////////////
-			//middle.getItems().add(temp);
+			middle.getItems().add(temp);
 			holder.getItems().remove(temp);
 			midElems.add(temp);
 
-			//left.getItems().remove(temp);
+			left.getItems().remove(temp);
 			leftElems.remove(temp);
 
-			//right.getItems().remove(temp);
+			right.getItems().remove(temp);
 			rightElems.remove(temp);
 
 			selected = false;
@@ -972,6 +937,8 @@ public class MainController {
 
 			WipeClean.setOnAction((event) -> {
 				popUpClearElems("all");
+				push(12);
+				view();
 				clearLeftSet();
 				clearRightSet();
 				System.out.print("clear all clicked");
@@ -1492,7 +1459,7 @@ public class MainController {
 	// ============================================// Right Click Menus
 
 	public void menuLeft(MouseEvent mouseEvent, Label test) {
-		if (mouseEvent.getButton() == MouseButton.SECONDARY ) {
+		if (mouseEvent.getButton() == MouseButton.SECONDARY && (left.getItems().size() > 0)) {
 
 //			System.out.println("RIGHT CLICK!");
 
@@ -1606,7 +1573,7 @@ public class MainController {
 	}
 
 	public void menuMiddle(MouseEvent mouseEvent, Label test) {
-		if (mouseEvent.getButton() == MouseButton.SECONDARY ) {
+		if (mouseEvent.getButton() == MouseButton.SECONDARY && (middle.getItems().size() > 0)) {
 
 //			System.out.println("RIGHT CLICK!");
 
