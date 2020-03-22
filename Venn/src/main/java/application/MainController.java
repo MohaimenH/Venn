@@ -118,8 +118,8 @@ public class MainController {
 	// @FXML
 	// private Circle setA;
 
-	//@FXML
-	//private Circle setA;
+	// @FXML
+	// private Circle setA;
 	@FXML
 	private Cursor mouse;
 
@@ -202,35 +202,34 @@ public class MainController {
 	@FXML
 	private URL location;
 
-
 	@FXML
 	private Label thing;
 
-		@FXML
-		private Label GlobalRef;
+	@FXML
+	private Label GlobalRef;
 
 	@FXML
 	private ResourceBundle resources;
 
-	int elementNum=0;
-	int LeftNumOfElements=0;
-	int RightNumOfElements=0;
-	int count=0;
-	int LeftCount=0;
-	int RightCount=0;
-	int IntersectionCount=0;
-	Boolean MoveLeft=false;
-	Boolean MoveRight=false;
-	Boolean MoveIntersection=false;
-	Boolean MoveAllLeft=false;
-	Boolean MoveAllRight=false;
-	Boolean MoveAllIntersection=false;
-	Boolean ActionInCircle=false;//true if the user wants to move something inside the sets
-	Boolean InLeft=false;
-	Boolean InRight=false;
-	Boolean InIntersection=false;
-	Boolean AutoLeft=false;
-	Boolean AutoRight=false;
+	int elementNum = 0;
+	int LeftNumOfElements = 0;
+	int RightNumOfElements = 0;
+	int count = 0;
+	int LeftCount = 0;
+	int RightCount = 0;
+	int IntersectionCount = 0;
+	Boolean MoveLeft = false;
+	Boolean MoveRight = false;
+	Boolean MoveIntersection = false;
+	Boolean MoveAllLeft = false;
+	Boolean MoveAllRight = false;
+	Boolean MoveAllIntersection = false;
+	Boolean ActionInCircle = false;// true if the user wants to move something inside the sets
+	Boolean InLeft = false;
+	Boolean InRight = false;
+	Boolean InIntersection = false;
+	Boolean AutoLeft = false;
+	Boolean AutoRight = false;
 
 	// =============================================//
 
@@ -251,32 +250,32 @@ public class MainController {
 	 * label 2 9:change title 10:change color of left 11:change color of right
 	 * 12:clear set
 	 */
-	
+
 	public void twoSetSelected(ActionEvent Event) throws IOException {
 		Parent twoSets = FXMLLoader.load(getClass().getResource("/application/Main.fxml"));
 		Scene twoSetScene = new Scene(twoSets);
-		Stage Window = (Stage)((Node)Event.getSource()).getScene().getWindow();
+		Stage Window = (Stage) ((Node) Event.getSource()).getScene().getWindow();
 		Window.setScene(twoSetScene);
 		Window.show();
 	}
-	
+
 	public void threeSetSelected(ActionEvent Event) throws IOException {
 		Parent threeSets = FXMLLoader.load(getClass().getResource("/application/TripleSet.fxml"));
 		Scene threeSetScene = new Scene(threeSets);
-		Stage Window = (Stage)((Node)Event.getSource()).getScene().getWindow();
+		Stage Window = (Stage) ((Node) Event.getSource()).getScene().getWindow();
 		Window.setScene(threeSetScene);
 		Window.show();
 	}
-	
+
 	public void goBackToSelect(ActionEvent Event) throws IOException {
 		isDark = false;
 		Parent selectScene = FXMLLoader.load(getClass().getResource("/application/SelectScene.fxml"));
 		Scene SelectScene = new Scene(selectScene);
-		Stage Window = (Stage)((Node)Event.getSource()).getScene().getWindow();
+		Stage Window = (Stage) ((Node) Event.getSource()).getScene().getWindow();
 		Window.setScene(SelectScene);
 		Window.show();
 	}
-	
+
 	public int size() {
 		return stackPointer + 1;
 	}
@@ -390,7 +389,6 @@ public class MainController {
 //		set.remove(temp);
 	}
 
-
 	public void delElemsHelper(Label test, Set<String> set) {
 		// index = list.getSelectionModel().getSelectedIndex();
 		// temp = list.getItems().get(index);
@@ -456,11 +454,11 @@ public class MainController {
 //			leftElems.remove(left.getItems().get(index));
 //			left.getItems().remove(index);
 //			index=0;
-			
+
 			deleteIDLeft.remove(GlobalRef);
 			MainAnchor.getChildren().remove(GlobalRef);
-			
-			//delElemsHelper(left, leftElems);
+
+			// delElemsHelper(left, leftElems);
 		}
 	}
 
@@ -474,8 +472,8 @@ public class MainController {
 
 			deleteIDRight.remove(GlobalRef);
 			MainAnchor.getChildren().remove(GlobalRef);
-			
-			//delElemsHelper(right, rightElems);
+
+			// delElemsHelper(right, rightElems);
 		}
 	}
 
@@ -490,9 +488,8 @@ public class MainController {
 
 			deleteIDIntersection.remove(GlobalRef);
 			MainAnchor.getChildren().remove(GlobalRef);
-			
-			
-			//delElemsHelper(middle, midElems);
+
+			// delElemsHelper(middle, midElems);
 		}
 	}
 
@@ -539,7 +536,6 @@ public class MainController {
 
 		System.out.println("dropped");
 
-
 	}
 
 	@FXML
@@ -550,7 +546,7 @@ public class MainController {
 	@FXML
 	private void detactDrag() {
 		System.out.print("drag");// do some mouse stuff here
-		//MainAnchor.getScene().setCursor(mouse.CLOSED_HAND);
+		// MainAnchor.getScene().setCursor(mouse.CLOSED_HAND);
 		index = holder.getSelectionModel().getSelectedIndex();
 		selected = true;
 		temp = holder.getSelectionModel().getSelectedItem();
@@ -567,49 +563,47 @@ public class MainController {
 		test.setText(t);// set object text
 
 		free.add(test);// add label object to list, consider removing bc it may be useless now
-		String s=test.getText();//text of label
+		String s = test.getText();// text of label
 
-
-		////////////////////////testing sets
-		for(int y=0;y<deleteID.size();y++) {
+		//////////////////////// testing sets
+		for (int y = 0; y < deleteID.size(); y++) {
 			System.out.println(deleteID.get(y));
 		}
-		
+
 		//////////////////////////
-	
 
 		if (MoveLeft) {// handles right click movement/shortcuts between holder and sets
-			if(AutoLeft || AutoRight) {
+			if (AutoLeft || AutoRight) {
 				intersectionHelper(test);
-				
-			}else {
-			double x = left.getLayoutX();
-			double y = left.getLayoutY();
-			test.setLayoutX(x + 300);
-			test.setLayoutY(y + 100 + (20 * LeftCount + 1));
-			LeftCount++;
-			deleteIDLeft.add(test);//node set for left, mainly used for deletion
-			deleteIDRight.remove(test);//node set for right
-			leftElems.add(s);//string set for left
-			rightElems.remove(s);
+
+			} else {
+				double x = left.getLayoutX();
+				double y = left.getLayoutY();
+				test.setLayoutX(x + 300);
+				test.setLayoutY(y + 100 + (20 * LeftCount + 1));
+				LeftCount++;
+				deleteIDLeft.add(test);// node set for left, mainly used for deletion
+				deleteIDRight.remove(test);// node set for right
+				leftElems.add(s);// string set for left
+				rightElems.remove(s);
 			}
 			MoveLeft = false;// reset
 
 		} else if (MoveRight) {
-			if(AutoLeft || AutoRight) {
+			if (AutoLeft || AutoRight) {
 				intersectionHelper(test);
-				
-			}else {
-			double x = right.getLayoutX();
-			double y = right.getLayoutY();
-			test.setLayoutX(x + 250);
-			test.setLayoutY(y + 100 + (20 * RightCount));
-			RightCount++;
-			leftElems.remove(s);
-			rightElems.add(s);
-			deleteIDLeft.remove(test);
-			deleteIDRight.add(test);
-		}
+
+			} else {
+				double x = right.getLayoutX();
+				double y = right.getLayoutY();
+				test.setLayoutX(x + 250);
+				test.setLayoutY(y + 100 + (20 * RightCount));
+				RightCount++;
+				leftElems.remove(s);
+				rightElems.add(s);
+				deleteIDLeft.remove(test);
+				deleteIDRight.add(test);
+			}
 			MoveRight = false;
 
 		} else if (MoveIntersection) {
@@ -617,8 +611,8 @@ public class MainController {
 			double y = right.getLayoutY();
 			test.setLayoutX(x);
 
-			test.setLayoutY(y+100+(20*IntersectionCount));
-			IntersectionCount=IntersectionCount++;
+			test.setLayoutY(y + 100 + (20 * IntersectionCount));
+			IntersectionCount = IntersectionCount++;
 
 			deleteIDIntersection.add(test);
 			deleteIDLeft.remove(test);
@@ -626,187 +620,179 @@ public class MainController {
 			midElems.add(s);
 			leftElems.remove(s);
 			rightElems.remove(s);
-			MoveIntersection=false;
-		}else if(MoveAllLeft) {
-			
-			
+			MoveIntersection = false;
+		} else if (MoveAllLeft) {
 
-				
-				
-			MoveAllLeft=false;
-		}else if(MoveAllRight) {
-			
-		}else if(MoveAllIntersection) {
-			
-		}else {//handles norma drag and stuff
-			if(InLeft) {
+			MoveAllLeft = false;
+		} else if (MoveAllRight) {
+
+		} else if (MoveAllIntersection) {
+
+		} else {// handles norma drag and stuff
+			if (InLeft) {
 
 				deleteIDLeft.add(test);
 				leftElems.add(s);
-				if(AutoLeft || AutoRight) {
+				if (AutoLeft || AutoRight) {
 					intersectionHelper(test);
-					
+
 				}
 				InLeft = false;
 			} else if (InRight) {
 				deleteIDRight.add(test);
 				rightElems.add(s);
-				if(AutoLeft || AutoRight) {
+				if (AutoLeft || AutoRight) {
 					intersectionHelper(test);
-					
+
 				}
 				InRight = false;
 			} else {
 				deleteIDIntersection.add(test);
 				midElems.add(s);
-				if(AutoLeft || AutoRight) {
+				if (AutoLeft || AutoRight) {
 					intersectionHelper(test);
-					
+
 				}
-				InIntersection=false;
+				InIntersection = false;
 
 			}
 			test.setLayoutX(e.getSceneX());// default drag and drop
 			test.setLayoutY(e.getSceneY());
 		}
-		
-		   test.setOnMousePressed(event->{//handles right click for individual label objects
-			//	MainAnchor.getScene().setCursor(mouse.CLOSED_HAND);
 
-			   String hold=test.getId();
-			   System.out.println("thing"+"ID: "+hold);
-			   GlobalRef=test;//testing: global pointer to the currently selected moveable text thing
-			   System.out.print("Click");
-			   if(deleteIDLeft.contains(test)) {
-				   menuLeft(event,test);
-			   }else if(deleteIDRight.contains(test)) {
-				   menuRight(event,test);
-			   }else if(deleteIDIntersection.contains(test)) {
-				   menuMiddle(event,test);
-			   }
-			   
-		   });
-		   
-		   
-		   test.setOnMouseReleased(event->{//allows us to drag anywhere,here we can do detection into other sets
-			   if(event.getButton() == MouseButton.PRIMARY) {
-			   x=event.getSceneX();
-			   y=event.getSceneY();
-			   test.setLayoutX(x);
-			   test.setLayoutY(y);
-				//MainAnchor.getScene().setCursor(mouse.OPEN_HAND);
-			   }
-		   });	
-		   if(AutoLeft==false && AutoRight==false) {
-				 MainAnchor.getChildren().add(test);//ads to the main anchor,	   
-		   }else {
-			   AutoLeft=false;
-			   AutoRight=false;
-		   }
-			elementNum++;//number of actual text elements create since start of program
+		test.setOnMousePressed(event -> {// handles right click for individual label objects
+			// MainAnchor.getScene().setCursor(mouse.CLOSED_HAND);
+
+			String hold = test.getId();
+			System.out.println("thing" + "ID: " + hold);
+			GlobalRef = test;// testing: global pointer to the currently selected moveable text thing
+			System.out.print("Click");
+			if (deleteIDLeft.contains(test)) {
+				menuLeft(event, test);
+			} else if (deleteIDRight.contains(test)) {
+				menuRight(event, test);
+			} else if (deleteIDIntersection.contains(test)) {
+				menuMiddle(event, test);
+			}
+
+		});
+
+		test.setOnMouseReleased(event -> {// allows us to drag anywhere,here we can do detection into other sets
+			if (event.getButton() == MouseButton.PRIMARY) {
+				x = event.getSceneX();
+				y = event.getSceneY();
+				test.setLayoutX(x);
+				test.setLayoutY(y);
+				// MainAnchor.getScene().setCursor(mouse.OPEN_HAND);
+			}
+		});
+		if (AutoLeft == false && AutoRight == false) {
+			MainAnchor.getChildren().add(test);// ads to the main anchor,
+		} else {
+			AutoLeft = false;
+			AutoRight = false;
+		}
+		elementNum++;// number of actual text elements create since start of program
 
 	}
 
 	// ==============================================// Set Operations
 	private void MoveAllLeft(ArrayList n, int num) {
-		
+
 	}
-	
-	private void intersectionHelper(Label test) {//makes new label element for the auto intersection
-		String tempID=test.getId();
-		String tempText=test.getText();
-		
-		Label temp=new Label();
+
+	private void intersectionHelper(Label test) {// makes new label element for the auto intersection
+		String tempID = test.getId();
+		String tempText = test.getText();
+
+		Label temp = new Label();
 		temp.setText(tempText);
 		temp.setId(tempID);
 		temp.setLayoutX(600);
-		temp.setLayoutY(right.getLayoutY()+100+(20*IntersectionCount));
-		IntersectionCount++; 
+		temp.setLayoutY(right.getLayoutY() + 100 + (20 * IntersectionCount));
+		IntersectionCount++;
 		deleteID.add(temp);
 		deleteIDIntersection.add(temp);
-		MainAnchor.getChildren().add(temp);//ads to the main anchor,	   
-		
-		
-		///////////because we create a new label object, it needs new event listeners
-		
-		 temp.setOnMousePressed(event->{//handles right click for individual label objects
-				//	MainAnchor.getScene().setCursor(mouse.CLOSED_HAND);
+		MainAnchor.getChildren().add(temp);// ads to the main anchor,
 
-				   String hold=temp.getId();
-				   GlobalRef=temp;//testing: global pointer to the currently selected moveable text thing
-				   if(deleteIDLeft.contains(temp)) {
-					   menuLeft(event,temp);
-				   }else if(deleteIDRight.contains(temp)) {
-					   menuRight(event,temp);
-				   }else if(deleteIDIntersection.contains(temp)) {
-					   menuMiddle(event,temp);
-				   }
-				   
-			   });
-		 
-		 
-		/////////now we remove the orogional 2 duplicates from the main anchor
-		if(AutoRight) {
-			Node a=deleteIDLeft.get(deleteIDLeft.size()-1);
-			int first=MainAnchor.getChildren().indexOf(a);
+		/////////// because we create a new label object, it needs new event listeners
+
+		temp.setOnMousePressed(event -> {// handles right click for individual label objects
+			// MainAnchor.getScene().setCursor(mouse.CLOSED_HAND);
+
+			String hold = temp.getId();
+			GlobalRef = temp;// testing: global pointer to the currently selected moveable text thing
+			if (deleteIDLeft.contains(temp)) {
+				menuLeft(event, temp);
+			} else if (deleteIDRight.contains(temp)) {
+				menuRight(event, temp);
+			} else if (deleteIDIntersection.contains(temp)) {
+				menuMiddle(event, temp);
+			}
+
+		});
+
+		///////// now we remove the orogional 2 duplicates from the main anchor
+		if (AutoRight) {
+			Node a = deleteIDLeft.get(deleteIDLeft.size() - 1);
+			int first = MainAnchor.getChildren().indexOf(a);
 
 			MainAnchor.getChildren().remove(first);
 
-		}
-		else if(AutoLeft) {
-			Node b=deleteIDRight.get(deleteIDRight.size()-1);
-			int second=MainAnchor.getChildren().indexOf(b);
+		} else if (AutoLeft) {
+			Node b = deleteIDRight.get(deleteIDRight.size() - 1);
+			int second = MainAnchor.getChildren().indexOf(b);
 			MainAnchor.getChildren().remove(second);
 
 		}
-	
-		
-		if(deleteIDLeft.size()>0 && deleteIDRight.size()>0) {
-		deleteIDLeft.remove(deleteIDLeft.size()-1);
-		deleteIDRight.remove(deleteIDRight.size()-1);
+
+		if (deleteIDLeft.size() > 0 && deleteIDRight.size() > 0) {
+			deleteIDLeft.remove(deleteIDLeft.size() - 1);
+			deleteIDRight.remove(deleteIDRight.size() - 1);
 
 		}
-		//MainAnchor.getChildren().add(test);//ads to the main anchor,
-			// elementNum++;
+		// MainAnchor.getChildren().add(test);//ads to the main anchor,
+		// elementNum++;
 	}
+
 	private void InCircleActions(MouseEvent mouseEvent, Label test) {
-		String s=test.getText();
-		if(MoveRight) {
+		String s = test.getText();
+		if (MoveRight) {
 			deleteIDLeft.remove(test);
 			deleteIDRight.add(test);
 			leftElems.remove(s);
 			rightElems.add(s);
-			double x=right.getLayoutX();
-			double y=right.getLayoutY();
-			test.setLayoutX(x+250);
-			test.setLayoutY(y+100+(20*RightCount));
+			double x = right.getLayoutX();
+			double y = right.getLayoutY();
+			test.setLayoutX(x + 250);
+			test.setLayoutY(y + 100 + (20 * RightCount));
 			RightCount++;
 			LeftCount--;
-			MoveRight=false;
-		}else if(MoveLeft) {
+			MoveRight = false;
+		} else if (MoveLeft) {
 			leftElems.add(s);
 			rightElems.remove(s);
 			deleteIDLeft.add(test);
 			deleteIDRight.remove(test);
-			double x=left.getLayoutX();
-			double y=left.getLayoutY();
-			test.setLayoutX(x+300);
-			test.setLayoutY(y+100+(20*LeftCount+1));
+			double x = left.getLayoutX();
+			double y = left.getLayoutY();
+			test.setLayoutX(x + 300);
+			test.setLayoutY(y + 100 + (20 * LeftCount + 1));
 			LeftCount++;
 			RightCount--;
-			MoveLeft=false;//reset
-		}else if(MoveIntersection) {
+			MoveLeft = false;// reset
+		} else if (MoveIntersection) {
 			deleteIDIntersection.add(test);
 			midElems.add(s);
-			double x=600.0;
-			double y=right.getLayoutY();
+			double x = 600.0;
+			double y = right.getLayoutY();
 			test.setLayoutX(x);
-			
-			test.setLayoutY(y+100+(20*IntersectionCount));
+
+			test.setLayoutY(y + 100 + (20 * IntersectionCount));
 			IntersectionCount++;
 			LeftCount--;
 			RightCount--;
-			MoveIntersection=false;
+			MoveIntersection = false;
 
 		}
 	}
@@ -817,7 +803,7 @@ public class MainController {
 		if (selected && (leftElems.contains(temp) != true) && (midElems.contains(temp) != true) && notBlank(temp)) {
 
 			if (rightElems.contains(temp)) {
-				AutoLeft=true;//flag for auto intersection
+				AutoLeft = true;// flag for auto intersection
 
 				detectMiddle(e);
 
@@ -827,13 +813,13 @@ public class MainController {
 				push(1);// push action to stack, 1: move to right set
 				view();
 
-			///////////////////////movable text 
-			//MainAnchor.getScene().setCursor(mouse.OPEN_HAND);//cool cursor
+				/////////////////////// movable text
+				// MainAnchor.getScene().setCursor(mouse.OPEN_HAND);//cool cursor
 
-			InLeft=true;
-			MovableText(e);
-			///////////////////////
-			
+				InLeft = true;
+				MovableText(e);
+				///////////////////////
+
 				left.getItems().add(temp);
 				holder.getItems().remove(temp);
 				leftElems.add(temp);
@@ -856,7 +842,7 @@ public class MainController {
 		if (selected && (rightElems.contains(temp) != true) && (midElems.contains(temp) != true) && notBlank(temp)) {
 
 			if (leftElems.contains(temp)) {
-				AutoRight=true;//flag for auto intersection
+				AutoRight = true;// flag for auto intersection
 				detectMiddle(e);
 
 			}
@@ -995,7 +981,7 @@ public class MainController {
 					LeftCount = RightCount = IntersectionCount = 0;
 				}
 				deleteID.clear();
-				elementNum=0;
+				elementNum = 0;
 			});
 
 			changeTitle.setOnAction((event) -> {
@@ -1017,7 +1003,7 @@ public class MainController {
 			changeSetACircleColor.setOnAction((event) -> {
 				popUpChangeSetACircleColor();
 			});
-			
+
 			changeNameA.setOnAction((event) -> {
 				popUpLeft();
 			});
@@ -1033,15 +1019,15 @@ public class MainController {
 			changeSetAFont.setOnAction((event) -> {
 				popUpChangeSetAFont();
 			});
-			
+
 			changeSetASize.setOnAction((event) -> {
 				circleSlider("left");
 			});
-			
+
 			changeSetBCircleColor.setOnAction((event) -> {
 				popUpChangeSetBCircleColor();
 			});
-			
+
 			changeNameB.setOnAction((event) -> {
 				popUpRight();
 			});
@@ -1061,10 +1047,12 @@ public class MainController {
 			changeSetBSize.setOnAction((event) -> {
 				circleSlider("right");
 			});
-			
+
 			title.getItems().addAll(changeTitle, changeTitleColor, changeTitleFontSize, changeTitleFont);
-			setA.getItems().addAll(changeSetACircleColor, changeSetASize, changeNameA, changeSetAColor, changeSetAFontSize, changeSetAFont);
-			setB.getItems().addAll(changeSetBCircleColor, changeSetBSize, changeNameB, changeSetBColor, changeSetBFontSize, changeSetBFont);
+			setA.getItems().addAll(changeSetACircleColor, changeSetASize, changeNameA, changeSetAColor,
+					changeSetAFontSize, changeSetAFont);
+			setB.getItems().addAll(changeSetBCircleColor, changeSetBSize, changeNameB, changeSetBColor,
+					changeSetBFontSize, changeSetBFont);
 
 			menuBarContextMenu.getItems().addAll(WipeClean, title, setA, setB);
 
@@ -1523,7 +1511,7 @@ public class MainController {
 			ContextMenu contextMenu = new ContextMenu();
 			Menu delMenu = new Menu("Delete Elements");
 			Menu moveMenu = new Menu("Move Elements");
-			
+
 			MenuItem editLabel = new MenuItem("Edit the text");
 			MenuItem del = new MenuItem("Delete Element");
 			MenuItem moveRight = new MenuItem("Move to Second Set");
@@ -1562,7 +1550,7 @@ public class MainController {
 					LeftCount = 0;
 				}
 			});
-			
+
 			editLabel.setOnAction((event) -> {
 				popUpLabelsEdit(test);
 			});
@@ -1760,16 +1748,16 @@ public class MainController {
 				Object[] arr = holder.getItems().toArray();
 				int size = arr.length;
 				///////////////////////////// method MoveAll testing
-				for(int j=0;j<size;j++) {
-					
+				for (int j = 0; j < size; j++) {
+
 				}
 				/////////////////////////////
-				MoveAllLeft=true;
+				MoveAllLeft = true;
 				for (int i = 0; i < size; i++) {
 					selected = true;
 					temp = arr[i].toString();
 
-					//MoveAllLeft=true;dont use the for loop here, instead do it above
+					// MoveAllLeft=true;dont use the for loop here, instead do it above
 
 					detectLeft(mouseEvent);
 					selected = false;
@@ -2371,38 +2359,36 @@ public class MainController {
 
 		HBox current = colorName(title.getTextFill().toString());
 		Label label1 = new Label("Please Choose A Color: ");
-		
-		ColorPicker cp = new ColorPicker((Color)title.getTextFill());
 
-		EventHandler<ActionEvent> cpEvent = new EventHandler<ActionEvent>() { 
-            public void handle(ActionEvent e) 
-            { 
-            	Color c = cp.getValue();
-            	setLabelColor(title, c);
-            }
+		ColorPicker cp = new ColorPicker((Color) title.getTextFill());
+
+		EventHandler<ActionEvent> cpEvent = new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent e) {
+				Color c = cp.getValue();
+				setLabelColor(title, c);
+			}
 		};
-		
-		cp.setOnAction(cpEvent);
 
+		cp.setOnAction(cpEvent);
 
 		Button button1 = new Button("Set Color");
 
 		button1.setOnAction((event) -> {
 			popupwindow.close();
 		});
-		
+
 		button1.setOnKeyPressed((keyEvent -> {
-			if(keyEvent.getCode() == KeyCode.ESCAPE) {
+			if (keyEvent.getCode() == KeyCode.ESCAPE) {
 				title.setTextFill(initialColor);
 			}
 			popupwindow.close();
 		}));
-		
+
 		popupwindow.setOnCloseRequest((event) -> {
 			title.setTextFill(initialColor);
 			popupwindow.close();
 		});
-	
+
 		VBox layout = new VBox(10);
 
 		layout.getChildren().addAll(current, label1, cp, button1);
@@ -2418,48 +2404,37 @@ public class MainController {
 
 	public void popUpChangeSetAColor() {
 
+		Color initialColor = (Color) leftLabel.getTextFill();
+
 		Stage popupwindow = new Stage();
 
 		popupwindow.initModality(Modality.APPLICATION_MODAL);
 		popupwindow.setTitle("Change Color");
 
 		HBox current = colorName(leftLabel.getTextFill().toString());
-		Label label1 = new Label("Please Enter A Color: ");
-
-		TextField test = new TextField();
-
-		test.setAlignment(Pos.CENTER);
-		test.setOnAction((event) -> {
-			if (notBlank(test.getText())) {
-				try {
-					setLabelColor(leftLabel, test.getText());
-				}
-
-				catch (Exception e) {
-					// TODO
-				}
-			}
-			popupwindow.close();
-		});
+		VBox test = colorPicker(leftLabel);
 
 		Button button1 = new Button("Set Color");
 
 		button1.setOnAction((event) -> {
-			if (notBlank(test.getText())) {
-				try {
-					setLabelColor(leftLabel, test.getText());
-				}
+			popupwindow.close();
+		});
 
-				catch (Exception e) {
-					// TODO
-				}
+		button1.setOnKeyPressed((keyEvent -> {
+			if (keyEvent.getCode() == KeyCode.ESCAPE) {
+				leftLabel.setTextFill(initialColor);
 			}
+			popupwindow.close();
+		}));
+
+		popupwindow.setOnCloseRequest((event) -> {
+			leftLabel.setTextFill(initialColor);
 			popupwindow.close();
 		});
 
 		VBox layout = new VBox(10);
 
-		layout.getChildren().addAll(current, label1, test, button1);
+		layout.getChildren().addAll(current, test, button1);
 		layout.setAlignment(Pos.CENTER);
 
 		Scene scene1 = new Scene(layout, 300, 150);
@@ -2472,48 +2447,37 @@ public class MainController {
 
 	public void popUpChangeSetBColor() {
 
+		Color initialColor = (Color) rightLabel.getTextFill();
+
 		Stage popupwindow = new Stage();
 
 		popupwindow.initModality(Modality.APPLICATION_MODAL);
 		popupwindow.setTitle("Change Color");
 
 		HBox current = colorName(rightLabel.getTextFill().toString());
-		Label label1 = new Label("Please Enter A Color: ");
-
-		TextField test = new TextField();
-
-		test.setAlignment(Pos.CENTER);
-		test.setOnAction((event) -> {
-			if (notBlank(test.getText())) {
-				try {
-					setLabelColor(rightLabel, test.getText());
-				}
-
-				catch (Exception e) {
-					// TODO
-				}
-			}
-			popupwindow.close();
-		});
+		VBox test = colorPicker(rightLabel);
 
 		Button button1 = new Button("Set Color");
 
 		button1.setOnAction((event) -> {
-			if (notBlank(test.getText())) {
-				try {
-					setLabelColor(rightLabel, test.getText());
-				}
+			popupwindow.close();
+		});
 
-				catch (Exception e) {
-					// TODO
-				}
+		button1.setOnKeyPressed((keyEvent -> {
+			if (keyEvent.getCode() == KeyCode.ESCAPE) {
+				rightLabel.setTextFill(initialColor);
 			}
+			popupwindow.close();
+		}));
+
+		popupwindow.setOnCloseRequest((event) -> {
+			rightLabel.setTextFill(initialColor);
 			popupwindow.close();
 		});
 
 		VBox layout = new VBox(10);
 
-		layout.getChildren().addAll(current, label1, test, button1);
+		layout.getChildren().addAll(current, test, button1);
 		layout.setAlignment(Pos.CENTER);
 
 		Scene scene1 = new Scene(layout, 300, 150);
@@ -2525,7 +2489,7 @@ public class MainController {
 	}
 
 	public void popUpChangeSetACircleColor() {
-		
+
 		double initialOp = setA.getOpacity();
 
 		Stage popupwindow = new Stage();
@@ -2534,15 +2498,15 @@ public class MainController {
 		popupwindow.setTitle("Change Color of Set");
 
 		HBox current = colorName(setA.getFill().toString());
-		
+
 		Label opacity = new Label(" (Opacity: " + (Math.round(setA.getOpacity() * 100.0) / 100.0) + ") ");
 		current.getChildren().add(2, opacity);
-		
+
 		Label label1 = new Label("Please Enter A Color: ");
 		Label label2 = new Label("Use Slider Below To Adjust Opacity: ");
-		
+
 		Slider opacitySlider = circleOpacitySlider("left");
-		
+
 		TextField test = new TextField();
 
 		test.setAlignment(Pos.CENTER);
@@ -2573,18 +2537,17 @@ public class MainController {
 			}
 			popupwindow.close();
 		});
-		
+
 		button1.setOnKeyPressed((event) -> {
 			setA.setOpacity(initialOp);
 			popupwindow.close();
 		});
-		
+
 		popupwindow.setOnCloseRequest((event) -> {
 			setA.setOpacity(initialOp);
 			popupwindow.close();
 		});
-		
-		
+
 		VBox layout = new VBox(10);
 
 		layout.getChildren().addAll(current, label1, test, label2, opacitySlider, button1);
@@ -2598,9 +2561,8 @@ public class MainController {
 	}
 
 	public void popUpChangeSetBCircleColor() {
-		
-		double initialOp = setB.getOpacity();
 
+		double initialOp = setB.getOpacity();
 
 		Stage popupwindow = new Stage();
 
@@ -2611,11 +2573,10 @@ public class MainController {
 		Label opacity = new Label(" (Opacity: " + (Math.round(setB.getOpacity() * 100.0) / 100.0) + ") ");
 		current.getChildren().add(2, opacity);
 		Label label1 = new Label("Please Enter A Color: ");
-		
+
 		Label label2 = new Label("Use Slider Below To Adjust Opacity: ");
-		
+
 		Slider opacitySlider = circleOpacitySlider("right");
-		
 
 		TextField test = new TextField();
 
@@ -2647,17 +2608,16 @@ public class MainController {
 			}
 			popupwindow.close();
 		});
-		
+
 		button1.setOnKeyPressed((event) -> {
 			setB.setOpacity(initialOp);
 			popupwindow.close();
 		});
-		
+
 		popupwindow.setOnCloseRequest((event) -> {
 			setB.setOpacity(initialOp);
 			popupwindow.close();
 		});
-		
 
 		VBox layout = new VBox(10);
 
@@ -2811,38 +2771,38 @@ public class MainController {
 
 	public void circleSlider(String set) {
 		Circle temp;
-		
+
 		if (set.equals("left")) {
 			temp = setA;
 		}
-			
+
 		else {
 			temp = setB;
 		}
-		
+
 		leftCircleSize = setA.getRadius();
 		rightCircleSize = setB.getRadius();
-		
+
 		Slider circleSize = new Slider();
-		
+
 		circleSize.setMax(280);
 		circleSize.setMin(180);
 		circleSize.setValue(temp.getRadius());
-		
+
 		circleSize.valueProperty().addListener(new ChangeListener<Number>() {
 
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 				temp.setRadius(newValue.doubleValue());
 			}
-			
+
 		});
-		
+
 		Stage popupwindow = new Stage();
 
 		popupwindow.initModality(Modality.APPLICATION_MODAL);
 		popupwindow.setTitle("Change Size of Circle");
-		
+
 		Label prompt = new Label("Use the slider below to adjust the size of the circle:");
 
 		Button button1 = new Button("Done");
@@ -2862,49 +2822,49 @@ public class MainController {
 		popupwindow.setScene(scene1);
 
 		popupwindow.showAndWait();
-		
+
 	}
-	
+
 	public Slider circleOpacitySlider(String set) {
-		
+
 		Circle temp;
-		
+
 		if (set.equals("left")) {
 			temp = setA;
 		}
-			
+
 		else {
 			temp = setB;
 		}
-		
+
 		Slider circleOpacity = new Slider();
-		
+
 		circleOpacity.setMax(0.8);
 		circleOpacity.setMin(0.3);
 		circleOpacity.setValue(temp.getOpacity());
-		
+
 		circleOpacity.valueProperty().addListener(new ChangeListener<Number>() {
 
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 				temp.setOpacity(newValue.doubleValue());
 			}
-			
+
 		});
-		
+
 		return circleOpacity;
-		
+
 	}
-	
+
 	public void popUpLabelsEdit(Label label) {
-		
+
 		Stage popupwindow = new Stage();
 
 		popupwindow.initModality(Modality.APPLICATION_MODAL);
 		popupwindow.setTitle("Edit Element");
 
 		HBox current = colorName(label.getTextFill().toString());
-		
+
 		Label label1 = new Label("Please Enter A Color: ");
 
 		TextField test = new TextField();
@@ -2956,7 +2916,7 @@ public class MainController {
 			popupwindow.close();
 		});
 
-		Button button2= new Button("Set Text");
+		Button button2 = new Button("Set Text");
 
 		button2.setOnAction((event) -> {
 			if (notBlank(newText.getText())) {
@@ -2970,7 +2930,7 @@ public class MainController {
 			}
 			popupwindow.close();
 		});
-		
+
 		VBox layout = new VBox(10);
 
 		layout.getChildren().addAll(current, label1, test, button1, label2, newText, button2);
@@ -2981,34 +2941,49 @@ public class MainController {
 		popupwindow.setScene(scene1);
 
 		popupwindow.showAndWait();
-		
+
 	}
-	
+
 	public HBox colorName(String color) {
-		
+
 		HBox colorHBox = new HBox(3);
-		
+
 		Label currentColor = new Label("Current Color: ");
 		currentColor.setStyle("-fx-font-weight: bold");
-		
+
 //		Rectangle colorBlock = new Rectangle(25,15);
 		Circle colorBlock = new Circle(7);
-		
+
 		colorBlock.setFill(Color.valueOf(color));
-		
+
 		colorHBox.getChildren().addAll(currentColor, colorBlock);
 		colorHBox.setAlignment(Pos.CENTER);
-		
+
 		return colorHBox;
-		
+
 	}
-	
-	public ColorPicker colorPicker() {
-		ColorPicker colorPicker = new ColorPicker();
-		
-		
-		
-		return colorPicker; 
+
+	public VBox colorPicker(Label label) {
+
+		Label label1 = new Label("Please Choose A Color: ");
+
+		ColorPicker cp = new ColorPicker((Color) label.getTextFill());
+
+		EventHandler<ActionEvent> cpEvent = new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent e) {
+				Color c = cp.getValue();
+				setLabelColor(label, c);
+			}
+		};
+
+		cp.setOnAction(cpEvent);
+
+		VBox layout = new VBox(3);
+		layout.getChildren().addAll(label1, cp);
+		layout.setAlignment(Pos.CENTER);
+		layout.setSpacing(10);
+
+		return layout;
 	}
 //	public void browse() throws URISyntaxException { 
 //		Desktop desktop = Desktop.getDesktop();
