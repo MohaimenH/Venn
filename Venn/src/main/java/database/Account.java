@@ -1,13 +1,25 @@
 package database;
 
-import java.io.File;
+import java.util.Iterator;
 import java.util.List;
+
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
+import org.dom4j.Document;
+import org.dom4j.Element;
+import org.dom4j.Node;
+import org.dom4j.io.SAXReader;
+import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
+
 
 public abstract class Account {
 	String name;
 	long pwd;
 	public static int User = 0;
-	public List<Venn> venn;
+	public List<Record> venns;
 	public Account(String name, long pwd) {
 		this.name = name;
 		this.pwd = pwd;
@@ -21,6 +33,21 @@ public abstract class Account {
 //		}
 //		return result;
 //	}
+	public boolean inilist(String input) {
+		try {
+			SAXReader reader = new SAXReader();
+			Document document = reader.read(AccSys.filepath);
+			List<Node> nodes = document.selectNodes("Users/user[name='" +input  +"']/venns");
+			
+			return true;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	
 	
 	public String getname() {
 		return this.name;
@@ -29,4 +56,23 @@ public abstract class Account {
 	public long getpwd() {
 		return this.pwd;
 	}
-}
+} 
+// SAX reader method
+//class MyHander extends DefaultHandler{
+//
+//	@Override
+//	public void endElement(String uri, String localName, String qName) throws SAXException {
+//		
+//	}
+//	
+//	@Override
+//	public void characters(char[] ch, int start, int length) throws SAXException {
+//		String value = new String(ch, start, length);
+//	}
+//
+//	@Override
+//	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+//		
+//	}
+//	
+//}

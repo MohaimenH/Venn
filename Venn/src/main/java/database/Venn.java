@@ -9,35 +9,40 @@ import javafx.scene.Node;
 
 public class Venn {
 
-	public List<Item> left;
-	public List<Item> right;
-	public List<Item> middle;
+	public List<Item> nodes;
 	
-	public class Item {
+	public static class Item {
+		public Object id;
 		public double x;
 		public double y;
 		
 		public Item(Node node) {
+			id = node;
 			x = node.getLayoutX();
 			y = node.getLayoutY();
 		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj) {
+				return true;
+			}
+			else if(obj == null  || this.getClass() != obj.getClass()) {
+				return false;
+			}
+			Item other = (Item) obj;
+			if (this.id == other.id) {
+				return true;
+			}
+			return false;
+		}
+		
 	}
 	
-	public Venn(List<Node> left,List<Node> middle, List<Node> right) {
-		this.left = new ArrayList<>();
-		this.middle = new ArrayList<>();
-		this.right = new ArrayList<>();
-		
-		for (Node l : left) {
-			this.left.add(new Item(l));
-		}
-		
-		for (Node r : left) {
-			this.right.add(new Item(r));
-		}
-		
-		for (Node m : left) {
-			this.middle.add(new Item(m));
+	public Venn(List<Node> nodes) {
+		this.nodes = new ArrayList<>();
+		for (Node n: nodes) {
+			this.nodes.add(new Item(n));
 		}
 	}
 	

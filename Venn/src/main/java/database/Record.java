@@ -7,30 +7,28 @@ import java.util.Set;
 import javafx.scene.Node;
 
 public class Record {
-	List<Venn> venns;
-	int i;
-	int size;
+	public List<Venn> venns;
+	public int i;
+	public int size;
 	
 	public Record(){
 		venns = new ArrayList<Venn>();
-		this.i = 0;
+		this.i = -1;
 		this.size = 0;
 	}
 	
-	public void newop(List<Node> left,List<Node> middle,List<Node> right) {
-		if (i == size) {
-		venns.add(new Venn(left, middle, right));
+	public void newop(List<Node> nodes) {
+		this.venns.add(new Venn(nodes));
 		this.i++;
-		this.size++;
-		}
-		else {
-			venns.set(++ this.i, new Venn(left, middle, right));
-			this.size = this.i;
-		}
+		this.size = i + 1;
 	}
 	
 	public Venn undo() {
-		return venns.get(--i);
+		if (i == 0) {
+			i = -1;
+			return null;
+		}
+		return venns.get(i--);
 	}
 	
 	public Venn redo() {

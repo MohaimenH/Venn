@@ -1,7 +1,14 @@
 package login;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.Duration;
+
+import org.dom4j.Document;
+import org.dom4j.Element;
+import org.dom4j.io.OutputFormat;
+import org.dom4j.io.SAXReader;
+import org.dom4j.io.XMLWriter;
 
 import application.Main;
 import application.MainController;
@@ -39,11 +46,14 @@ public class Login extends Application {
 			e.consume();
 			closeprogram();
 		});
+		if (!AccSys.valid) {
+			sys = new AccSys();
+			AccSys.valid = true;
+		}
 		
-		sys = new AccSys();
 		AnchorPane grid = new AnchorPane();
 		
-		// labels
+		// labels------------------------------------------------------------------------
 		Label label1 = new Label("UserName:");
 		AnchorPane.setTopAnchor(label1, 10.0);
 		AnchorPane.setLeftAnchor(label1, 10.0);
@@ -51,7 +61,7 @@ public class Login extends Application {
 		AnchorPane.setTopAnchor(label2, 45.0);
 		AnchorPane.setLeftAnchor(label2, 10.0);
 		
-		// Input field
+		// Input field---------------------------------------------------------------------
 		TextField nameInput = new TextField();
 		nameInput.setPromptText("username");
 		AnchorPane.setTopAnchor(nameInput, 10.0);
@@ -87,10 +97,13 @@ public class Login extends Application {
         	}
         });
         
+        
+        pwInput.setOnKeyReleased(e ->{
+        	tip.setText(pwInput.getText());
+        });;
         pwInput.setOnKeyTyped(e ->{
         	tip.setText(pwInput.getText());
 		});
-
 		
 		// Button filed ----------------------------------------------------------------------------------------
 		// Button login
@@ -108,9 +121,10 @@ public class Login extends Application {
 				UserInterface ui = new UserInterface();
 				ui.sys = this.sys;
 				AccSys.current = this.sys.accounts.get(i);
+				AccSys.current.inilist(AccSys.current.getname());
 				window.close();
 				try {
-					ui.run(window);
+					ui.run(new Stage());
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -121,7 +135,7 @@ public class Login extends Application {
 			
 		});
 		
-		// Button register
+		// Button register------------------------------------------------------------------------------
 		Button register = new Button("Register");
 		AnchorPane.setTopAnchor(register, 80.0);
 		AnchorPane.setLeftAnchor(register, 120.0);
@@ -141,21 +155,19 @@ public class Login extends Application {
 				AlertBox.display("Alert", "You haven't input your password. Please try again");
 			}
 			else {
-				try {
-						FileWriter write = new FileWriter(AccSys.filepath, true);
-						this.sys.accounts.add(new User(nameInput.getText(), AccSys.getpwcode(pwInput.getText())));
-						write.write(nameInput.getText() + "\t" + AccSys.getpwcode(pwInput.getText()) + "\n");
-						write.close();
-						nameInput.clear();
-						pwInput.clear();
-						AlertBox.display("Success", "Register success!");
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
+				if (!this.insertnewUser(nameInput.getText(), pwInput.getText())) {
+					AlertBox.display("Alert", "Miss database!");
+				}
+				else {
+					AlertBox.display("Success", "Registion success!");
+					sys.accounts.add(new User(nameInput.getText(), AccSys.getpwcode(pwInput.getText())));
+					nameInput.clear();
+					pwInput.clear();
+				}
 			}
 		});
 		
-		// Button login
+		// Button login-------------------------------------------------------------------------------------
 				Button visitor = new Button("Visitor Access");
 				AnchorPane.setTopAnchor(visitor, 80.0);
 				loginButton.setPrefWidth(100);
@@ -165,7 +177,7 @@ public class Login extends Application {
 					try {
 					window.close();
 					MainController.sys = this.sys;
-					MainController.sys.valid = false;
+					AccSys.current = null;
 					main.run(new Stage());
 					} catch (IOException e1) {
 					AlertBox.display("Error", "Unknown Error occurs.");
@@ -175,6 +187,16 @@ public class Login extends Application {
 		
 		grid.getChildren().addAll(cb,label1, label2,nameInput, pwInput, loginButton, register, visitor);
 		Scene scene = new Scene(grid, 330, 100);
+		scene.setOnMouseMoved(e ->{
+			if (cb.isSelected()) {
+				Point2D p = pwInput.localToScene(pwInput.getBoundsInLocal().getMaxX(), pwInput.getBoundsInLocal().getMaxY());
+            tip.setText(pwInput.getText());
+            tip.show(pwInput,
+                    p.getX() + window.getScene().getX() + window.getX(),
+                    p.getY() + window.getScene().getY() + window.getY());
+			}
+			
+		});
 		window.setResizable(false);
 		window.setScene(scene);
 		window.show();
@@ -183,17 +205,44 @@ public class Login extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
-
+	
+	public void run() throws Exception {
+		this.start(new Stage());
+	}
+	
 	private void closeprogram() {
 		Boolean answer = ComfirmBox.display("Attention", "Sure you want to exit?");
 		if (answer) {
 			window.close();
 		}
-		else {
-			
-		}
 	}
 	
+	private boolean insertnewUser(String user, String pw){
+		try {
+			Document doc = new SAXReader().read(AccSys.filepath);
+			Element root = doc.getRootElement();
+			Element sub = root.addElement("User");
+			Element name = sub.addElement("name");
+			sub.addAttribute("name", user);
+			name.setText(user);
+			sub.addElement("pwd").setText("" + AccSys.getpwcode(pw));
+			sub.addElement("Venns");
+			
+			FileOutputStream out = new FileOutputStream(AccSys.filepath);
+			
+			OutputFormat format = OutputFormat.createPrettyPrint();
+			format.setEncoding("UTF-8");
+			XMLWriter writer = new XMLWriter(out, format);
+			writer.write(doc);
+			writer.close();
+			return true;
+		}
+		catch (Exception e){
+			return false;
+		}
+		
+		
+	}
 }
 
 
