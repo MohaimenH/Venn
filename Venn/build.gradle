@@ -24,8 +24,8 @@ dependencies {
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
     implementation 'com.google.guava:guava:28.0-jre'
     implementation files('libs/jfxrt.jar')
-	implementation files('libs/jaxen-1.1-beta-7.jar')
-	implementation files('libs/dom4j-2.1.1.jar')
+	implementation 'org.dom4j:dom4j:2.1.1'
+	implementation 'jaxen:jaxen:1.1-beta-7'
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'
 }

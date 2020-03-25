@@ -26,18 +26,14 @@ public class Xmltester {
 			
 			
 			Element ele = (Element) document.selectSingleNode("Users/User[1]//Venn");
-	        // 指定文本的写出的格式：
 			FileOutputStream out =new FileOutputStream(AccSys.filepath);
-	        OutputFormat format=OutputFormat.createPrettyPrint();   //漂亮格式：有空格换行
+	        OutputFormat format=OutputFormat.createPrettyPrint(); 
 	        format.setEncoding("UTF-8");
 	        
-	        //1.创建写出对象
 	        XMLWriter writer=new XMLWriter(out,format);
 	           
-	        //2.写出Document对象
 	        writer.write(document);
 	        
-	        //3.关闭流
 	        writer.close();
 		} catch (Exception e) {
 			e.printStackTrace();
