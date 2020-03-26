@@ -566,18 +566,27 @@ public class MainController {
 		temp = holder.getSelectionModel().getSelectedItem();
 	}
 
-	private void MovableText(MouseEvent e, Label input) {
+	private void MovableText(MouseEvent e, Label input,int n) {
 		Label test = new Label();// makes a new label object
 
 		String id = elementNum + "";// label id
 		deleteID.add(test);// adds label to a list in the case it needs to be deleted
 		test.setId(id);// set id
-		if (input == null) {
+		
+		if (input == null) {//handles text setting if normal drag, import or right click option
+			if(MoveAllLeft||MoveAllRight||MoveAllIntersection) {
+				String tempMoveAll=this.holder.getItems().get(n);
+				test.setText(tempMoveAll);
+				System.out.println("Text"+tempMoveAll);
+			}
+			
+			else {
 			int i = holder.getSelectionModel().getSelectedIndex();// get text from master list
 			String t = holder.getItems().get(i);	
 			test.setText(t);// set object text		
-		}
-		else {
+			}
+		}		
+		else{
 			test.setText(input.getText());
 			test.setFont(input.getFont());
 			test.setLayoutX(input.getLayoutX());
@@ -586,14 +595,10 @@ public class MainController {
 		
 
 		free.add(test);// add label object to list, consider removing bc it may be useless now
-		String s=test.getText();//text of label
+		String s=test.getText();//text of label created above, for convienence
 
-		////////////////////////testing sets
-		for(int y=0;y<deleteID.size();y++) {
-			System.out.println(deleteID.get(y));
-		}
 		
-		//////////////////////////
+		
 	
 		if (MoveLeft) {// handles right click movement/shortcuts between holder and sets
 			if(AutoLeft || AutoRight) {
@@ -644,17 +649,41 @@ public class MainController {
 			leftElems.remove(s);
 			rightElems.remove(s);
 			MoveIntersection=false;
-		}else if(MoveAllLeft) {
-			
-			
-
+		}else if(MoveAllLeft) {		
+			if(AutoLeft || AutoRight) {
+				intersectionHelper(test);
 				
-				
-			MoveAllLeft=false;
+			}else {
+			double x = left.getLayoutX();
+			double y = left.getLayoutY();
+			test.setLayoutX(x + 300);
+			test.setLayoutY(y + 100 + (20 * LeftCount + 1));
+			LeftCount++;
+			deleteIDLeft.add(test);//node set for left, mainly used for deletion
+			System.out.println(deleteIDLeft.get(n));//test
+			leftElems.add(s);//string set for left
+			}
 		}else if(MoveAllRight) {
-			
+			if(AutoLeft || AutoRight) {
+				intersectionHelper(test);
+				
+			}else {
+			double x = right.getLayoutX();
+			double y = right.getLayoutY();
+			test.setLayoutX(x + 250);
+			test.setLayoutY(y + 100 + (20 * RightCount));
+			RightCount++;
+			rightElems.add(s);
+			deleteIDRight.add(test);
+		}
 		}else if(MoveAllIntersection) {
-			
+			double x = 600.0;
+			double y = right.getLayoutY();
+			test.setLayoutX(x);
+			test.setLayoutY(y+100+(20*IntersectionCount));
+			IntersectionCount=IntersectionCount++;
+			deleteIDIntersection.add(test);
+			midElems.add(s);
 		}else {//handles norma drag and stuff
 			if(InLeft) {
 
@@ -694,9 +723,7 @@ public class MainController {
 			//	MainAnchor.getScene().setCursor(mouse.CLOSED_HAND);
 
 			   String hold=test.getId();
-			   System.out.println("thing"+"ID: "+hold);
 			   GlobalRef=test;//testing: global pointer to the currently selected moveable text thing
-			   System.out.print("Click");
 			   if(deleteIDLeft.contains(test)) {
 				   menuLeft(event,test);
 			   }else if(deleteIDRight.contains(test)) {
@@ -728,8 +755,37 @@ public class MainController {
 	}
 
 	// ==============================================// Set Operations
-	private void MoveAllLeft(ArrayList n, int num) {
+	private void MoveAllLeft(MouseEvent e) {//calles MovableText() n times, n being the number of elements in the holder
+		int s=this.holder.getItems().size();
+
+		MoveAllLeft=true;
+		for(int i=0;i<s;i++) {
+			MovableText(e,null,i);
+		}
+		this.holder.getItems().clear();
+		MoveAllLeft=false;
 		
+	}
+	
+	private void MoveAllRight(MouseEvent e) {
+		int s=this.holder.getItems().size();
+
+		MoveAllRight=true;
+		for(int i=0;i<s;i++) {
+			MovableText(e,null,i);
+		}
+		this.holder.getItems().clear();
+		MoveAllRight=false;
+	}
+	private void MoveAllIntersection(MouseEvent e) {
+		int s=this.holder.getItems().size();
+
+		MoveAllIntersection=true;
+		for(int i=0;i<s;i++) {
+			MovableText(e,null,i);
+		}
+		this.holder.getItems().clear();
+		MoveAllIntersection=false;
 	}
 	
 	private void intersectionHelper(Label test) {//makes new label element for the auto intersection
@@ -861,7 +917,7 @@ public class MainController {
 			//MainAnchor.getScene().setCursor(mouse.OPEN_HAND);//cool cursor
 
 			InLeft=true;
-			MovableText(e, null);
+			MovableText(e, null,0);
 			///////////////////////
 			
 				left.getItems().add(temp);
@@ -896,7 +952,7 @@ public class MainController {
 				view();
 				//////////////////////// movable text
 				InRight = true;
-				MovableText(e, null);
+				MovableText(e, null,0);
 				////////////////////////
 
 				right.getItems().add(temp);
@@ -922,7 +978,7 @@ public class MainController {
 			view();
 			////////////////// movable text things
 			InIntersection = true;
-			MovableText(e, null);
+			MovableText(e, null,0);
 			/////////////////
 			middle.getItems().add(temp);
 			holder.getItems().remove(temp);
@@ -1595,7 +1651,7 @@ public class MainController {
 	// ============================================// Right Click Menus
 
 	public void menuLeft(MouseEvent mouseEvent, Label test) {
-		if (mouseEvent.getButton() == MouseButton.SECONDARY && (left.getItems().size() > 0)) {
+		if (mouseEvent.getButton() == MouseButton.SECONDARY && (deleteIDLeft.size() >= 0)) {
 
 //			System.out.println("RIGHT CLICK!");
 
@@ -1653,7 +1709,7 @@ public class MainController {
 	}
 
 	public void menuRight(MouseEvent mouseEvent, Label test) {
-		if (mouseEvent.getButton() == MouseButton.SECONDARY && (right.getItems().size() > 0)) {
+		if (mouseEvent.getButton() == MouseButton.SECONDARY && (deleteIDRight.size() > 0)) {
 
 //			System.out.println("RIGHT CLICK!");
 
@@ -1709,7 +1765,7 @@ public class MainController {
 	}
 
 	public void menuMiddle(MouseEvent mouseEvent, Label test) {
-		if (mouseEvent.getButton() == MouseButton.SECONDARY && (middle.getItems().size() > 0)) {
+		if (mouseEvent.getButton() == MouseButton.SECONDARY && (deleteIDIntersection.size() > 0)) {
 
 //			System.out.println("RIGHT CLICK!");
 
@@ -1832,53 +1888,20 @@ public class MainController {
 
 			moveAllLeft.setOnAction((event) -> {
 				Object[] arr = holder.getItems().toArray();
-				int size = arr.length;
 				///////////////////////////// method MoveAll testing
-				for(int j=0;j<size;j++) {
-					
-				}
+				MoveAllLeft(mouseEvent);//calls  helper method for moving everything to left
 				/////////////////////////////
-				MoveAllLeft=true;
-				for (int i = 0; i < size; i++) {
-					selected = true;
-					temp = arr[i].toString();
-
-					//MoveAllLeft=true;dont use the for loop here, instead do it above
-
-					detectLeft(mouseEvent);
-					selected = false;
-				}
+				
 			});
 
 			moveAllRight.setOnAction((event) -> {
 
-				Object[] arr = holder.getItems().toArray();
-				int size = arr.length;
-				for (int i = 0; i < size; i++) {
-					selected = true;
-					temp = arr[i].toString();
-					MoveAllRight = true;
-					detectRight(null);
-					selected = false;
-				}
-
-//				addToRight(middle.getSelectionModel().getSelectedItem());
-//				delElemsClick(middle, midElems);
+				MoveAllRight(mouseEvent);
 			});
 
 			moveAllMid.setOnAction((event) -> {
 
-				Object[] arr = holder.getItems().toArray();
-				int size = arr.length;
-				for (int i = 0; i < size; i++) {
-					selected = true;
-					temp = arr[i].toString();
-					MoveAllIntersection = true;
-					detectMiddle(mouseEvent);
-					selected = false;
-				}
-//				addToRight(middle.getSelectionModel().getSelectedItem());
-//				delElemsClick(middle, midElems);
+				MoveAllIntersection(mouseEvent);
 			});
 
 			delAll.setOnAction((event) -> {
