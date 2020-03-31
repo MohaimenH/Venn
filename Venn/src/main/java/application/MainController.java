@@ -895,6 +895,8 @@ public class MainController {
 
 	@FXML
 	private void detectLeft(MouseEvent e) {
+		
+		toolTips();
 
 		if (selected && (leftElems.contains(temp) != true) && (midElems.contains(temp) != true) && notBlank(temp)) {
 
@@ -3212,11 +3214,26 @@ public class MainController {
 
 	public void toolTips() {
 		
-		Tooltip titleTooltip = new Tooltip();
-		titleTooltip.setText("Title of the Venn Diagram");
-		titleTooltip.setStyle("-fx-font-size:14px;");
-		title.setTooltip(titleTooltip);
+		title.setTooltip(new Tooltip("Title of the Venn Diagram"));
+		title.getTooltip().setStyle("-fx-font-size:14px;");
 		
+		leftLabel.setTooltip(new Tooltip("Title of the Set Below"));
+		leftLabel.getTooltip().setStyle("-fx-font-size:10px;");
+		
+		rightLabel.setTooltip(new Tooltip("Title of the Set Below"));
+		rightLabel.getTooltip().setStyle("-fx-font-size:10px;");
+		
+		holder.setTooltip(new Tooltip("List of Elements"));
+		holder.getTooltip().setStyle("-fx-font-size:10px;");
+		
+		inputText.setTooltip(new Tooltip("Enter Elements Here"));
+		inputText.getTooltip().setStyle("-fx-font-size:10px;");
+		
+		importer.setTooltip(new Tooltip("Click to Import Data"));
+		importer.getTooltip().setStyle("-fx-font-size:10px;");
+		
+		submit.setTooltip(new Tooltip("Click to Add Element To List"));
+		submit.getTooltip().setStyle("-fx-font-size:10px;");
 	}
 	
 
