@@ -252,7 +252,6 @@ public class MainController {
 
 	@FXML
 	private void initialize() {
-
 	}
 
 	// ==============================================//Undo Stack
@@ -574,6 +573,7 @@ public class MainController {
 			if (MoveAllLeft || MoveAllRight || MoveAllIntersection) {
 				String tempMoveAll = this.holder.getItems().get(n);
 				test.setText(tempMoveAll);
+				test.setTooltip(new Tooltip("Element description"));
 				System.out.println("Text" + tempMoveAll);
 			}
 
@@ -581,14 +581,19 @@ public class MainController {
 				int i = holder.getSelectionModel().getSelectedIndex();// get text from master list
 				String t = holder.getItems().get(i);
 				test.setText(t);// set object text
+				test.setTooltip(new Tooltip("Element description"));
 			}
 		} else {
+			test.setTooltip(new Tooltip("Element description"));
 			test.setText(input.getText());
 			test.setFont(input.getFont());
 			test.setLayoutX(input.getLayoutX());
 			test.setLayoutY(input.getLayoutY());
 		}
-
+		
+		test.setStyle("-fx-font-size:20px");
+		test.getTooltip().setStyle("-fx-font-size:12px");
+		
 		free.add(test);// add label object to list, consider removing bc it may be useless now
 		String s = test.getText();// text of label created above, for convienence
 
@@ -1260,6 +1265,7 @@ public class MainController {
 			});
 
 			projDevs.setOnAction((event) -> {
+				toolTips();
 				popUpNames();
 			});
 
@@ -2076,6 +2082,7 @@ public class MainController {
 	}
 
 	// ======================================== Title Change Pop-ups
+	
 	public void popUpChangeTitle() {
 
 		Stage popupwindow = new Stage();
@@ -2969,13 +2976,14 @@ public class MainController {
 		Tab tab0 = new Tab("Text");
 		Tab tab1 = new Tab("Color");
 		Tab tab2 = new Tab("Font");
+		Tab tab3 = new Tab("Description");
+		
 		tab0.setClosable(false);
 		tab1.setClosable(false);
 		tab2.setClosable(false);
-
-		tabPane.getTabs().add(tab0);
-		tabPane.getTabs().add(tab1);
-		tabPane.getTabs().add(tab2);
+		tab3.setClosable(false);
+		
+		tabPane.getTabs().addAll(tab0, tab3, tab1, tab2);
 
 		// Text Changes
 		Label label2 = new Label("Please Enter New Text");
@@ -3019,6 +3027,51 @@ public class MainController {
 		textVBox.getChildren().addAll(label2, newText, button2);
 
 		tab0.setContent(textVBox);
+		
+		// Description Change
+		
+		Label enterDesc = new Label("Please Enter A Description \n \t For The Element");
+		enterDesc.setAlignment(Pos.CENTER);
+		
+		TextField enterDescText = new TextField();
+
+		enterDescText.setAlignment(Pos.CENTER);
+		enterDescText.setOnAction((event) -> {
+			if (notBlank(enterDescText.getText())) {
+				try {
+					label.getTooltip().setText(enterDescText.getText());
+				}
+
+				catch (Exception e) {
+					// TODO
+				}
+			}
+			popupwindow.close();
+		});
+
+		Button descButton = new Button("Set Description");
+
+		descButton.setOnAction((event) -> {
+			if (notBlank(enterDescText.getText())) {
+				try {
+					label.getTooltip().setText(enterDescText.getText());
+				}
+
+				catch (Exception e) {
+					// TODO
+				}
+			}
+			popupwindow.close();
+		});
+
+		VBox descVBox = new VBox(3);
+
+		descVBox.setSpacing(10);
+		descVBox.setAlignment(Pos.CENTER);
+		descVBox.setPadding(new Insets(20));
+		descVBox.getChildren().addAll(enterDesc, enterDescText, descButton);
+
+		tab3.setContent(descVBox);
 
 		// Color changes
 
@@ -3156,16 +3209,27 @@ public class MainController {
 
 		return layout;
 	}
-//	public void browse() throws URISyntaxException { 
-//		Desktop desktop = Desktop.getDesktop();
-//		try {
-//			URI url = new URI("http://google.com");
-//			desktop.browse(url);
-//		}
-//		catch (Exception e) {
-//			//random changes
-//		}
-//		
-//	}
+
+	public void toolTips() {
+		
+		Tooltip titleTooltip = new Tooltip();
+		titleTooltip.setText("Title of the Venn Diagram");
+		titleTooltip.setStyle("-fx-font-size:14px;");
+		title.setTooltip(titleTooltip);
+		
+	}
+	
+
+	public void browse() throws URISyntaxException { 
+		Desktop desktop = Desktop.getDesktop();
+		try {
+			URI url = new URI("http://google.com");
+			desktop.browse(url);
+		}
+		catch (Exception e) {
+			//random changes
+		}
+		
+	}
 
 }
