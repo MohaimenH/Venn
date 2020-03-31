@@ -1647,7 +1647,7 @@ public class MainController {
 	// ============================================// Right Click Menus
 
 	public void menuLeft(MouseEvent mouseEvent, Label test) {
-		if (mouseEvent.getButton() == MouseButton.SECONDARY && (left.getItems().size() > 0)) {
+		if (mouseEvent.getButton() == MouseButton.SECONDARY && (deleteIDLeft.size() > 0)) {
 
 //			System.out.println("RIGHT CLICK!");
 
@@ -1710,7 +1710,7 @@ public class MainController {
 	}
 
 	public void menuRight(MouseEvent mouseEvent, Label test) {
-		if (mouseEvent.getButton() == MouseButton.SECONDARY && (right.getItems().size() > 0)) {
+		if (mouseEvent.getButton() == MouseButton.SECONDARY && (deleteIDRight.size() > 0)) {
 
 //			System.out.println("RIGHT CLICK!");
 
@@ -1771,7 +1771,7 @@ public class MainController {
 	}
 
 	public void menuMiddle(MouseEvent mouseEvent, Label test) {
-		if (mouseEvent.getButton() == MouseButton.SECONDARY && (middle.getItems().size() > 0)) {
+		if (mouseEvent.getButton() == MouseButton.SECONDARY && (deleteIDIntersection.size() > 0)) {
 
 //			System.out.println("RIGHT CLICK!");
 
