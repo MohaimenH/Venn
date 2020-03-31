@@ -242,7 +242,8 @@ public class MainController {
 	Boolean InIntersection = false;
 	Boolean AutoLeft = false;
 	Boolean AutoRight = false;
-
+	Boolean Clicked=false;
+	Boolean MouseDrag=false;
 	// =============================================//
 
 	public MainController() {
@@ -464,7 +465,7 @@ public class MainController {
 //			leftElems.remove(left.getItems().get(index));
 //			left.getItems().remove(index);
 //			index=0;
-
+			System.out.print("del");
 			deleteIDLeft.remove(GlobalRef);
 			MainAnchor.getChildren().remove(GlobalRef);
 
@@ -709,18 +710,33 @@ public class MainController {
 				InIntersection = false;
 
 			}
+			
 			if (input == null) {
 				test.setLayoutX(e.getSceneX());// default drag and drop
 				test.setLayoutY(e.getSceneY());
 			}
+			
 
 		}
+		test.setOnDragDetected(t->{
+			MouseDrag=true;
+		});
+		test.setOnKeyPressed(clk->{
+			if(Clicked&&deleteIDLeft.contains(test)) {
+				keyPressLeft(clk);
+			}else if(Clicked&&deleteIDRight.contains(test)) {
+				keyPressRight(clk);
+			}else if(Clicked&&deleteIDIntersection.contains(test)) {
+				keyPressMiddle(clk);
+			}
+		});
 
 		test.setOnMousePressed(event -> {// handles right click for individual label objects
-			// MainAnchor.getScene().setCursor(mouse.CLOSED_HAND);
-
-			String hold = test.getId();
+			Clicked=true;
+			
 			GlobalRef = test;// testing: global pointer to the currently selected moveable text thing
+			System.out.println(GlobalRef);
+
 			if (deleteIDLeft.contains(test)) {
 				menuLeft(event, test);
 			} else if (deleteIDRight.contains(test)) {
@@ -730,16 +746,18 @@ public class MainController {
 			}
 
 		});
-
+		
 		test.setOnMouseReleased(event -> {// allows us to drag anywhere,here we can do detection into other sets
-			if (event.getButton() == MouseButton.PRIMARY) {
+			if (event.getButton() == MouseButton.PRIMARY&&MouseDrag) {
 				x = event.getSceneX();
 				y = event.getSceneY();
 				test.setLayoutX(x);
 				test.setLayoutY(y);
 				// MainAnchor.getScene().setCursor(mouse.OPEN_HAND);
+				MouseDrag=false;
 			}
 		});
+		
 		if (AutoLeft == false && AutoRight == false) {
 			MainAnchor.getChildren().add(test);// ads to the main anchor,
 		} else {
@@ -801,11 +819,12 @@ public class MainController {
 		MainAnchor.getChildren().add(temp);// ads to the main anchor,
 
 		/////////// because we create a new label object, it needs new event listeners
-
+		test.setOnDragDetected(t->{
+			MouseDrag=true;
+		});
+		
 		temp.setOnMousePressed(event -> {// handles right click for individual label objects
-			// MainAnchor.getScene().setCursor(mouse.CLOSED_HAND);
-
-			String hold = temp.getId();
+			Clicked=true;
 			GlobalRef = temp;// testing: global pointer to the currently selected moveable text thing
 			if (deleteIDLeft.contains(temp)) {
 				menuLeft(event, temp);
@@ -816,9 +835,9 @@ public class MainController {
 			}
 
 		});
-
+		
 		temp.setOnMouseReleased(event -> {// allows us to drag anywhere,here we can do detection into other sets
-			if (event.getButton() == MouseButton.PRIMARY) {
+			if (event.getButton() == MouseButton.PRIMARY&&MouseDrag) {
 				x = event.getSceneX();
 				y = event.getSceneY();
 				temp.setLayoutX(x);
@@ -826,7 +845,7 @@ public class MainController {
 				// MainAnchor.getScene().setCursor(mouse.OPEN_HAND);
 			}
 		});
-
+		
 		///////// now we remove the orogional 2 duplicates from the main anchor
 		if (AutoRight) {
 			Node a = deleteIDLeft.get(deleteIDLeft.size() - 1);
