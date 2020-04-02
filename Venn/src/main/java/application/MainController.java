@@ -1692,7 +1692,9 @@ public class MainController {
 				popUpClearElems("left");
 				int size = deleteIDLeft.size();
 				for (int i = 0; i < size; i++) {
-					MainAnchor.getChildren().remove(deleteIDLeft.get(i));
+					this.deleteID.remove(deleteIDLeft.get(0));
+					MainAnchor.getChildren().remove(deleteIDLeft.remove(0));
+					
 					LeftCount = 0;
 				}
 			});
@@ -1748,7 +1750,9 @@ public class MainController {
 				popUpClearElems("right");
 				int size = deleteIDRight.size();
 				for (int i = 0; i < size; i++) {
-					MainAnchor.getChildren().remove(deleteIDRight.get(i));
+
+					this.deleteID.remove(deleteIDRight.get(0));
+					MainAnchor.getChildren().remove(deleteIDRight.remove(0));
 					RightCount = 0;
 				}
 			});
@@ -1805,7 +1809,9 @@ public class MainController {
 				popUpClearElems("mid");
 				int size = deleteIDIntersection.size();
 				for (int i = 0; i < size; i++) {
-					MainAnchor.getChildren().remove(deleteIDIntersection.get(i));
+
+					this.deleteID.remove(deleteIDIntersection.get(0));
+					MainAnchor.getChildren().remove(deleteIDIntersection.remove(0));
 					IntersectionCount = 0;
 				}
 			});
@@ -1937,6 +1943,13 @@ public class MainController {
 			Document doc = reader.read(path);
 			Element root = doc.getRootElement();
 			
+			this.MoveLeft = false;
+			this.MoveRight = false;
+			this.MoveIntersection = false;
+			this.MoveAllIntersection = false;
+			this.MoveAllLeft = false;
+			this.MoveAllRight = false;
+			
 			for (Iterator<Element> rootIter = root.elementIterator(); rootIter.hasNext();) {
 				Element venn = rootIter.next();
 				
@@ -1954,16 +1967,29 @@ public class MainController {
 					label.setFont(font);
 					if (set.equals("left")) {
 						this.deleteIDLeft.add(label);
+						this.InLeft = true;
+						this.InRight = false;
+						this.InIntersection = false;
 					}
 					else if (set.equals("right")) {
 						this.deleteIDRight.add(label);
+						this.InLeft = false;
+						this.InRight = true;
+						this.InIntersection = false;
 					}
 					else if (set.equals("intersection")) {
 						this.deleteIDIntersection.add(label);
+						this.InLeft = false;
+						this.InRight = false;
+						this.InIntersection = true;
 					}
+					this.MovableText(null, label, 1);
 					this.deleteID.add(label);
-					this.MovableText(null, label);
+					
 				}
+				this.InLeft = false;
+				this.InRight = false;
+				this.InIntersection = false;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
