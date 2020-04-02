@@ -2020,7 +2020,7 @@ public class MainController {
 						this.InRight = false;
 						this.InIntersection = true;
 					}
-					this.MovableText(null, label, 1);
+					this.MovableText(null, label, 0);
 					this.deleteID.add(label);
 				}
 				this.InLeft = false;
