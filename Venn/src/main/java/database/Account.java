@@ -37,7 +37,7 @@ public abstract class Account {
 		try {
 			SAXReader reader = new SAXReader();
 			Document document = reader.read(AccSys.filepath);
-			List<Node> nodes = document.selectNodes("Users/user[name='" +input  +"']/venns");
+			List<Node> nodes = document.selectNodes("Users/user[@name='" +input  +"']/venns");
 			
 			return true;
 		}

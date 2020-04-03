@@ -61,6 +61,7 @@ public class Login extends Application {
 		AnchorPane.setTopAnchor(label2, 45.0);
 		AnchorPane.setLeftAnchor(label2, 10.0);
 		
+		
 		// Input field---------------------------------------------------------------------
 		TextField nameInput = new TextField();
 		nameInput.setPromptText("username");

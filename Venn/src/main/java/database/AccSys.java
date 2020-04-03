@@ -27,6 +27,7 @@ public class AccSys {
 	public static Record record;
 	public static boolean valid = false;
 	public static Account current;
+	public static String v;
 	
 	public AccSys() throws IOException {
 		accounts = new ArrayList<Account>();
