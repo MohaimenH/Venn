@@ -10,11 +10,13 @@ import org.junit.runners.MethodSorters;
 import org.testfx.api.FxAssert;
 import org.testfx.framework.junit.ApplicationTest;
 import org.testfx.matcher.control.*;
+//import org.testfx.service.query.*;
 import org.assertj.core.api.Assertions;
 
 //Others
 import application.Main;
 import application.MainController;
+import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
 
@@ -34,6 +36,28 @@ public class TestCases extends ApplicationTest {
 		stage.show();
 	}
 
+	@Test
+	public void dragDropTest() {
+		
+		clickOn("#inputText").write("A");
+		clickOn("#test");
+		
+		clickOn("#inputText").write("B");
+		clickOn("#test");	
+		
+		clickOn("#inputText").write("C");
+		clickOn("#test");	
+		
+		drag("A").dropTo("#left");
+		drag("B").dropTo("#middle");
+		drag("C").dropTo("#right");
+		
+		
+		FxAssert.verifyThat("#left", ListViewMatchers.hasListCell("A"));
+		FxAssert.verifyThat("#middle", ListViewMatchers.hasListCell("B"));
+		FxAssert.verifyThat("#right", ListViewMatchers.hasListCell("C"));
+	}
+	
 	@Test
 	public void whenAddClickedElementMovesToMasterList() {
 
@@ -65,6 +89,8 @@ public class TestCases extends ApplicationTest {
 		clickOn("Switch to Dark Mode");
 		sleep(100);
 
+		Assertions.assertThat(MainController.isDark());
+		
 		clickOn("#About_menu");
 		sleep(100);
 		clickOn("Switch to Light Mode");
@@ -96,23 +122,48 @@ public class TestCases extends ApplicationTest {
 	}
 
 	@Test
-	public void darkModeTest() {
-
-		clickOn("#About_menu");
-		sleep(100);
-		clickOn("Switch to Dark Mode");
-		sleep(200);
-//    	clickOn("");
-
-		Assertions.assertThat(MainController.isDark());
-
-	}
-
-	@Test
 	public void AlwaysFailsTest() {
 
 		FxAssert.verifyThat("#holder", ListViewMatchers.hasListCell("DestinedToFail"));
 
 	}
+	
+//	@Test
+//	public void intersectionTestRMenus() {
+//		
+//		clickOn("#inputText").write("Element A");
+//		clickOn("#test");	
+////		clickOn("#inputText").write("Element B");
+////		clickOn("#test");	
+//		
+//		rightClickOn("Element A");
+//		rightClickOn("Element A");
+////		rightClickOn("#holder");
+////		rightClickOn("#holder");
+//		clickOn("Move Elements");
+////		moveBy(10,-20);
+//		sleep(50);
+//		clickOn("Move Element To Second Set");
+////		clickOn("Move All To Second Set");
+//		
+//		clickOn("#inputText").write("Element A");
+//		clickOn("#test");	
+////		clickOn("#inputText").write("Element B");
+////		clickOn("#test");	
+//		
+//		sleep(1000);
+//		rightClickOn(ListViewMatchers.hasListCell("Element A"));
+//		rightClickOn(ListViewMatchers.hasListCell("Element A"));
+////		rightClickOn("#holder");
+////		rightClickOn("#holder");
+//		clickOn("Move Elements");
+////		moveBy(10,-20);
+//		sleep(50);
+//		clickOn("Move Element To Second Set");
+////		clickOn("Move All To First Set");
+//		
+//		FxAssert.verifyThat("#middle", ListViewMatchers.hasListCell("Element A"));
+//		
+//	}
 
 }
