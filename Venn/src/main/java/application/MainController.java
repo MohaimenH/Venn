@@ -160,7 +160,7 @@ public class MainController {
 //	@FXML
 //	private Button clearRight;
 	@FXML
-	private Circle setA;
+	public Circle setA;
 	@FXML
 	private Circle setB;
 	@FXML
@@ -3291,6 +3291,65 @@ public class MainController {
 			//random changes
 		}
 		
+	}
+	
+	// ============================================= Getters and Setters
+
+	
+	public double getLeftCircleSize() {
+		return leftCircleSize;
+	}
+
+	public void setLeftCircleSize(double leftCircleSize) {
+		this.leftCircleSize = leftCircleSize;
+	}
+
+	public double getRightCircleSize() {
+		return rightCircleSize;
+	}
+
+	public void setRightCircleSize(double rightCircleSize) {
+		this.rightCircleSize = rightCircleSize;
+	}
+
+	public static boolean isDark() {
+		return isDark;
+	}
+
+	public static void setDark(boolean isDark) {
+		MainController.isDark = isDark;
+	}
+
+	public Circle getSetA() {
+		return setA;
+	}
+
+	public void setSetA(Circle setA) {
+		this.setA = setA;
+	}
+
+	public Circle getSetB() {
+		return setB;
+	}
+
+	public void setSetB(Circle setB) {
+		this.setB = setB;
+	}
+
+	public Label getLeftLabel() {
+		return leftLabel;
+	}
+
+	public void setLeftLabel(Label leftLabel) {
+		this.leftLabel = leftLabel;
+	}
+
+	public Label getRightLabel() {
+		return rightLabel;
+	}
+
+	public void setRightLabel(Label rightLabel) {
+		this.rightLabel = rightLabel;
 	}
 
 }

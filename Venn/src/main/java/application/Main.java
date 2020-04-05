@@ -74,7 +74,7 @@ public class Main extends Application{
 	}
 	
 	public void closingPopUp(WindowEvent event1) {
-		 System.out.println("Exit clicked!");
+//		 System.out.println("Exit clicked!");
 //		    int status = popUpExit(primaryStaglefte);
 //		    
 //		    if (status == 1) {
