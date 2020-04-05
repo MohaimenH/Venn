@@ -66,7 +66,7 @@ public class TestCases extends ApplicationTest {
 		sleep(100);
 
 		clickOn("#About_menu");
-		sleep(1000);
+		sleep(100);
 		clickOn("Switch to Light Mode");
 		sleep(100);
 
@@ -108,11 +108,11 @@ public class TestCases extends ApplicationTest {
 
 	}
 
-    @Test
-public void AlwaysFailsTest() {
-    	
-    	FxAssert.verifyThat("#holder", ListViewMatchers.hasListCell("DestinedToFail"));
-    	
-    }
+	@Test
+	public void AlwaysFailsTest() {
+
+		FxAssert.verifyThat("#holder", ListViewMatchers.hasListCell("DestinedToFail"));
+
+	}
 
 }

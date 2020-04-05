@@ -592,6 +592,14 @@ public class MainController {
 			test.setLayoutY(input.getLayoutY());
 		}
 		
+		if (isDark == true) {
+			test.setTextFill(Color.WHITE);
+		}
+		
+		else {
+			test.setTextFill(Color.BLACK);
+		}
+		
 		test.setStyle("-fx-font-size:20px");
 		test.getTooltip().setStyle("-fx-font-size:12px");
 		
