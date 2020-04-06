@@ -3307,19 +3307,6 @@ public class MainController {
 		submit.setTooltip(new Tooltip("Click to Add Element To List"));
 		submit.getTooltip().setStyle("-fx-font-size:10px;");
 	}
-	
-
-	public Circle browse() throws URISyntaxException { 
-		Desktop desktop = Desktop.getDesktop();
-		try {
-			URI url = new URI("http://google.com");
-			desktop.browse(url);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
 
 	// ============================================= Getters and Setters
 
