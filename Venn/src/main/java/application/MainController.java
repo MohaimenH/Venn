@@ -1373,12 +1373,12 @@ public class MainController {
 			contextMenu.getItems().addAll(editTitleColor, editTitleSize);
 			title.setContextMenu(contextMenu);
 		}
-//		if (e.getButton() == MouseButton.PRIMARY) {
-//			title.setOpacity(0);
-//			this.title.setDisable(true);
-//			leftname();
-//			
-//		}
+		if (e.getButton() == MouseButton.PRIMARY) {
+			title.setOpacity(0);
+			this.title.setDisable(true);
+			titlename();
+			
+		}
 	}
 
 	@FXML
@@ -1425,7 +1425,7 @@ public class MainController {
 				this.rightLabel.setText(this.rightTextArea.getText());
 				this.rightTextArea.setOpacity(0);
 				rightLabel.setOpacity(1);
-				leftTextArea.setText("");
+				rightTextArea.setText("");
 
 				this.rightTextArea.setDisable(true);
 				this.rightTextArea.setOpacity(0);
@@ -1433,13 +1433,33 @@ public class MainController {
 			}
 
 		});
-		;
+		
 
 	};
+	
+	@FXML
+	public void titlename() {
+		this.titleTextArea.setDisable(false);
+		this.titleTextArea.setOpacity(1);
+		this.titleTextArea.requestFocus();
+		this.titleTextArea.setOnKeyPressed(e -> {
+			
+			if (e.getCode() == KeyCode.ENTER) {
+			this.title.setText(this.titleTextArea.getText());
+			this.titleTextArea.setOpacity(0);
+			title.setOpacity(1);
+			titleTextArea.setText("");
+			
+			this.titleTextArea.setDisable(true);
+			this.titleTextArea.setOpacity(0);
+			this.title.setDisable(false);
+			}
+		});
+	}
 
 	@FXML
 	public void donothing() {
-
+		
 	}
 
 //	@FXML
@@ -3289,18 +3309,18 @@ public class MainController {
 	}
 	
 
-	public void browse() throws URISyntaxException { 
+	public Circle browse() throws URISyntaxException { 
 		Desktop desktop = Desktop.getDesktop();
 		try {
 			URI url = new URI("http://google.com");
 			desktop.browse(url);
 		}
 		catch (Exception e) {
-			//random changes
+			e.printStackTrace();
 		}
-		
 	}
 	
+
 	// ============================================= Getters and Setters
 
 	
@@ -3359,5 +3379,6 @@ public class MainController {
 	public void setRightLabel(Label rightLabel) {
 		this.rightLabel = rightLabel;
 	}
+
 
 }
