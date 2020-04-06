@@ -160,7 +160,7 @@ public class MainController {
 //	@FXML
 //	private Button clearRight;
 	@FXML
-	private Circle setA;
+	public Circle setA;
 	@FXML
 	private Circle setB;
 	@FXML
@@ -590,6 +590,14 @@ public class MainController {
 			test.setFont(input.getFont());
 			test.setLayoutX(input.getLayoutX());
 			test.setLayoutY(input.getLayoutY());
+		}
+		
+		if (isDark == true) {
+			test.setTextFill(Color.WHITE);
+		}
+		
+		else {
+			test.setTextFill(Color.BLACK);
 		}
 		
 		test.setStyle("-fx-font-size:20px");
@@ -1365,12 +1373,12 @@ public class MainController {
 			contextMenu.getItems().addAll(editTitleColor, editTitleSize);
 			title.setContextMenu(contextMenu);
 		}
-//		if (e.getButton() == MouseButton.PRIMARY) {
-//			title.setOpacity(0);
-//			this.title.setDisable(true);
-//			leftname();
-//			
-//		}
+		if (e.getButton() == MouseButton.PRIMARY) {
+			title.setOpacity(0);
+			this.title.setDisable(true);
+			titlename();
+			
+		}
 	}
 
 	@FXML
@@ -1417,7 +1425,7 @@ public class MainController {
 				this.rightLabel.setText(this.rightTextArea.getText());
 				this.rightTextArea.setOpacity(0);
 				rightLabel.setOpacity(1);
-				leftTextArea.setText("");
+				rightTextArea.setText("");
 
 				this.rightTextArea.setDisable(true);
 				this.rightTextArea.setOpacity(0);
@@ -1425,13 +1433,33 @@ public class MainController {
 			}
 
 		});
-		;
+		
 
 	};
+	
+	@FXML
+	public void titlename() {
+		this.titleTextArea.setDisable(false);
+		this.titleTextArea.setOpacity(1);
+		this.titleTextArea.requestFocus();
+		this.titleTextArea.setOnKeyPressed(e -> {
+			
+			if (e.getCode() == KeyCode.ENTER) {
+			this.title.setText(this.titleTextArea.getText());
+			this.titleTextArea.setOpacity(0);
+			title.setOpacity(1);
+			titleTextArea.setText("");
+			
+			this.titleTextArea.setDisable(true);
+			this.titleTextArea.setOpacity(0);
+			this.title.setDisable(false);
+			}
+		});
+	}
 
 	@FXML
 	public void donothing() {
-
+		
 	}
 
 //	@FXML
@@ -3279,18 +3307,65 @@ public class MainController {
 		submit.setTooltip(new Tooltip("Click to Add Element To List"));
 		submit.getTooltip().setStyle("-fx-font-size:10px;");
 	}
-	
 
-	public void browse() throws URISyntaxException { 
-		Desktop desktop = Desktop.getDesktop();
-		try {
-			URI url = new URI("http://google.com");
-			desktop.browse(url);
-		}
-		catch (Exception e) {
-			//random changes
-		}
-		
+	// ============================================= Getters and Setters
+
+	
+	public double getLeftCircleSize() {
+		return leftCircleSize;
 	}
+
+	public void setLeftCircleSize(double leftCircleSize) {
+		this.leftCircleSize = leftCircleSize;
+	}
+
+	public double getRightCircleSize() {
+		return rightCircleSize;
+	}
+
+	public void setRightCircleSize(double rightCircleSize) {
+		this.rightCircleSize = rightCircleSize;
+	}
+
+	public static boolean isDark() {
+		return isDark;
+	}
+
+	public static void setDark(boolean isDark) {
+		MainController.isDark = isDark;
+	}
+
+	public Circle getSetA() {
+		return setA;
+	}
+
+	public void setSetA(Circle setA) {
+		this.setA = setA;
+	}
+
+	public Circle getSetB() {
+		return setB;
+	}
+
+	public void setSetB(Circle setB) {
+		this.setB = setB;
+	}
+
+	public Label getLeftLabel() {
+		return leftLabel;
+	}
+
+	public void setLeftLabel(Label leftLabel) {
+		this.leftLabel = leftLabel;
+	}
+
+	public Label getRightLabel() {
+		return rightLabel;
+	}
+
+	public void setRightLabel(Label rightLabel) {
+		this.rightLabel = rightLabel;
+	}
+
 
 }

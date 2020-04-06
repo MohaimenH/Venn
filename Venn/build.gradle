@@ -31,7 +31,11 @@ dependencies {
 	implementation 'org.dom4j:dom4j:2.1.1'
 	implementation 'jaxen:jaxen:1.1-beta-7'
     // Use JUnit test framework
-    testImplementation 'junit:junit:4.12'
+    //testImplementation 'junit:junit:4.12'
+	testCompile "junit:junit:4.13-beta-3"
+    testCompile "org.testfx:testfx-junit:4.0.16-alpha"
+    testCompile group: 'org.hamcrest', name: 'hamcrest', version: '2.1'
+    testCompile group: 'org.assertj', name: 'assertj-core', version: '3.13.2'
 }
 
 sourceSets {
