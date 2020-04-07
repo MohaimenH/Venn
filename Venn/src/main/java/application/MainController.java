@@ -1207,7 +1207,7 @@ public class MainController {
 		if (e.getButton() == MouseButton.PRIMARY) {
 //			ContextMenu contextMenu=new ContextMenu();
 
-			MenuItem Snapshot = new MenuItem("As JPEG Image (.jpg)");
+			MenuItem Snapshot = new MenuItem("As PNG Image (.png)");
 			MenuItem Export = new MenuItem("As Readble Report (.txt)");
 			MenuItem Exportxml = new MenuItem("As Save File (.xml)");
 
@@ -1712,9 +1712,12 @@ public class MainController {
 		snapShotHelperTransparency(0);
 		
 //		WritableImage snap = new WritableImage(1000,611);
-		WritableImage snap = new WritableImage(1186, 700);
+		WritableImage snap = new WritableImage(1337, 715);
+		
+		SnapshotParameters param = new SnapshotParameters();
+		param.setFill(Color.web("0xf4f4f4ff"));
 
-		MainAnchor.snapshot(new SnapshotParameters(), snap);
+		MainAnchor.snapshot(param, snap);
 //		MainAnchor.snapshot(new SnapshotParameters(), snap);
 
 		String path = this.getpath(1);
