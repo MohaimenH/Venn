@@ -72,6 +72,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
@@ -216,6 +217,10 @@ public class MainController {
 	private ListView<String> decoyLeft;
 	@FXML
 	private Button submit;
+	@FXML
+	private Rectangle dummyRectangleMenu;
+	@FXML
+	private Button goBackToSelect;
 	// =============================================//
 	@FXML
 	private URL location;
@@ -1232,7 +1237,7 @@ public class MainController {
 		if (e.getButton() == MouseButton.PRIMARY) {
 //			ContextMenu contextMenu=new ContextMenu();
 
-			MenuItem Snapshot = new MenuItem("As JPEG Image (.jpg)");
+			MenuItem Snapshot = new MenuItem("As PNG Image (.png)");
 			MenuItem Export = new MenuItem("As Readble Report (.txt)");
 			MenuItem Exportxml = new MenuItem("As Save File (.xml)");
 
@@ -1705,13 +1710,49 @@ public class MainController {
 		return path;
 	}
 
+	private void snapShotHelperTransparency(int i) {
+		if (i == 0) {
+			holder.setOpacity(0);
+			submit.setOpacity(0);
+			importer.setOpacity(0);
+			inputText.setOpacity(0);
+			dragDropDummyText.setOpacity(0);
+			dummyRectangleMenu.setOpacity(0);
+			goBackToSelect.setOpacity(0);
+			File_menu.setOpacity(0);
+			Edit_menu.setOpacity(0);
+			Export_menu.setOpacity(0);
+			About_menu.setOpacity(0);
+			
+		}
+		else {
+			
+			holder.setOpacity(100);
+			submit.setOpacity(100);
+			importer.setOpacity(100);
+			inputText.setOpacity(100);
+			dragDropDummyText.setOpacity(100);
+			dummyRectangleMenu.setOpacity(100);
+			goBackToSelect.setOpacity(100);
+			File_menu.setOpacity(100);
+			Edit_menu.setOpacity(100);
+			Export_menu.setOpacity(100);
+			About_menu.setOpacity(100);
+			
+		}
+	}
 	@FXML
 	public void takeSnapshot() throws IOException, AWTException {
+		
+		snapShotHelperTransparency(0);
+		
 //		WritableImage snap = new WritableImage(1000,611);
+		WritableImage snap = new WritableImage(1337, 715);
+		
+		SnapshotParameters param = new SnapshotParameters();
+		param.setFill(Color.web("0xf4f4f4ff"));
 
-		WritableImage snap = new WritableImage(781, 624);
-
-		secondAnchor.snapshot(new SnapshotParameters(), snap);
+		MainAnchor.snapshot(param, snap);
 //		MainAnchor.snapshot(new SnapshotParameters(), snap);
 
 		String path = this.getpath(1);
@@ -1720,7 +1761,7 @@ public class MainController {
 		}
 		File file = new File(path);
 //		File file = new File("C:\\Users\\RM\\Pictures\\snap.png"); // Change Directory
-
+		
 		try {
 			ImageIO.write(SwingFXUtils.fromFXImage(snap, null), "png", file);
 //	    	ImageIO.write(snap, "png", file);
@@ -1729,7 +1770,8 @@ public class MainController {
 			// TODO: handle exception here
 
 		}
-
+		
+		snapShotHelperTransparency(1);
 		/*
 		 * Robot abc = new Robot(); Rectangle screenRect = new Rectangle(934,611);
 		 * BufferedImage snap = abc.createScreenCapture(screenRect);

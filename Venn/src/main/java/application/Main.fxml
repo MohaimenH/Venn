@@ -16,7 +16,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
+<<<<<<< HEAD
 <AnchorPane fx:id="MainAnchor" onMouseEntered="#detectLeft" prefHeight="716.0" prefWidth="1110.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
+=======
+<AnchorPane fx:id="MainAnchor" onMouseEntered="#detectLeft" prefHeight="716.0" prefWidth="1186.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
+>>>>>>> refs/remotes/origin/develop
    <children>
       <TextField fx:id="referenceTextField" alignment="TOP_LEFT" disable="true" editable="false" layoutX="52.0" layoutY="116.0" opacity="0.0" prefHeight="87.0" prefWidth="176.0" promptText="Please Type Elements.." text="Duplicate TextF" />
       <ListView fx:id="referenceListView" disable="true" layoutX="53.0" layoutY="358.0" opacity="0.0" prefHeight="320.0" prefWidth="176.0" />
@@ -59,7 +63,7 @@
             <Button fx:id="goBackToSelect" layoutX="742.0" layoutY="18.0" mnemonicParsing="false" onAction="#goBackToSelect" text="Go Back To Select Screen" />
          </children>
       </AnchorPane>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b7c4d1" height="26.0" layoutX="16.0" layoutY="7.0" stroke="BLACK" strokeType="INSIDE" width="229.0" />
+      <Rectangle fx:id="dummyRectangleMenu" arcHeight="5.0" arcWidth="5.0" fill="#b7c4d1" height="26.0" layoutX="16.0" layoutY="7.0" stroke="BLACK" strokeType="INSIDE" width="229.0" />
       <Label fx:id="Edit_menu" layoutX="81.0" layoutY="12.0" onMouseClicked="#Menubar_edit" text="Edit" />
       <Label fx:id="Export_menu" layoutX="132.0" layoutY="12.0" onMouseClicked="#Menubar_export" text="Export" />   
       <Button id="test" fx:id="submit" layoutX="43.0" layoutY="217.0" mnemonicParsing="false" onAction="#printOutput" prefHeight="34.0" prefWidth="75.0" text="Add" />
