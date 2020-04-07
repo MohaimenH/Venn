@@ -16,11 +16,8 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<<<<<<< HEAD
-<AnchorPane fx:id="MainAnchor" onMouseEntered="#detectLeft" prefHeight="716.0" prefWidth="1110.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
-=======
 <AnchorPane fx:id="MainAnchor" onMouseEntered="#detectLeft" prefHeight="716.0" prefWidth="1186.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
->>>>>>> refs/remotes/origin/develop
+
    <children>
       <TextField fx:id="referenceTextField" alignment="TOP_LEFT" disable="true" editable="false" layoutX="52.0" layoutY="116.0" opacity="0.0" prefHeight="87.0" prefWidth="176.0" promptText="Please Type Elements.." text="Duplicate TextF" />
       <ListView fx:id="referenceListView" disable="true" layoutX="53.0" layoutY="358.0" opacity="0.0" prefHeight="320.0" prefWidth="176.0" />
