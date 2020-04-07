@@ -82,6 +82,7 @@ import javafx.scene.*;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 
 public class MainController {
 	boolean control;
@@ -587,7 +588,7 @@ public class MainController {
 		} else {
 			test.setTooltip(new Tooltip("Element description"));
 			test.setText(input.getText());
-			test.setFont(input.getFont());
+//			test.setFont(input.getFont());
 			test.setLayoutX(input.getLayoutX());
 			test.setLayoutY(input.getLayoutY());
 		}
@@ -600,7 +601,7 @@ public class MainController {
 			test.setTextFill(Color.BLACK);
 		}
 		
-		test.setStyle("-fx-font-size:20px");
+		setLabelFontSize(test, 20.0);
 		test.getTooltip().setStyle("-fx-font-size:12px");
 		
 		free.add(test);// add label object to list, consider removing bc it may be useless now
@@ -1521,7 +1522,8 @@ public class MainController {
 
 	private void setLabelFont(Label label, String family) {
 		if (notBlank(family)) {
-			label.setFont(Font.font(family));
+			double oldSize = label.getFont().getSize();
+			label.setFont(Font.font(family, oldSize));
 
 		}
 	}
@@ -2213,6 +2215,7 @@ public class MainController {
 		test.setOnAction((event) -> {
 			if (notBlank(test.getText())) {
 				try {
+//					System.out.println("Set Title Size");
 					setLabelFontSize(title, Double.valueOf(test.getText()));
 				}
 
@@ -2495,7 +2498,7 @@ public class MainController {
 			if (notBlank(test.getText())) {
 				try {
 					setLabelFont(rightLabel, test.getText());
-					setLabelFontSize(rightLabel, 25);
+//					setLabelFontSize(rightLabel, 25);
 				}
 
 				catch (Exception e) {
@@ -2511,7 +2514,7 @@ public class MainController {
 			if (notBlank(test.getText())) {
 				try {
 					setLabelFont(rightLabel, test.getText());
-					setLabelFontSize(rightLabel, 25);
+//					setLabelFontSize(rightLabel, 25);
 				}
 
 				catch (Exception e) {
@@ -3049,15 +3052,17 @@ public class MainController {
 
 		Tab tab0 = new Tab("Text");
 		Tab tab1 = new Tab("Color");
-		Tab tab2 = new Tab("Font");
+		Tab tab2 = new Tab("Font Size");
 		Tab tab3 = new Tab("Description");
+		Tab font = new Tab("Font");
 		
 		tab0.setClosable(false);
 		tab1.setClosable(false);
 		tab2.setClosable(false);
 		tab3.setClosable(false);
+		font.setClosable(false);
 		
-		tabPane.getTabs().addAll(tab0, tab3, tab1, tab2);
+		tabPane.getTabs().addAll(tab0, tab3, tab1, tab2, font);
 
 		// Text Changes
 		Label label2 = new Label("Please Enter New Text");
@@ -3184,9 +3189,46 @@ public class MainController {
 		colorVBox.getChildren().addAll(current, test, button1);
 
 		tab1.setContent(colorVBox);
+		
+		// Font Change
+		
+		String old = label.getFont().getFamily();
+		Label fontFamilyLabel = new Label("Current Font Is " + label.getFont().getFamily());
+		Label fontChooseLabel = new Label("Choose a font from below: ");
+		
+		ComboBox<String> combo = fontsComboBox(label);
+		
+		Button fontFamilyButton = new Button("Set Font");
+		
+		fontFamilyButton.setOnAction((event) -> {
+			popupwindow.close();
+		});
 
+		fontFamilyButton.setOnKeyPressed((keyEvent -> {
+			if (keyEvent.getCode() == KeyCode.ESCAPE) {
+				setLabelFont(label, old);
+			}
+			popupwindow.close();
+		}));
+		
+		VBox fontFamilyBox = new VBox(4);
+		
+		fontFamilyBox.setOnKeyPressed((keyEvent -> {
+			if (keyEvent.getCode() == KeyCode.ESCAPE) {
+				setLabelFont(label, old);
+			}
+			popupwindow.close();
+		}));
+		
+		fontFamilyBox.setSpacing(10);
+		fontFamilyBox.setAlignment(Pos.CENTER);
+		fontFamilyBox.setPadding(new Insets(20));
+		fontFamilyBox.getChildren().addAll(fontFamilyLabel, fontChooseLabel, combo, fontFamilyButton);
+		
+		font.setContent(fontFamilyBox);
+		
 		// Font Size Change
-
+	
 		Label currentFont = new Label("Current Font Size Is " + label.getFont().getSize());
 		Label fontSizeLabel = new Label("Please Enter A Font Size: ");
 
@@ -3208,9 +3250,10 @@ public class MainController {
 
 		Button fontButton = new Button("Set Font Size");
 
-		button1.setOnAction((event) -> {
+		fontButton.setOnAction((event) -> {
 			if (notBlank(fontSize.getText())) {
 				try {
+
 					setLabelFontSize(label, Double.valueOf(fontSize.getText()));
 				}
 
@@ -3221,7 +3264,7 @@ public class MainController {
 			popupwindow.close();
 		});
 
-		VBox fontVBox = new VBox(3);
+		VBox fontVBox = new VBox(4);
 
 		fontVBox.setSpacing(10);
 		fontVBox.setAlignment(Pos.CENTER);
@@ -3234,7 +3277,7 @@ public class MainController {
 
 //			layout.setAlignment(Pos.CENTER);
 
-		Scene scene1 = new Scene(layout, 300, 200);
+		Scene scene1 = new Scene(layout, 350, 200);
 
 		popupwindow.setScene(scene1);
 
@@ -3308,6 +3351,51 @@ public class MainController {
 		submit.getTooltip().setStyle("-fx-font-size:10px;");
 	}
 
+	public void fontList() {
+		
+		Stage popupwindow = new Stage();
+
+		popupwindow.initModality(Modality.APPLICATION_MODAL);
+		popupwindow.setTitle("Available Fonts");
+
+		ListView<String> fontsAvailable = new ListView<String>();
+
+		fontsAvailable.getItems().addAll(Font.getFamilies());
+
+		VBox layout = new VBox(5);
+
+		layout.getChildren().addAll(fontsAvailable);
+		layout.setAlignment(Pos.CENTER);
+
+		Scene scene1 = new Scene(layout, 300, 400);
+
+		popupwindow.setScene(scene1);
+
+		popupwindow.showAndWait();
+
+	}
+	
+	public ComboBox<String> fontsComboBox(Label label) {
+		
+		ComboBox<String> fontsDropDown =  new ComboBox<>();
+		fontsDropDown.getItems().addAll(Font.getFamilies());
+		fontsDropDown.setTooltip(new Tooltip("Use the dropdown to select a font"));
+		fontsDropDown.setEditable(false);
+		fontsDropDown.setPromptText("<Choose Font>");
+		
+		EventHandler<ActionEvent> comboEvent = new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent e) {
+				setLabelFont(label, fontsDropDown.getValue());
+				System.out.println("Font Changed!" + fontsDropDown.getValue());
+			}
+		};
+		
+		fontsDropDown.setOnAction(comboEvent);
+		
+		
+		return fontsDropDown;
+	}
+	
 	// ============================================= Getters and Setters
 
 	
