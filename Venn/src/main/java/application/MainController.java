@@ -1674,9 +1674,9 @@ public class MainController {
 	public void takeSnapshot() throws IOException, AWTException {
 //		WritableImage snap = new WritableImage(1000,611);
 
-		WritableImage snap = new WritableImage(781, 624);
+		WritableImage snap = new WritableImage(1200, 700);
 
-		secondAnchor.snapshot(new SnapshotParameters(), snap);
+		MainAnchor.snapshot(new SnapshotParameters(), snap);
 //		MainAnchor.snapshot(new SnapshotParameters(), snap);
 
 		String path = this.getpath(1);
