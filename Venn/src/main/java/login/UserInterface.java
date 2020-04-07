@@ -167,13 +167,18 @@ public class UserInterface extends Application {
 		
 		Button modify = new Button("Modify");
 		modify.setOnAction(e->{
-			Main main = new Main();
-			try {
-				main.run(new Stage());
-				MainController.sys = this.sys;
-				AccSys.v = list.getSelectionModel().getSelectedItem();
-			} catch (IOException e1) {
-				e1.printStackTrace();
+			if (!list.getSelectionModel().isEmpty()) {
+				Main main = new Main();
+				try {
+					main.run(new Stage());
+					MainController.sys = this.sys;
+					AccSys.v = list.getSelectionModel().getSelectedItem();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+			else {
+				AlertBox.display("Error", "You didn't choose any venn graph.");
 			}
 		});
 		AnchorPane.setTopAnchor(modify, 160.0);

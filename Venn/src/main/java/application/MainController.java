@@ -2063,7 +2063,7 @@ public class MainController {
 	}
 
 	/**
-	 * This method check duplication: Return flase if contain : true if not contain
+	 * This method check duplication: Return false if contain : true if not contain
 	 */
 	private boolean checkcontain(String name) {
 		for (Node n : this.deleteID) {
