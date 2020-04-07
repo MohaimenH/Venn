@@ -26,6 +26,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -46,11 +47,10 @@ public class Login extends Application {
 			e.consume();
 			closeprogram();
 		});
-		if (!AccSys.valid) {
+		if (sys == null) {
 			sys = new AccSys();
-			AccSys.valid = true;
 		}
-		
+		window.getIcons().add(new Image("icon/icon.png"));
 		AnchorPane grid = new AnchorPane();
 		
 		// labels------------------------------------------------------------------------
@@ -122,7 +122,6 @@ public class Login extends Application {
 				UserInterface ui = new UserInterface();
 				ui.sys = this.sys;
 				AccSys.current = this.sys.accounts.get(i);
-				AccSys.current.inilist(AccSys.current.getname());
 				window.close();
 				try {
 					ui.run(new Stage());

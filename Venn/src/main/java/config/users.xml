@@ -10,8 +10,40 @@
     <name>qwer</name>  
     <pwd>309</pwd>  
     <Venns> 
-      <number/>
-      <animal/>
+      <Venn name="number" A="odd" B="prime"> 
+        <Node name="1" belong="left"> 
+          <x>418.0</x>  
+          <y>343.0</y>  
+          <font size="20.0">Regular</font> 
+        </Node>  
+        <Node name="3" belong="intersection"> 
+          <x>716.0</x>  
+          <y>374.0</y>  
+          <font size="20.0">Regular</font> 
+        </Node>  
+        <Node name="2" belong="right"> 
+          <x>936.0</x>  
+          <y>386.0</y>  
+          <font size="20.0">Regular</font> 
+        </Node> 
+      </Venn>  
+      <Venn name="animal" A="big" B="small">
+        <Node name="tiger" belong="left">
+          <x>447.0</x>
+          <y>431.0</y>
+          <font size="20.0">Regular</font>
+        </Node>
+        <Node name="dog" belong="intersection">
+          <x>668.0</x>
+          <y>375.0</y>
+          <font size="20.0">Regular</font>
+        </Node>
+        <Node name="mouse" belong="right">
+          <x>939.0</x>
+          <y>383.0</y>
+          <font size="20.0">Regular</font>
+        </Node>
+      </Venn>
     </Venns> 
   </User>  
   <User name="qwe"> 

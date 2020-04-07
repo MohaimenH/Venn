@@ -33,19 +33,7 @@ public abstract class Account {
 //		}
 //		return result;
 //	}
-	public boolean inilist(String input) {
-		try {
-			SAXReader reader = new SAXReader();
-			Document document = reader.read(AccSys.filepath);
-			List<Node> nodes = document.selectNodes("Users/user[@name='" +input  +"']/venns");
-			
-			return true;
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-			return false;
-		}
-	}
+
 	
 	
 	

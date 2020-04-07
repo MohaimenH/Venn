@@ -25,9 +25,9 @@ public class AccSys {
 	public SuperAcc superacc;
 	public static String filepath = "src/main/java/config/users.xml";
 	public static Record record;
-	public static boolean valid = false;
 	public static Account current;
 	public static String v;
+	public static String xpath;
 	
 	public AccSys() throws IOException {
 		accounts = new ArrayList<Account>();

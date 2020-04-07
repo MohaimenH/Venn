@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.dom4j.Attribute;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.Node;
@@ -39,7 +40,7 @@ import javafx.stage.Stage;
 
 public class UserInterface extends Application {
 	
-	AccSys sys;
+	public AccSys sys;
 	Stage window;
 	String xpath;
 	Document document;
@@ -66,7 +67,9 @@ public class UserInterface extends Application {
 		Button logout = new Button("Log Out");
 		logout.setPrefWidth(70.0);
 		logout.setOnAction(e ->{
+			System.out.println("logout");
 			AccSys.current = null;
+			AccSys.v = null;
 			window.close();
 			Login login = new Login();
 			login.sys = this.sys;
@@ -97,20 +100,20 @@ public class UserInterface extends Application {
 		Element venns = (Element) document.selectSingleNode(xpath);
 		for (Iterator<Element> rootIter = venns.elementIterator(); rootIter.hasNext();) {
 			Element venn = rootIter.next();
-			litems.add(venn.getName());
+			litems.add(venn.attributeValue("name"));
 		}
 		list.setItems(litems);
 		list.setEditable(true);
 		list.setCellFactory(TextFieldListCell.forListView());
 		list.setOnEditCommit(e->{
 			String s = e.getNewValue();
-			int i = 0;
-			while (i < s.length()) {
-				if (s.charAt(i++) == ' ') {
-					AlertBox.display("Error", "Venn name can't contain space character");
-					return;
-				}
-			}
+//			int i = 0;
+//			while (i < s.length()) {
+//				if (s.charAt(i++) == ' ') {
+//					AlertBox.display("Error", "Venn name can't contain space character");
+//					return;
+//				}
+//			}
 			litems.set(list.getSelectionModel().getSelectedIndex(), e.getNewValue());
 			try {
 				this.update(litems);
@@ -170,9 +173,13 @@ public class UserInterface extends Application {
 			if (!list.getSelectionModel().isEmpty()) {
 				Main main = new Main();
 				try {
-					main.run(new Stage());
+					
 					MainController.sys = this.sys;
+					MainController.document = this.document;
+					AccSys.xpath = this.xpath;
 					AccSys.v = list.getSelectionModel().getSelectedItem();
+					main.run(new Stage());
+					window.close();
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
@@ -214,7 +221,7 @@ public class UserInterface extends Application {
 		String cn = null;
 		for (Iterator<Element> rootIter = venns.elementIterator(); rootIter.hasNext();) {
 			Element venn = rootIter.next();
-			c.add(venn.getName());
+			c.add(venn.attributeValue("name"));
 		}
 		for (String s : l) {
 			if (!c.contains(s)) {
@@ -229,18 +236,22 @@ public class UserInterface extends Application {
 		if (ln != null && cn != null) {
 			for (Iterator<Element> rootIter = venns.elementIterator(); rootIter.hasNext();) {
 				Element venn = rootIter.next();
-				if (venn.getName() == cn) {
-					venn.setName(ln);
+				if (venn.attributeValue("name").contentEquals(cn)) {
+					Attribute a = venn.attribute("name");
+					a.setValue(ln);
 				}
 			}
 		}
 		else if (ln != null) {
-			venns.addElement(""+ln);
+			Element venn = venns.addElement("Venn");
+			venn.addAttribute("name", ln);
+			venn.addAttribute("A", "setA");
+			venn.addAttribute("B", "setB");
 		}
 		else {
 			for (Iterator<Element> rootIter = venns.elementIterator(); rootIter.hasNext();) {
 				Element venn = rootIter.next();
-				if (venn.getName() == cn) {
+				if (venn.attributeValue("name").contentEquals(cn)) {
 					venns.remove(venn);
 				}
 			}

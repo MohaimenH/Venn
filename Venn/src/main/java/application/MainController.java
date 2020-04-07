@@ -25,6 +25,7 @@ import java.util.Set;
 import javax.imageio.ImageIO;
 
 import org.dom4j.Document;
+import org.dom4j.DocumentException;
 import org.dom4j.DocumentFactory;
 import org.dom4j.Element;
 import org.dom4j.io.OutputFormat;
@@ -75,6 +76,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+import login.Login;
+import login.UserInterface;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.control.*;
@@ -102,6 +105,8 @@ public class MainController {
 	String temp;
 	int index;
 	public static AccSys sys;
+	public static Document document;
+	public String vpath;
 	static ContextMenu menuBarContextMenu = new ContextMenu();
 	static boolean isDark = false;
 	private ArrayList<Node> deleteID = new ArrayList<>();// holds id's of things that need to be deleted in all sets
@@ -223,7 +228,19 @@ public class MainController {
 
 	@FXML
 	private ResourceBundle resources;
-
+	
+	@FXML
+	private Button login;
+	
+	@FXML
+	private Label welcome;
+	
+	@FXML
+	private Button save;
+	
+	@FXML
+	private Button logout;
+	
 	int elementNum = 0;
 	int LeftNumOfElements = 0;
 	int RightNumOfElements = 0;
@@ -254,6 +271,19 @@ public class MainController {
 
 	@FXML
 	private void initialize() {
+		if (AccSys.current != null) {
+			welcome.setOpacity(1);
+			welcome.setDisable(false);
+			welcome.setText("Hello " + AccSys.current.getname());
+			save.setDisable(false);
+			save.setOpacity(1);
+			logout.setDisable(false);
+			logout.setOpacity(1);
+			title.setText(AccSys.v);
+			login.setDisable(true);
+			login.setOpacity(0);
+			userinitialize();
+		}
 	}
 
 	// ==============================================//Undo Stack
@@ -1546,14 +1576,19 @@ public class MainController {
 	@FXML
 	public void exportAsXML() throws Exception {
 		DocumentFactory dbf = DocumentFactory.getInstance();
-		// 创建DocumentBuilder对象
 		Document doc = dbf.createDocument();
 		Element root = dbf.createElement("Venn");
 		doc.setRootElement(root);
+		
 		root.setName("Venn");
+		root.addAttribute("name", title.getText());
+		root.addAttribute("A",leftLabel.getText());
+		root.addAttribute("B",rightLabel.getText());
+		
 		for (Node n : this.deleteID) {
 			Label l = (Label) n;
-			Element sub = root.addElement(l.getText());
+			Element sub = root.addElement("Node");
+			sub.addAttribute("name",l.getText());
 			if (this.deleteIDLeft.contains(n)) {
 				sub.addAttribute("belong", "left");
 			} else if (this.deleteIDRight.contains(n)) {
@@ -2010,6 +2045,9 @@ public class MainController {
 			SAXReader reader = new SAXReader();
 			Document doc = reader.read(path);
 			Element root = doc.getRootElement();
+			title.setText(root.attributeValue("name"));
+			leftLabel.setText(root.attributeValue("A"));
+			rightLabel.setText(root.attributeValue("B"));
 			this.MoveLeft = false;
 			this.MoveRight = false;
 			this.MoveIntersection = false;
@@ -2021,7 +2059,7 @@ public class MainController {
 
 				if (checkcontain(venn.getName())) {
 					Label label = new Label();
-					String name = venn.getName();
+					String name = venn.attributeValue("name");
 					String set = venn.attributeValue("belong");
 					Double x = Double.parseDouble((venn.element("x").getText()));
 					Double y = Double.parseDouble((venn.element("y").getText()));
@@ -3455,5 +3493,129 @@ public class MainController {
 		this.rightLabel = rightLabel;
 	}
 
+	/* ========================================================= 
+	 *	User functions:
+	 *	Save
+	 *	Logout
+	 *	user initialize
+	 *	go to login
+	 */
+	
+	public void save() {
+		Element root = (Element) document.selectSingleNode(this.vpath);
+		root.setName("Venn");
+		root.addAttribute("name", title.getText());
+		root.addAttribute("A",leftLabel.getText());
+		root.addAttribute("B",rightLabel.getText());
+		
+		for (Node n : this.deleteID) {
+			Label l = (Label) n;
+			Element sub = root.addElement("Node");
+			sub.addAttribute("name",l.getText());
+			if (this.deleteIDLeft.contains(n)) {
+				sub.addAttribute("belong", "left");
+			} else if (this.deleteIDRight.contains(n)) {
+				sub.addAttribute("belong", "right");
+			} else if (this.deleteIDIntersection.contains(n)) {
+				sub.addAttribute("belong", "intersection");
+			}
+			sub.addElement("x").setText(l.getLayoutX() + "");
+			sub.addElement("y").setText(l.getLayoutY() + "");
+			Element font = sub.addElement("font");
+			font.setText(l.getFont().getStyle());
+			font.addAttribute("size", l.getFont().getSize() + "");
+		}
 
+		try {
+			FileOutputStream out = new FileOutputStream(AccSys.filepath);
+
+			OutputFormat format = OutputFormat.createPrettyPrint();
+			format.setEncoding("UTF-8");
+			XMLWriter writer = new XMLWriter(out, format);
+			writer.write(document);
+			writer.close();
+		} catch (Exception e) {
+
+		}
+	}
+	
+	public void logout() {
+		Stage stage = (Stage) logout.getScene().getWindow();
+		AccSys.xpath = null;
+		AccSys.v =null;
+		stage.close();
+		UserInterface ui = new UserInterface();
+		ui.sys = MainController.sys;
+		try {
+			ui.run(new Stage());
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+	}
+	
+	public void userinitialize() {
+		this.vpath = AccSys.xpath + "/Venn[@name='" + AccSys.v + "']";
+		Element root = (Element) document.selectSingleNode(this.vpath);
+		title.setText(root.attributeValue("name"));
+		leftLabel.setText(root.attributeValue("A"));
+		rightLabel.setText(root.attributeValue("B"));
+		this.MoveLeft = false;
+		this.MoveRight = false;
+		this.MoveIntersection = false;
+		this.MoveAllIntersection = false;
+		this.MoveAllLeft = false;
+		this.MoveAllRight = false;
+		for (Iterator<Element> rootIter = root.elementIterator(); rootIter.hasNext();) {
+			Element venn = rootIter.next();
+
+			if (checkcontain(venn.getName())) {
+				Label label = new Label();
+				String name = venn.attributeValue("name");
+				String set = venn.attributeValue("belong");
+				Double x = Double.parseDouble((venn.element("x").getText()));
+				Double y = Double.parseDouble((venn.element("y").getText()));
+				Font font = new Font(venn.element("font").getText(),
+						Double.parseDouble(venn.element("font").attributeValue("size")));
+
+				label.setText(name);
+				label.setLayoutX(x);
+				label.setLayoutY(y);
+				label.setFont(font);
+				if (set.equals("left")) {
+					this.deleteIDLeft.add(label);
+					this.InLeft = true;
+					this.InRight = false;
+					this.InIntersection = false;
+				}
+				else if (set.equals("right")) {
+					this.deleteIDRight.add(label);
+					this.InLeft = false;
+					this.InRight = true;
+					this.InIntersection = false;
+				}
+				else if (set.equals("intersection")) {
+					this.deleteIDIntersection.add(label);
+					this.InLeft = false;
+					this.InRight = false;
+					this.InIntersection = true;
+				}
+				this.MovableText(null, label, 0);
+				this.deleteID.add(label);
+			}
+			this.InLeft = false;
+			this.InRight = false;
+			this.InIntersection = false;
+		}
+	}
+	
+	public void login() {
+		Stage stage = (Stage) logout.getScene().getWindow();
+		stage.close();
+		Login main = new Login();
+		try {
+			main.run();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

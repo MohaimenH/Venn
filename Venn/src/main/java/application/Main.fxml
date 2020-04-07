@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
@@ -11,7 +16,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="MainAnchor" onMouseEntered="#detectLeft" prefHeight="716.0" prefWidth="1110.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
+<AnchorPane fx:id="MainAnchor" onMouseEntered="#detectLeft" prefHeight="716.0" prefWidth="1110.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
    <children>
       <TextField fx:id="referenceTextField" alignment="TOP_LEFT" disable="true" editable="false" layoutX="52.0" layoutY="116.0" opacity="0.0" prefHeight="87.0" prefWidth="176.0" promptText="Please Type Elements.." text="Duplicate TextF" />
       <ListView fx:id="referenceListView" disable="true" layoutX="53.0" layoutY="358.0" opacity="0.0" prefHeight="320.0" prefWidth="176.0" />
@@ -19,7 +24,7 @@
          <children>
             <TextField fx:id="rightTextArea" disable="true" layoutX="472.0" layoutY="88.0" onInputMethodTextChanged="#donothing" onKeyReleased="#rightname" onKeyTyped="#donothing" opacity="0.0" />
             <TextField fx:id="leftTextArea" disable="true" layoutX="216.0" layoutY="88.0" onInputMethodTextChanged="#donothing" onKeyReleased="#leftname" onKeyTyped="#donothing" opacity="0.0" />
-            <TextField fx:id="titleTextArea"  disable="true" layoutX="242.0" layoutY="6.0" onInputMethodTextChanged="#donothing" onKeyReleased="#titlename" onKeyTyped="#donothing" opacity="0.0" prefHeight="70.0" prefWidth="416.0" />
+            <TextField fx:id="titleTextArea" disable="true" layoutX="242.0" layoutY="6.0" onInputMethodTextChanged="#donothing" onKeyReleased="#titlename" onKeyTyped="#donothing" opacity="0.0" prefHeight="70.0" prefWidth="416.0" />
 
             <Circle id="Left Circle" fx:id="setA" fill="#30068f" layoutX="309.0" layoutY="398.0" onKeyPressed="#keyPressLeft" onMouseEntered="#detectLeft" opacity="0.38" radius="261.0" stroke="BLACK" strokeWidth="4.0" />
             <Circle id="Right Circle" fx:id="setB" fill="RED" layoutX="544.0" layoutY="398.0" onKeyPressed="#keyPressRight" onMouseEntered="#detectRight" opacity="0.39" radius="261.0" stroke="#4d3f3f" strokeWidth="4.0" />
@@ -70,7 +75,15 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="inputText" alignment="TOP_LEFT" layoutX="44.0" layoutY="121.0" onKeyPressed="#handle" prefHeight="87.0" prefWidth="176.0" promptText="Please Type Elements.." /> 
+      <TextField fx:id="inputText" alignment="TOP_LEFT" layoutX="44.0" layoutY="121.0" onKeyPressed="#handle" prefHeight="87.0" prefWidth="176.0" promptText="Please Type Elements.." />
+      <Button fx:id="save" disable="true" layoutX="43.0" layoutY="78.0" mnemonicParsing="false" onAction="#save" opacity="0.0" prefHeight="34.0" prefWidth="75.0" text="Save" />
+      <Button fx:id="logout" disable="true" layoutX="141.0" layoutY="78.0" mnemonicParsing="false" onAction="#logout" opacity="0.0" prefHeight="34.0" prefWidth="75.0" text="go back" />
+      <Label fx:id="welcome" disable="true" layoutX="44.0" layoutY="44.0" opacity="0.0" text="Hello, ">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Label>
+      <Button fx:id="login" layoutX="72.0" layoutY="61.0" mnemonicParsing="false" onAction="#login" prefHeight="35.0" prefWidth="120.0" text="Go to login" /> 
 
 
    </children>
