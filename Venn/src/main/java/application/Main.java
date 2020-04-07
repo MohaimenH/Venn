@@ -31,7 +31,7 @@ public class Main extends Application{
 	@FXML
 	private Button threeSetSelect;
 	private static final int sceneHeight = 716;
-	private static final int sceneWidth = 1074;
+	private static final int sceneWidth = 1186;
 	
 	// Make any changes here for primaryStage
 	public void primaryStageControls(Scene scene, Stage primaryStage) {
@@ -42,8 +42,8 @@ public class Main extends Application{
 		primaryStage.setScene(scene);
 		primaryStage.show();
 		
-		primaryStage.setMinHeight(726);
-		primaryStage.setMinWidth(1074);
+		primaryStage.setMinHeight(sceneHeight);
+		primaryStage.setMinWidth(sceneWidth);
 		primaryStage.centerOnScreen();
 		
 		
