@@ -2078,7 +2078,6 @@ public class MainController {
 	// =========================================import file chooser//
 	public void importer(ActionEvent event) throws IOException {
 
-		String line;
 		String path = getpath(3);
 		if (path.length() == 0) {
 			return;
@@ -2099,7 +2098,7 @@ public class MainController {
 			for (Iterator<Element> rootIter = root.elementIterator(); rootIter.hasNext();) {
 				Element venn = rootIter.next();
 
-				if (checkcontain(venn.getName())) {
+				if (checkcontain(venn.attributeValue("name"))) {
 					Label label = new Label();
 					String name = venn.attributeValue("name");
 					String set = venn.attributeValue("belong");
@@ -2131,7 +2130,6 @@ public class MainController {
 						this.InIntersection = true;
 					}
 					this.MovableText(null, label, 0);
-					this.deleteID.add(label);
 				}
 				this.InLeft = false;
 				this.InRight = false;
@@ -3544,8 +3542,10 @@ public class MainController {
 	 */
 	
 	public void save() {
-		Element root = (Element) document.selectSingleNode(this.vpath);
-		root.setName("Venn");
+		Element root = (Element) document.selectSingleNode(vpath);
+		Element fa = root.getParent();
+		fa.remove(root);
+		root = fa.addElement("Venn");
 		root.addAttribute("name", title.getText());
 		root.addAttribute("A",leftLabel.getText());
 		root.addAttribute("B",rightLabel.getText());
@@ -3610,7 +3610,7 @@ public class MainController {
 		for (Iterator<Element> rootIter = root.elementIterator(); rootIter.hasNext();) {
 			Element venn = rootIter.next();
 
-			if (checkcontain(venn.getName())) {
+			if (checkcontain(venn.attributeValue("name"))) {
 				Label label = new Label();
 				String name = venn.attributeValue("name");
 				String set = venn.attributeValue("belong");
@@ -3642,12 +3642,12 @@ public class MainController {
 					this.InIntersection = true;
 				}
 				this.MovableText(null, label, 0);
-				this.deleteID.add(label);
 			}
 			this.InLeft = false;
 			this.InRight = false;
 			this.InIntersection = false;
 		}
+		System.out.println("" + this.deleteID.size());
 	}
 	
 	public void login() {
