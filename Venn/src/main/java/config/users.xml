@@ -27,33 +27,23 @@
           <font size="20.0">Regular</font> 
         </Node> 
       </Venn>  
-      <Venn name="animal" A="big" B="small">
-        <Node name="tiger" belong="left">
-          <x>447.0</x>
-          <y>431.0</y>
-          <font size="20.0">Regular</font>
-        </Node>
-        <Node name="dog" belong="intersection">
-          <x>668.0</x>
-          <y>375.0</y>
-          <font size="20.0">Regular</font>
-        </Node>
-        <Node name="mouse" belong="right">
-          <x>939.0</x>
-          <y>383.0</y>
-          <font size="20.0">Regular</font>
-        </Node>
-      </Venn>
+      <Venn name="animal" A="big" B="small"> 
+        <Node name="tiger" belong="left"> 
+          <x>447.0</x>  
+          <y>431.0</y>  
+          <font size="20.0">Regular</font> 
+        </Node>  
+        <Node name="dog" belong="intersection"> 
+          <x>668.0</x>  
+          <y>375.0</y>  
+          <font size="20.0">Regular</font> 
+        </Node>  
+        <Node name="mouse" belong="right"> 
+          <x>939.0</x>  
+          <y>383.0</y>  
+          <font size="20.0">Regular</font> 
+        </Node> 
+      </Venn> 
     </Venns> 
-  </User>  
-  <User name="qwe"> 
-    <name>qwe</name>  
-    <pwd>309</pwd>  
-    <Venns/> 
-  </User>  
-  <User name="qwee"> 
-    <name>qwee</name>  
-    <pwd>309</pwd>  
-    <Venns/> 
   </User> 
 </Users>

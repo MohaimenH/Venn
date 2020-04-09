@@ -16,9 +16,11 @@ import database.AccSys;
 import database.Account;
 import database.User;
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -35,13 +37,15 @@ import javafx.stage.Stage;
 
 public class Login extends Application {
 	//implements EventHandler<ActionEvent>
-	Button log_in, exit;
-	Stage window;
-	Scene scene1, scene2;
+	public static Button loginButton, register, visitor;
+	public static TextField nameInput;
+	public static PasswordField pwInput;
+	public static Stage window;
 	AccSys sys;
+	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		this.window = primaryStage;
+		window = primaryStage;
 		window.setTitle("Log In");
 		window.setOnCloseRequest(e -> {
 			e.consume();
@@ -63,13 +67,13 @@ public class Login extends Application {
 		
 		
 		// Input field---------------------------------------------------------------------
-		TextField nameInput = new TextField();
+		nameInput = new TextField();
 		nameInput.setPromptText("username");
 		AnchorPane.setTopAnchor(nameInput, 10.0);
 		AnchorPane.setLeftAnchor(nameInput, 100.0);
 		AnchorPane.setRightAnchor(nameInput, 10.0);
 		nameInput.setPrefWidth(100);
-		PasswordField pwInput = new PasswordField();
+		pwInput = new PasswordField();
 
 		pwInput.setPromptText("password");
 		AnchorPane.setTopAnchor(pwInput, 45.0);
@@ -108,7 +112,7 @@ public class Login extends Application {
 		
 		// Button filed ----------------------------------------------------------------------------------------
 		// Button login
-		Button loginButton = new Button("Log In");
+		loginButton = new Button("Log In");
 		loginButton.setPrefWidth(100);
 		AnchorPane.setTopAnchor(loginButton, 80.0);
 		AnchorPane.setLeftAnchor(loginButton, 10.0);
@@ -136,7 +140,7 @@ public class Login extends Application {
 		});
 		
 		// Button register------------------------------------------------------------------------------
-		Button register = new Button("Register");
+		register = new Button("Register");
 		AnchorPane.setTopAnchor(register, 80.0);
 		AnchorPane.setLeftAnchor(register, 120.0);
 		AnchorPane.setRightAnchor(register, 115.0);
@@ -168,7 +172,7 @@ public class Login extends Application {
 		});
 		
 		// Button login-------------------------------------------------------------------------------------
-				Button visitor = new Button("Visitor Access");
+				visitor = new Button("Visitor Access");
 				AnchorPane.setTopAnchor(visitor, 80.0);
 				loginButton.setPrefWidth(100);
 				AnchorPane.setRightAnchor(visitor, 10.0);
@@ -240,8 +244,6 @@ public class Login extends Application {
 		catch (Exception e){
 			return false;
 		}
-		
-		
 	}
 }
 

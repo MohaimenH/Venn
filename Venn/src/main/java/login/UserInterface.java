@@ -39,14 +39,15 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class UserInterface extends Application {
-	
 	public AccSys sys;
-	Stage window;
+	public static Button add, delete, modify;
+	public static ListView<String> list;
+	public static Stage window;
 	String xpath;
 	Document document;
 	@Override
 	public void start(Stage primaryStage) throws Exception{
-		this.window = primaryStage;
+		window = primaryStage;
 		window.setOnCloseRequest(e ->{
 			e.consume();
 			this.closeprogram();
@@ -88,7 +89,7 @@ public class UserInterface extends Application {
 		AnchorPane.setTopAnchor(hb, 10.0);
 		
 		// List View
-		ListView<String> list = new ListView<>();
+		list = new ListView<>();
 		AnchorPane.setTopAnchor(list, 40.0);
 		AnchorPane.setLeftAnchor(list, 10.0);
 		AnchorPane.setRightAnchor(list, 100.0);
@@ -123,7 +124,7 @@ public class UserInterface extends Application {
 		});
 		
 		// Button's
-		Button add = new Button("Add");
+		add = new Button("Add");
 		add.setPrefWidth(70);
 
 		AnchorPane.setTopAnchor(add, 60.0);
@@ -154,7 +155,7 @@ public class UserInterface extends Application {
 			}
 		});
 		
-		Button delete = new Button("Delete");
+		delete = new Button("Delete");
 
 		AnchorPane.setTopAnchor(delete, 110.0);
 		AnchorPane.setRightAnchor(delete, 10.0);
@@ -168,7 +169,7 @@ public class UserInterface extends Application {
 			}
 		});
 		
-		Button modify = new Button("Modify");
+		modify = new Button("Modify");
 		modify.setOnAction(e->{
 			if (!list.getSelectionModel().isEmpty()) {
 				Main main = new Main();
