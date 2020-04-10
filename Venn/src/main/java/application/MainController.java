@@ -57,10 +57,13 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.Dragboard;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -732,8 +735,13 @@ public class MainController {
 			
 
 		}
-		test.setOnDragDetected(t->{
-			MouseDrag=true;
+		test.setOnDragDetected(t -> {
+//			Dragboard db = test.startDragAndDrop(TransferMode.COPY);
+//			db.setDragView(new Text(test.getText()).snapshot(null, null), t.getX(), t.getY());
+//			ClipboardContent cc = new ClipboardContent();
+//			cc.putString(test.getText());
+//			db.setContent(cc);
+			MouseDrag = true;
 		});
 		test.setOnKeyPressed(clk->{
 			if(Clicked&&deleteIDLeft.contains(test)) {
