@@ -127,6 +127,10 @@ public class MainController {
 	private Set<String> rightElems = new HashSet<>(); // Set B for 2 Sets Version ||| Set C for 3 Sets Version
 	private Set<String> midElems = new HashSet<>(); // Intersection of all sets
 
+	private ArrayList<String>GameLeft=new ArrayList<>();
+	private ArrayList<String>GameRight=new ArrayList<>();
+	private ArrayList<String>GameIntersection=new ArrayList<>();
+
 //	ArrayList<String> elements = new ArrayList<>();
 //	ArrayList<String> leftElems = new ArrayList<>();
 //	ArrayList<String> rightElems = new ArrayList<>();
@@ -2080,6 +2084,79 @@ public class MainController {
 //			contextMenu.getItems().addAll(del, moveLeft, moveRight, moveMid, delAll);
 			holder.setContextMenu(contextMenu);
 
+		}
+	}
+	@FXML
+	public void gameFinished(ActionEvent click) {
+		int score=0;
+		int total=0;
+		int t1,t2,t3=0;
+		int s1=GameLeft.size();
+		int s2=GameRight.size();
+		int s3=GameIntersection.size();
+		System.out.println("Left:"+s1+" Right"+s2+" Middle"+s3);
+		total=s1+s2+s3;
+		
+		GameLeft.retainAll(leftElems);
+		t1=GameLeft.size();
+		
+		GameRight.retainAll(rightElems);
+		t2=GameRight.size();
+		
+		GameIntersection.retainAll(midElems);
+		t3=GameIntersection.size();
+		score=t1+t2+t3;
+		
+		System.out.println("Total"+total);
+		System.out.println("Score"+ (100)*(score/total));
+		
+	}
+	@FXML
+	public void gameImport(ActionEvent im) throws IOException{
+		String path = getpath(3);
+		if (path.length() == 0) {
+			return;
+		}
+		try {
+			SAXReader reader = new SAXReader();
+			Document doc = reader.read(path);
+			Element root = doc.getRootElement();
+			this.MoveLeft = false;
+			this.MoveRight = false;
+			this.MoveIntersection = false;
+			this.MoveAllIntersection = false;
+			this.MoveAllLeft = false;
+			this.MoveAllRight = false;
+			for (Iterator<Element> rootIter = root.elementIterator(); rootIter.hasNext();) {
+				Element venn = rootIter.next();
+
+				
+				String name = venn.attributeValue("name");
+				holder.getItems().add(name);
+				
+				
+				
+			
+					String set = venn.attributeValue("belong");
+					
+		
+
+					if (set.equals("left")) {
+						GameLeft.add(name);
+					}
+					else if (set.equals("right")) {
+						GameRight.add(name);
+					}
+					else if (set.equals("intersection")) {
+						GameIntersection.add(name);
+					}
+				}
+				
+				
+				
+			
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
