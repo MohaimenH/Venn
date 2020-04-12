@@ -58,10 +58,13 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.Dragboard;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -123,6 +126,10 @@ public class MainController {
 	private Set<String> leftElems = new HashSet<>(); // Set A for 2 Sets Version ||| Set B for 3 Sets Version
 	private Set<String> rightElems = new HashSet<>(); // Set B for 2 Sets Version ||| Set C for 3 Sets Version
 	private Set<String> midElems = new HashSet<>(); // Intersection of all sets
+
+	private ArrayList<String>GameLeft=new ArrayList<>();
+	private ArrayList<String>GameRight=new ArrayList<>();
+	private ArrayList<String>GameIntersection=new ArrayList<>();
 
 //	ArrayList<String> elements = new ArrayList<>();
 //	ArrayList<String> leftElems = new ArrayList<>();
@@ -762,8 +769,13 @@ public class MainController {
 			
 
 		}
-		test.setOnDragDetected(t->{
-			MouseDrag=true;
+		test.setOnDragDetected(t -> {
+//			Dragboard db = test.startDragAndDrop(TransferMode.COPY);
+//			db.setDragView(new Text(test.getText()).snapshot(null, null), t.getX(), t.getY());
+//			ClipboardContent cc = new ClipboardContent();
+//			cc.putString(test.getText());
+//			db.setContent(cc);
+			MouseDrag = true;
 		});
 		test.setOnKeyPressed(clk->{
 			if(Clicked&&deleteIDLeft.contains(test)) {
@@ -2074,6 +2086,79 @@ public class MainController {
 
 		}
 	}
+	@FXML
+	public void gameFinished(ActionEvent click) {
+		int score=0;
+		int total=0;
+		int t1,t2,t3=0;
+		int s1=GameLeft.size();
+		int s2=GameRight.size();
+		int s3=GameIntersection.size();
+		System.out.println("Left:"+s1+" Right"+s2+" Middle"+s3);
+		total=s1+s2+s3;
+		
+		GameLeft.retainAll(leftElems);
+		t1=GameLeft.size();
+		
+		GameRight.retainAll(rightElems);
+		t2=GameRight.size();
+		
+		GameIntersection.retainAll(midElems);
+		t3=GameIntersection.size();
+		score=t1+t2+t3;
+		
+		System.out.println("Total"+total);
+		System.out.println("Score"+ (100)*(score/total));
+		
+	}
+	@FXML
+	public void gameImport(ActionEvent im) throws IOException{
+		String path = getpath(3);
+		if (path.length() == 0) {
+			return;
+		}
+		try {
+			SAXReader reader = new SAXReader();
+			Document doc = reader.read(path);
+			Element root = doc.getRootElement();
+			this.MoveLeft = false;
+			this.MoveRight = false;
+			this.MoveIntersection = false;
+			this.MoveAllIntersection = false;
+			this.MoveAllLeft = false;
+			this.MoveAllRight = false;
+			for (Iterator<Element> rootIter = root.elementIterator(); rootIter.hasNext();) {
+				Element venn = rootIter.next();
+
+				
+				String name = venn.attributeValue("name");
+				holder.getItems().add(name);
+				
+				
+				
+			
+					String set = venn.attributeValue("belong");
+					
+		
+
+					if (set.equals("left")) {
+						GameLeft.add(name);
+					}
+					else if (set.equals("right")) {
+						GameRight.add(name);
+					}
+					else if (set.equals("intersection")) {
+						GameIntersection.add(name);
+					}
+				}
+				
+				
+				
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	// =========================================import file chooser//
 	public void importer(ActionEvent event) throws IOException {
@@ -2235,7 +2320,7 @@ public class MainController {
 
 	}
 
-	// ======================================== Title Change Pop-ups
+	// ======================================== Label Change Pop-ups
 	
 	public void popUpChangeTitle() {
 
@@ -3036,6 +3121,8 @@ public class MainController {
 
 	}
 
+	// ========================================= Set Circle Helpers
+	
 	public void circleSlider(String set) {
 		Circle temp;
 
@@ -3123,26 +3210,9 @@ public class MainController {
 
 	}
 
-	public void popUpLabelsEdit(Label label) {
-
-		Stage popupwindow = new Stage();
-		TabPane tabPane = new TabPane();
-
-		Tab tab0 = new Tab("Text");
-		Tab tab1 = new Tab("Color");
-		Tab tab2 = new Tab("Font Size");
-		Tab tab3 = new Tab("Description");
-		Tab font = new Tab("Font");
-		
-		tab0.setClosable(false);
-		tab1.setClosable(false);
-		tab2.setClosable(false);
-		tab3.setClosable(false);
-		font.setClosable(false);
-		
-		tabPane.getTabs().addAll(tab0, tab3, tab1, tab2, font);
-
-		// Text Changes
+	// ================= Elements Edit Menu Helpers
+	
+	public VBox textChange(Label label, Stage popupwindow) {
 		Label label2 = new Label("Please Enter New Text");
 
 		TextField newText = new TextField();
@@ -3182,11 +3252,11 @@ public class MainController {
 		textVBox.setAlignment(Pos.CENTER);
 		textVBox.setPadding(new Insets(20));
 		textVBox.getChildren().addAll(label2, newText, button2);
-
-		tab0.setContent(textVBox);
 		
-		// Description Change
-		
+		return textVBox;
+	}
+	
+	public VBox descChange(Label label, Stage popupwindow) {
 		Label enterDesc = new Label("Please Enter A Description \n \t For The Element");
 		enterDesc.setAlignment(Pos.CENTER);
 		
@@ -3227,11 +3297,11 @@ public class MainController {
 		descVBox.setAlignment(Pos.CENTER);
 		descVBox.setPadding(new Insets(20));
 		descVBox.getChildren().addAll(enterDesc, enterDescText, descButton);
-
-		tab3.setContent(descVBox);
-
-		// Color changes
-
+		
+		return descVBox;
+	}
+	
+	public VBox colorChange(Label label, Stage popupwindow) {
 		Color initialColor = (Color) label.getTextFill();
 
 		popupwindow.initModality(Modality.APPLICATION_MODAL);
@@ -3265,10 +3335,11 @@ public class MainController {
 		colorVBox.setAlignment(Pos.CENTER);
 		colorVBox.setPadding(new Insets(20));
 		colorVBox.getChildren().addAll(current, test, button1);
-
-		tab1.setContent(colorVBox);
 		
-		// Font Change
+		return colorVBox;
+	}
+	
+	public VBox fontChange(Label label, Stage popupwindow) {
 		
 		String old = label.getFont().getFamily();
 		Label fontFamilyLabel = new Label("Current Font Is " + label.getFont().getFamily());
@@ -3303,12 +3374,14 @@ public class MainController {
 		fontFamilyBox.setPadding(new Insets(20));
 		fontFamilyBox.getChildren().addAll(fontFamilyLabel, fontChooseLabel, combo, fontFamilyButton);
 		
-		font.setContent(fontFamilyBox);
-		
-		// Font Size Change
+		return fontFamilyBox;
+	}
 	
+	public VBox fontSizeChange(Label label, Stage popupwindow) {
+		
 		Label currentFont = new Label("Current Font Size Is " + label.getFont().getSize());
 		Label fontSizeLabel = new Label("Please Enter A Font Size: ");
+		String oldFont = label.getFont().getFamily();
 
 		TextField fontSize = new TextField();
 
@@ -3317,6 +3390,7 @@ public class MainController {
 			if (notBlank(fontSize.getText())) {
 				try {
 					setLabelFontSize(label, Double.valueOf(fontSize.getText()));
+					setLabelFont(label, oldFont);
 				}
 
 				catch (Exception e) {
@@ -3333,6 +3407,7 @@ public class MainController {
 				try {
 
 					setLabelFontSize(label, Double.valueOf(fontSize.getText()));
+					setLabelFont(label, oldFont);
 				}
 
 				catch (Exception e) {
@@ -3348,6 +3423,55 @@ public class MainController {
 		fontVBox.setAlignment(Pos.CENTER);
 		fontVBox.setPadding(new Insets(20));
 		fontVBox.getChildren().addAll(currentFont, fontSizeLabel, fontSize, fontButton);
+		
+		return fontVBox;
+	}
+	
+	public void popUpLabelsEdit(Label label) {
+
+		Stage popupwindow = new Stage();
+		TabPane tabPane = new TabPane();
+
+		Tab tab0 = new Tab("Text");
+		Tab tab1 = new Tab("Color");
+		Tab tab2 = new Tab("Font Size");
+		Tab tab3 = new Tab("Description");
+		Tab font = new Tab("Font");
+		
+		tab0.setClosable(false);
+		tab1.setClosable(false);
+		tab2.setClosable(false);
+		tab3.setClosable(false);
+		font.setClosable(false);
+		
+		tabPane.getTabs().addAll(tab0, tab3, tab1, tab2, font);
+
+		// Text Changes
+		
+		VBox textVBox = textChange(label, popupwindow);
+		tab0.setContent(textVBox);
+		
+		// Description Change
+		
+		VBox descVBox = descChange(label, popupwindow);
+
+		tab3.setContent(descVBox);
+
+		// Color changes
+
+		VBox colorVBox = colorChange(label, popupwindow);
+
+		tab1.setContent(colorVBox);
+		
+		// Font Change
+		
+		VBox fontFamilyBox = fontChange(label, popupwindow);
+		
+		font.setContent(fontFamilyBox);
+		
+		// Font Size Change
+	
+		VBox fontVBox = fontSizeChange(label, popupwindow);
 
 		tab2.setContent(fontVBox);
 
