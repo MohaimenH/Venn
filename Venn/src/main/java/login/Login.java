@@ -231,8 +231,8 @@ public class Login extends Application {
 			name.setText(user);
 			sub.addElement("pwd").setText("" + AccSys.getpwcode(pw));
 			sub.addElement("Venns");
-			
 			FileOutputStream out = new FileOutputStream(AccSys.filepath);
+			
 			
 			OutputFormat format = OutputFormat.createPrettyPrint();
 			format.setEncoding("UTF-8");
@@ -242,6 +242,7 @@ public class Login extends Application {
 			return true;
 		}
 		catch (Exception e){
+			e.printStackTrace();
 			return false;
 		}
 	}
