@@ -2107,9 +2107,34 @@ public class MainController {
 		t3=GameIntersection.size();
 		score=t1+t2+t3;
 		
-		System.out.println("Total"+total);
-		System.out.println("Score"+ (100)*(score/total));
+	
+
+		System.out.println("Score"+ (double)(100)*(double)((double)score/(double)total)+"%");
+		popUpGame(score,total);
 		
+	}
+	public void popUpGame(int score,int total) {
+
+		Stage popupwindow = new Stage();
+
+		popupwindow.initModality(Modality.APPLICATION_MODAL);
+		popupwindow.setTitle("Game Mode Results");
+
+		Label label1 = new Label("Here are your results:");
+		Label label2=new Label("Your score:"+score+"/"+total);
+		Label label3=new Label("Percent score:"+(double)(100)*(double)((double)score/(double)total)+"%");
+
+		VBox layout = new VBox(10);
+
+		layout.getChildren().addAll(label1, label2, label3);
+		layout.setAlignment(Pos.CENTER);
+
+		Scene scene1 = new Scene(layout, 300, 100);
+
+		popupwindow.setScene(scene1);
+
+		popupwindow.showAndWait();
+
 	}
 	@FXML
 	public void gameImport(ActionEvent im) throws IOException{
