@@ -48,5 +48,15 @@
     <name>qwert</name>  
     <pwd>309</pwd>  
     <Venns/> 
+  </User>  
+  <User name="123456"> 
+    <name>123456</name>  
+    <pwd>309</pwd>  
+    <Venns/> 
+  </User>  
+  <User name="12345"> 
+    <name>12345</name>  
+    <pwd>356</pwd>  
+    <Venns/> 
   </User> 
 </Users>

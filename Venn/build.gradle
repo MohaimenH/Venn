@@ -49,7 +49,7 @@ sourceSets {
 
 jar {
 	manifest {
-		attributes 'Main-Class': 'application.Main'
+		attributes 'Main-Class': 'login.Login'
 	}
 
 //task relocateShadowJar(type: ConfigureShadowRelocation) {
