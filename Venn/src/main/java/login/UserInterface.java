@@ -68,7 +68,6 @@ public class UserInterface extends Application {
 		Button logout = new Button("Log Out");
 		logout.setPrefWidth(70.0);
 		logout.setOnAction(e ->{
-			System.out.println("logout");
 			AccSys.current = null;
 			AccSys.v = null;
 			window.close();
